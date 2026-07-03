@@ -26,6 +26,10 @@ differentiation of your own equations.
 v0.6 adds graphs: matplotlib figures (via ``optimumai.visualization``) for
 activation curves, attention heatmaps, embedding scatter, and a 3D loss
 landscape with the gradient-descent trajectory carved across it.
+
+v0.7 adds the circuit: render any expression or Value graph as a computation
+"circuit" (interactive HTML, Graphviz DOT, or terminal) via ``optimumai.circuit``,
+with data and gradients flowing the wires.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -57,7 +61,7 @@ from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 __all__ = [
     "COURSE",

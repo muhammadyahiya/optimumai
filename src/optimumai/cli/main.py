@@ -25,6 +25,8 @@ from optimumai import __version__
 from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
 from optimumai.analysis.compare import compare_trace, sweep_trace
+from optimumai.circuit.graph import build_from_expression
+from optimumai.circuit.render import to_dot, to_html, to_terminal
 from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
 from optimumai.foundations.kv_cache import kv_cache_trace
@@ -378,6 +380,44 @@ def landscape_cmd(func: str, out: str, kind: str) -> None:
     except (ImportError, ValueError) as exc:
         raise click.ClickException(str(exc)) from exc
     click.echo(f"saved → {path}")
+
+
+# --------------------------------------------------------------------- circuit
+@cli.command("circuit")
+@click.argument("expression")
+@click.option("--vars", "vars_", default=None, help='Values, e.g. "a=2,b=-3,c=10" (unset → 1).')
+@click.option("--fmt", type=click.Choice(["terminal", "html", "dot"]), default="terminal")
+@click.option("--out", default=None, help="Output file for html/dot.")
+def circuit_cmd(expression: str, vars_: str | None, fmt: str, out: str | None) -> None:
+    """Render YOUR expression as a computation-graph circuit (data + grad on every wire).
+
+    Example: optimumai circuit "(a*b + c) * f" --vars "a=2,b=-3,c=10,f=-2" --fmt html
+    """
+    variables: dict[str, float] = {}
+    if vars_:
+        for pair in vars_.split(","):
+            key, _, val = pair.partition("=")
+            try:
+                variables[key.strip()] = float(val)
+            except ValueError as exc:
+                msg = f"bad --vars entry {pair!r}: expected name=number"
+                raise click.BadParameter(msg) from exc
+    try:
+        _, graph = build_from_expression(expression, variables or None)
+    except ValueError as exc:
+        raise click.BadParameter(str(exc)) from exc
+
+    if fmt == "terminal":
+        to_terminal(graph)
+    elif fmt == "dot":
+        dot = to_dot(graph)
+        if out:
+            Path(out).write_text(dot)
+            click.echo(f"saved → {out}")
+        else:
+            click.echo(dot)
+    else:  # html
+        click.echo(f"saved → {to_html(graph, out or 'circuit.html')}")
 
 
 if __name__ == "__main__":  # pragma: no cover

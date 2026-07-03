@@ -43,6 +43,39 @@ def _render_trace(trace, level: str = "engineer") -> None:
         st.caption(f"Complexity: {trace.complexity}")
 
 
+def _render_circuit_playground() -> None:
+    """A live computation-graph 'circuit' from a user expression (v0.7)."""
+    import os
+    import tempfile
+
+    import streamlit.components.v1 as components
+
+    from optimumai.circuit.graph import build_from_expression
+    from optimumai.circuit.render import to_html
+
+    with st.expander("🔌 Circuit playground — see your own expression flow"):
+        expr = st.text_input("Expression (variables default to 1)", "(a*b + c) * f")
+        vars_str = st.text_input("Values", "a=2, b=-3, c=10, f=-2")
+        if st.button("Build circuit"):
+            variables: dict[str, float] = {}
+            for pair in vars_str.split(","):
+                key, _, val = pair.partition("=")
+                if key.strip() and val.strip():
+                    try:
+                        variables[key.strip()] = float(val)
+                    except ValueError:
+                        pass
+            try:
+                _, graph = build_from_expression(expr, variables or None)
+            except ValueError as exc:
+                st.error(str(exc))
+                return
+            path = to_html(graph, os.path.join(tempfile.mkdtemp(), "circuit.html"))
+            with open(path) as fh:
+                components.html(fh.read(), height=480, scrolling=True)
+            st.caption("Blue = data (forward) · Orange = grad (backward)")
+
+
 def main() -> None:
     st.set_page_config(page_title="OptimumAI", page_icon="🧮", layout="wide")
     tracker = ProgressTracker()
@@ -74,6 +107,8 @@ def main() -> None:
     # --- Main: tracks and lessons ----------------------------------------
     tracks = COURSE.tracks()
     level = st.select_slider("Explanation level", options=_LEVELS, value="engineer")
+
+    _render_circuit_playground()
 
     for track_name, lessons in tracks.items():
         if chosen != "All tracks" and chosen != track_name:

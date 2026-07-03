@@ -159,6 +159,28 @@ pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
 ```
 
+## Watch it flow — the circuit (v0.7)
+
+Type an expression and see it as a **computation-graph circuit**: every node
+shows its forward **data** and backward **gradient**, like current through wires
+(Karpathy's `draw_dot` meets Anthropic's circuits).
+
+```bash
+optimumai circuit "(a*b + c) * f" --vars "a=2,b=-3,c=10,f=-2"          # terminal
+optimumai circuit "(a*b + c) * f" --vars "a=2,b=-3,c=10,f=-2" --fmt html --out circuit.html
+optimumai circuit "a*b + c" --fmt dot                                   # Graphviz DOT
+```
+
+```python
+from optimumai.circuit import build_from_expression, to_html, to_terminal
+
+value, graph = build_from_expression("(a*b + c) * f", {"a": 2, "b": -3, "c": 10, "f": -2})
+to_terminal(graph)             # value=-8; leaf grads a=6, b=-4, c=-2, f=4
+to_html(graph, "circuit.html") # interactive, self-contained (vis-network)
+```
+
+The dashboard has a live **Circuit playground** too: `optimumai dashboard`.
+
 ## See the graphs (v0.6)
 
 Beyond terminal traces, render real **matplotlib** figures (needs `optimumai[viz]`):
@@ -261,6 +283,7 @@ optimumai/
 ├── symbolic/        # differentiate your own equations (SymPy)            ✨v0.5
 ├── analysis/        # compare ops & sweep parameters                      ✨v0.5
 ├── visualization/   # Rich terminal renderer + matplotlib graphs          ✨v0.6
+├── circuit/         # computation-graph "circuit" — HTML / Graphviz / TUI ✨v0.7
 └── cli/             # the `optimumai` command
 ```
 
@@ -292,9 +315,13 @@ your own equations. The course now spans **31 lessons across 10 tracks**.
 vs temperature, attention heatmaps, embedding scatter, training curves, and a
 **3D loss landscape with the gradient-descent trajectory** carved across it.
 
-**v0.7** (next) — the **circuit**: render any `Value`/expression as an interactive
-computation graph (HTML + Graphviz + terminal) with data and gradients lighting
-up the wires — Karpathy's `draw_dot` meets Anthropic's circuits.
+**v0.7** ✅ — the **circuit**: render any expression / `Value` graph as an
+interactive computation graph (HTML + Graphviz + terminal), with data and
+gradients lighting up the wires, plus a live Circuit playground in the dashboard.
+
+**v0.8** (next) — deeper systems (FlashAttention, quantization, LoRA/PEFT),
+reinforcement learning & RLHF, and animated forward/backward "current" in the
+circuit view.
 
 ## Development
 

@@ -4,6 +4,25 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.7.0] — 2026-07-03
+
+The **circuit** — render any expression or `Value` graph as a computation-graph
+"circuit" where each node carries its forward data and backward gradient, like
+current through wires. Karpathy's `draw_dot` meets Anthropic's circuits.
+
+### Added
+
+- **circuit.graph** — `FlowGraph`/`FlowNode`, `build_from_value` (from an autograd
+  DAG, inserting operator pseudo-nodes like micrograd's `draw_dot`), and
+  `build_from_expression` which turns a user arithmetic expression into a real
+  `Value` graph behind an **AST allow-list** (only names, numbers, + - * / **).
+- **circuit.render** — `to_dot` (Graphviz, `rankdir=LR`), `to_terminal` (a Rich
+  table with blue data / orange grad), `to_html` (a self-contained interactive
+  vis-network graph), and a `render(source, fmt, out)` dispatcher.
+- CLI: `optimumai circuit "<expr>" --vars "a=2,b=-3" --fmt terminal|html|dot`.
+- Dashboard: a live **Circuit playground** — type an expression, see the graph.
+- 13 new tests (177 total).
+
 ## [0.6.0] — 2026-07-03
 
 Adds real **graphs** — matplotlib figures rendered headlessly to PNG (via the
@@ -149,6 +168,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.7.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.7.0
 [0.6.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.6.0
 [0.5.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.5.0
 [0.4.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.4.0
