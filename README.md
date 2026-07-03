@@ -159,6 +159,22 @@ pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
 ```
 
+## Actually learn it — quiz & spaced review (v0.9)
+
+Reading isn't remembering. Cognitive science shows **active recall** (testing
+yourself) roughly *doubles* retention vs rereading, and **spaced repetition**
+locks it in. OptimumAI builds both in:
+
+```bash
+optimumai start                 # 30-second guided tour (new here? start here)
+optimumai quiz softmax          # test yourself — reveals answers + explanations
+optimumai review                # spaced repetition: quizzes whatever's due (SM-2)
+optimumai search attention      # find lessons by keyword
+```
+
+Your quiz scores feed the spaced-repetition scheduler, so `optimumai review`
+always surfaces the concept you're most likely to have forgotten.
+
 ## Frontier concepts (v0.8)
 
 How today's large models are actually built and run — each with the same
@@ -305,6 +321,8 @@ optimumai/
 ├── visualization/   # Rich terminal renderer + matplotlib graphs          ✨v0.6
 ├── circuit/         # computation-graph "circuit" — HTML / Graphviz / TUI ✨v0.7
 ├── frontier/        # FlashAttention, quantization, LoRA, DPO/RLHF         ✨v0.8
+├── quiz/            # active-recall quiz engine (the testing effect)       ✨v0.9
+├── review/          # spaced-repetition scheduler (SM-2)                   ✨v0.9
 └── cli/             # the `optimumai` command
 ```
 
@@ -344,9 +362,13 @@ gradients lighting up the wires, plus a live Circuit playground in the dashboard
 exact), quantization (int8/int4), LoRA (parameter-efficient fine-tuning), and DPO
 (preference alignment). The course now spans **35 lessons across 11 tracks**.
 
-**v0.9** (next) — the learning experience, grounded in cognitive science: a
-**quiz / active-recall** mode (the testing effect), **spaced-repetition review**
-(SM-2), guided onboarding, and lesson search.
+**v0.9** ✅ — the learning experience, grounded in cognitive science: a **quiz /
+active-recall** engine (the testing effect — ~2× retention), **spaced-repetition
+review** (SM-2), guided `start` onboarding, and course `search`. 20 quizzes / 57
+questions.
+
+**v1.0** (next) — the stable release: polish, docs site, notebooks, and API
+guarantees.
 
 ## Development
 

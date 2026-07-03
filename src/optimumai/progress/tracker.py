@@ -73,3 +73,15 @@ class ProgressTracker:
         if total <= 0:
             return 0.0
         return min(1.0, self.completed_count() / total)
+
+    # ---------------------------------------------------- spaced-repetition state
+    def review_state(self, lesson_id: str) -> dict | None:
+        """Return the stored SM-2 review state for a lesson, or None."""
+        return self._data.get("reviews", {}).get(lesson_id)
+
+    def set_review_state(self, lesson_id: str, state: dict) -> None:
+        self._data.setdefault("reviews", {})[lesson_id] = state
+        self.save()
+
+    def all_review_states(self) -> dict[str, dict]:
+        return dict(self._data.get("reviews", {}))

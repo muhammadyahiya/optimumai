@@ -38,6 +38,8 @@ from optimumai.interpretability.superposition import superposition_trace
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.progress import ProgressTracker
+from optimumai.quiz.engine import Quiz, available_quizzes
+from optimumai.review.scheduler import ReviewScheduler
 from optimumai.symbolic.differentiate import differentiate_trace
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.text_pipeline import TextPipeline
@@ -136,6 +138,93 @@ def progress_cmd(reset: bool) -> None:
         click.echo(f"\nNext: optimumai learn {nxt.id}   — {nxt.title}")
     else:
         click.echo("\n🎉 Course complete — you've unlocked the frontier!")
+
+
+def _run_quiz(topic: str) -> float:
+    """Run a quiz interactively (active recall) and return the score (0–1)."""
+    quiz = Quiz(topic)
+    answers: list[int] = []
+    for i, q in enumerate(quiz.questions, 1):
+        click.echo(f"\n{click.style(f'Q{i}.', bold=True)} {q.prompt}")
+        for j, choice in enumerate(q.choices, 1):
+            click.echo(f"  {j}) {choice}")
+        pick = click.prompt("Your answer", type=click.IntRange(1, len(q.choices))) - 1
+        answers.append(pick)
+        if pick == q.answer:
+            click.echo(click.style("  ✓ correct", fg="green"))
+        else:
+            click.echo(click.style(f"  ✗ correct answer: {q.choices[q.answer]}", fg="red"))
+        click.echo(click.style(f"    {q.explanation}", dim=True))
+    result = quiz.grade(answers)
+    click.echo(f"\nScore: {result.correct}/{result.total} ({result.score * 100:.0f}%)")
+    return result.score
+
+
+@cli.command("quiz")
+@click.argument("topic", required=False)
+def quiz_cmd(topic: str | None) -> None:
+    """Test yourself on a topic (active recall). Omit TOPIC to list quizzes."""
+    if topic is None:
+        click.echo("Quizzes: " + ", ".join(available_quizzes()))
+        return
+    key = topic.lower()
+    try:
+        score = _run_quiz(key)
+    except (KeyError, ValueError) as exc:
+        raise click.BadParameter(
+            f"no quiz for {topic!r}. Available: {', '.join(available_quizzes())}"
+        ) from exc
+    # Grade feeds the spaced-repetition scheduler (quality 0–5 from the score).
+    ReviewScheduler(ProgressTracker()).record(key, round(score * 5))
+    click.echo("Scheduled for spaced review — run 'optimumai review' later.")
+
+
+@cli.command("review")
+def review_cmd() -> None:
+    """Spaced repetition: quiz yourself on whatever's due for review."""
+    scheduler = ReviewScheduler(ProgressTracker())
+    topic = scheduler.next_due(available_quizzes())
+    if topic is None:
+        click.echo("Nothing due 🎉  Take a quiz first: optimumai quiz softmax")
+        return
+    click.echo(click.style(f"Reviewing: {topic}", bold=True))
+    score = _run_quiz(topic)
+    state = scheduler.record(topic, round(score * 5))
+    click.echo(f"Next review in ~{state.interval_days:g} day(s).")
+
+
+@cli.command("search")
+@click.argument("query")
+def search_cmd(query: str) -> None:
+    """Search the course by keyword (id, title, summary, track)."""
+    q = query.lower()
+    hits = [
+        lesson
+        for lesson in COURSE
+        if q in lesson.id.lower()
+        or q in lesson.title.lower()
+        or q in lesson.summary.lower()
+        or q in lesson.track.lower()
+    ]
+    if not hits:
+        click.echo(f"No lessons match {query!r}.")
+        return
+    for lesson in hits:
+        click.echo(f"  {lesson.id:<16} {lesson.title} — {lesson.summary}")
+
+
+@cli.command("start")
+def start_cmd() -> None:
+    """New here? The 30-second guided tour."""
+    click.echo(click.style("\n  Welcome to OptimumAI — unlock the math behind AI 🧮\n", bold=True))
+    click.echo("Here's a dot product, explained step by step:\n")
+    COURSE.get("dot").run("beginner")
+    click.echo(click.style("\nNext steps:", bold=True))
+    click.echo("  optimumai course           # the full learning path (35 lessons)")
+    click.echo("  optimumai learn attention  # run any lesson")
+    click.echo("  optimumai quiz softmax     # test yourself (active recall)")
+    click.echo("  optimumai circuit \"a*b+c\"  # see the computation as a circuit")
+    click.echo("  optimumai dashboard        # the visual dashboard\n")
 
 
 @cli.command("dashboard")

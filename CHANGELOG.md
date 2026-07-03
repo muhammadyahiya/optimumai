@@ -4,6 +4,23 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.9.0] — 2026-07-03
+
+Turns OptimumAI into a real learning product, grounded in cognitive science:
+active recall (the testing effect) and spaced repetition.
+
+### Added
+
+- **quiz** — an active-recall engine: `Quiz(topic)` with a 57-question bank across
+  20 topics; `optimumai quiz <topic>` reveals answers + explanations and scores you.
+- **review** — spaced-repetition scheduling (SM-2): `ReviewScheduler` grades a
+  review 0–5 and computes the next due date; `optimumai review` quizzes whatever's
+  due. Quiz scores feed the scheduler automatically.
+- **onboarding & discovery** — `optimumai start` (a 30-second guided first run)
+  and `optimumai search <query>` (find lessons by keyword).
+- `ProgressTracker` now persists spaced-repetition state alongside progress.
+- 20 new tests (199 total).
+
 ## [0.8.0] — 2026-07-03
 
 Frontier concepts — how today's large models are actually built and run — as a
@@ -187,6 +204,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.9.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.9.0
 [0.8.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.8.0
 [0.7.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.7.0
 [0.6.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.6.0

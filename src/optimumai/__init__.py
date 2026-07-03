@@ -34,6 +34,10 @@ with data and gradients flowing the wires.
 v0.8 adds frontier concepts: FlashAttention (IO-aware tiling + online softmax),
 quantization (int8/int4), LoRA (parameter-efficient fine-tuning), and DPO
 (preference alignment) — how today's large models are actually built and run.
+
+v0.9 makes it a learning product, grounded in cognitive science: a quiz /
+active-recall engine (the testing effect), spaced-repetition review (SM-2),
+guided onboarding, and course search.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -59,7 +63,9 @@ from optimumai.neural_networks.mlp import MLP
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
 from optimumai.progress import ProgressTracker
+from optimumai.quiz.engine import Quiz
 from optimumai.rag.pipeline import RAGPipeline
+from optimumai.review.scheduler import ReviewScheduler
 from optimumai.symbolic.differentiate import differentiate
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.block import TransformerBlock
@@ -69,7 +75,7 @@ from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 __all__ = [
     "COURSE",
@@ -84,7 +90,9 @@ __all__ = [
     "Matrix",
     "MultiHeadAttention",
     "ProgressTracker",
+    "Quiz",
     "RAGPipeline",
+    "ReviewScheduler",
     "Step",
     "TextPipeline",
     "dpo",
