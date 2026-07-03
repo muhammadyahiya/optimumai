@@ -4,6 +4,25 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.8.0] — 2026-07-03
+
+Frontier concepts — how today's large models are actually built and run — as a
+new "Frontier" course track (now **35 lessons across 11 tracks**).
+
+### Added
+
+- **frontier.flash_attention** — IO-aware tiled attention with online softmax;
+  proven **exact** vs standard attention (error ~1e-16), with the HBM/SRAM IO story.
+- **frontier.quantization** — `quantize`/`dequantize` to int8/int4, symmetric or
+  asymmetric, per-tensor or per-channel (scale + zero-point), with the error and
+  compression ratio.
+- **frontier.lora** — low-rank adaptation `W = W₀ + BA` (B init 0, r ≪ d): the
+  trainable-parameter reduction and why fine-tuning starts from the base model.
+- **frontier.rlhf** — the DPO objective on a preference pair (implicit reward,
+  margin, loss) and the SFT→reward-model→PPO pipeline it collapses.
+- CLI: `optimumai quantize "[...]" --bits 4` plus `learn` topics for all four.
+- 8 new tests (185 total).
+
 ## [0.7.0] — 2026-07-03
 
 The **circuit** — render any expression or `Value` graph as a computation-graph
@@ -168,6 +187,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.8.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.8.0
 [0.7.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.7.0
 [0.6.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.6.0
 [0.5.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.5.0

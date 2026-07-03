@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (31 across 10 tracks)
+optimumai learn                       # list every topic (35 across 11 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -157,6 +157,26 @@ Install the extras you want:
 pip install "optimumai[dashboard]"   # Streamlit progress dashboard
 pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
+```
+
+## Frontier concepts (v0.8)
+
+How today's large models are actually built and run — each with the same
+step-by-step trace:
+
+```bash
+optimumai learn flash_attention   # IO-aware tiling + online softmax (exact!)
+optimumai learn lora              # low-rank adapters — 10,000× fewer trainable params
+optimumai learn dpo               # align to preferences without a reward model or RL
+optimumai quantize "[0.1,-2.3,4.5,3.14]" --bits 4    # quantize YOUR values, see the error
+```
+
+```python
+from optimumai.frontier import flash_attention, quantize, lora, dpo
+import numpy as np
+
+Q, K, V = (np.random.default_rng(0).normal(size=(6, 4)) for _ in range(3))
+flash_attention(Q, K, V, block_size=2, explain=True)   # exact vs standard attention (error ~1e-16)
 ```
 
 ## Watch it flow — the circuit (v0.7)
@@ -284,6 +304,7 @@ optimumai/
 ├── analysis/        # compare ops & sweep parameters                      ✨v0.5
 ├── visualization/   # Rich terminal renderer + matplotlib graphs          ✨v0.6
 ├── circuit/         # computation-graph "circuit" — HTML / Graphviz / TUI ✨v0.7
+├── frontier/        # FlashAttention, quantization, LoRA, DPO/RLHF         ✨v0.8
 └── cli/             # the `optimumai` command
 ```
 
@@ -319,9 +340,13 @@ vs temperature, attention heatmaps, embedding scatter, training curves, and a
 interactive computation graph (HTML + Graphviz + terminal), with data and
 gradients lighting up the wires, plus a live Circuit playground in the dashboard.
 
-**v0.8** (next) — deeper systems (FlashAttention, quantization, LoRA/PEFT),
-reinforcement learning & RLHF, and animated forward/backward "current" in the
-circuit view.
+**v0.8** ✅ — frontier concepts: FlashAttention (IO-aware tiling + online softmax,
+exact), quantization (int8/int4), LoRA (parameter-efficient fine-tuning), and DPO
+(preference alignment). The course now spans **35 lessons across 11 tracks**.
+
+**v0.9** (next) — the learning experience, grounded in cognitive science: a
+**quiz / active-recall** mode (the testing effect), **spaced-repetition review**
+(SM-2), guided onboarding, and lesson search.
 
 ## Development
 

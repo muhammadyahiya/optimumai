@@ -30,6 +30,10 @@ landscape with the gradient-descent trajectory carved across it.
 v0.7 adds the circuit: render any expression or Value graph as a computation
 "circuit" (interactive HTML, Graphviz DOT, or terminal) via ``optimumai.circuit``,
 with data and gradients flowing the wires.
+
+v0.8 adds frontier concepts: FlashAttention (IO-aware tiling + online softmax),
+quantization (int8/int4), LoRA (parameter-efficient fine-tuning), and DPO
+(preference alignment) — how today's large models are actually built and run.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -45,6 +49,10 @@ from optimumai.embeddings.lookup import embedding_lookup, nearest_neighbors
 from optimumai.foundations.kv_cache import kv_cache_size
 from optimumai.foundations.math_foundations import integrate
 from optimumai.foundations.vram import vram_estimate
+from optimumai.frontier.flash_attention import flash_attention
+from optimumai.frontier.lora import lora
+from optimumai.frontier.quantization import quantize
+from optimumai.frontier.rlhf import dpo
 from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition
 from optimumai.neural_networks.mlp import MLP
@@ -61,7 +69,7 @@ from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 __all__ = [
     "COURSE",
@@ -79,6 +87,10 @@ __all__ = [
     "RAGPipeline",
     "Step",
     "TextPipeline",
+    "dpo",
+    "flash_attention",
+    "lora",
+    "quantize",
     "Trace",
     "TransformerBlock",
     "Tutor",

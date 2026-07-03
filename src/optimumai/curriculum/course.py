@@ -32,6 +32,10 @@ from optimumai.foundations.kv_cache import demo as kv_cache_demo
 from optimumai.foundations.math_foundations import integrate_demo, tensor_intro_trace
 from optimumai.foundations.pytorch_foundations import demo as pytorch_demo
 from optimumai.foundations.vram import demo as vram_demo
+from optimumai.frontier.flash_attention import demo as flash_attention_demo
+from optimumai.frontier.lora import demo as lora_demo
+from optimumai.frontier.quantization import demo as quantization_demo
+from optimumai.frontier.rlhf import demo as dpo_demo
 from optimumai.interpretability.superposition import superposition_trace
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.optimization.optimizers import descent_demo
@@ -182,6 +186,19 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("sweep", "Temperature sweep", "10 · Interactive Playground",
            "How softmax sharpens (T→0) or flattens (T→∞).",
            lambda: sweep_trace("softmax", "temperature", [0.25, 0.5, 1.0, 2.0]), ("softmax",)),
+    # --- Frontier -----------------------------------------------------------
+    Lesson("flash_attention", "FlashAttention", "11 · Frontier",
+           "IO-aware tiling + online softmax — exact attention, linear memory.",
+           flash_attention_demo, ("multihead",)),
+    Lesson("quantization", "Quantization", "11 · Frontier",
+           "int8/int4 with scale + zero-point — how models shrink to fit.",
+           quantization_demo, ("matmul",)),
+    Lesson("lora", "LoRA", "11 · Frontier",
+           "Low-rank adapters (W₀ + BA) — fine-tune ~10,000× fewer parameters.",
+           lora_demo, ("matmul",)),
+    Lesson("dpo", "DPO / RLHF", "11 · Frontier",
+           "Align to human preferences without a reward model or RL.",
+           dpo_demo, ("softmax",)),
 )
 
 

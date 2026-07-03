@@ -31,6 +31,7 @@ from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
 from optimumai.foundations.kv_cache import kv_cache_trace
 from optimumai.foundations.vram import vram_trace
+from optimumai.frontier.quantization import quantize_trace
 from optimumai.interactive.prompts import prompt_matrix, prompt_vector
 from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition_trace
@@ -380,6 +381,18 @@ def landscape_cmd(func: str, out: str, kind: str) -> None:
     except (ImportError, ValueError) as exc:
         raise click.ClickException(str(exc)) from exc
     click.echo(f"saved → {path}")
+
+
+# --------------------------------------------------------------------- frontier
+@cli.command("quantize")
+@click.argument("values")
+@click.option("--bits", type=click.Choice(["4", "8"]), default="8", help="Bit width.")
+@click.option("--scheme", type=click.Choice(["symmetric", "asymmetric"]), default="symmetric")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def quantize_cmd(values: str, bits: str, scheme: str, level: str) -> None:
+    """Quantize YOUR values to int8/int4 and see the error, e.g. quantize "[0.1,-2.3,4.5]"."""
+    parsed = _parse_literal(values, "values")
+    quantize_trace(parsed, bits=int(bits), scheme=scheme).render(level)
 
 
 # --------------------------------------------------------------------- circuit
