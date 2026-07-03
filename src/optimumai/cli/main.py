@@ -2,10 +2,13 @@
 
 Examples:
     optimumai algebra dot "[1,2,3]" "[4,5,6]"
-    optimumai algebra matmul "[[1,2],[3,4]]" "[[5,6],[7,8]]"
     optimumai softmax "[2,1,0.1]" --temperature 0.5
     optimumai attention --demo
-    optimumai learn
+    optimumai backprop
+    optimumai train --steps 150
+    optimumai jepa --demo
+    optimumai superposition --features 5 --neurons 2
+    optimumai learn            # list every topic
 """
 
 from __future__ import annotations
@@ -17,11 +20,36 @@ import click
 from optimumai import __version__
 from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
+from optimumai.autograd.value import Value
+from optimumai.calculus.derivative import chain_rule_trace, derivative_trace, gradient_trace
 from optimumai.core.explain import ExplainLevel
+from optimumai.interpretability.superposition import superposition_trace
+from optimumai.neural_networks.backprop import train_demo
+from optimumai.optimization.optimizers import descent_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.transformers.attention import Attention
+from optimumai.transformers.block import TransformerBlock
+from optimumai.transformers.multihead import MultiHeadAttention
+from optimumai.transformers.positional import positional_encoding_trace
+from optimumai.world_models.jepa import JEPA
 
 _LEVEL_CHOICE = click.Choice([lvl.value for lvl in ExplainLevel], case_sensitive=False)
+
+
+def _backprop_demo():
+    """A small labelled scalar graph, differentiated end to end (micrograd-style)."""
+    a = Value(2.0, label="a")
+    b = Value(-3.0, label="b")
+    c = Value(10.0, label="c")
+    e = a * b
+    e.label = "e"
+    d = e + c
+    d.label = "d"
+    f = Value(-2.0, label="f")
+    loss = d * f
+    loss.label = "L"
+    return loss.backward_trace()
+
 
 # topic -> (one-line description, zero-arg callable returning a Trace)
 _TOPICS: dict[str, tuple[str, callable]] = {
@@ -44,6 +72,50 @@ _TOPICS: dict[str, tuple[str, callable]] = {
     "attention": (
         "Scaled dot-product attention — the transformer core",
         Attention.demo,
+    ),
+    "derivative": (
+        "Derivative — the finite-difference slope, checked against autograd",
+        lambda: derivative_trace(lambda x: x**3, 2.0, label="x³"),
+    ),
+    "gradient": (
+        "Gradient — the vector of partial derivatives",
+        lambda: gradient_trace(lambda p: p[0] ** 2 + p[1] ** 2, [3.0, 4.0]),
+    ),
+    "chain_rule": (
+        "Chain rule — the single idea behind all backpropagation",
+        chain_rule_trace,
+    ),
+    "backprop": (
+        "Backpropagation — reverse-mode autodiff on a scalar graph (micrograd)",
+        _backprop_demo,
+    ),
+    "descent": (
+        "Gradient descent — Adam walking a loss bowl to its minimum",
+        lambda: descent_demo("adam", steps=60),
+    ),
+    "train": (
+        "Train an MLP — the full loop: predict → loss → backprop → step",
+        lambda: train_demo(steps=120),
+    ),
+    "positional": (
+        "Positional encoding — injecting word order into attention",
+        lambda: positional_encoding_trace(6, 8),
+    ),
+    "multihead": (
+        "Multi-head attention — parallel heads + causal mask (nanoGPT)",
+        MultiHeadAttention.demo,
+    ),
+    "transformer": (
+        "Transformer block — LayerNorm → attention → FFN with residuals",
+        TransformerBlock.demo,
+    ),
+    "jepa": (
+        "JEPA — LeCun's predict-in-latent-space world model",
+        JEPA.demo,
+    ),
+    "superposition": (
+        "Superposition — why neurons are polysemantic (Anthropic)",
+        lambda: superposition_trace(5, 2),
     ),
 }
 
@@ -125,6 +197,43 @@ def attention_cmd(use_demo: bool, seed: int, level: str) -> None:
     Attention.demo(seed=seed).render(level)
 
 
+# -------------------------------------------------------------- autograd / train
+@cli.command("backprop")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def backprop_cmd(level: str) -> None:
+    """Backpropagate through a scalar autograd graph, chain rule step by step."""
+    _backprop_demo().render(level)
+
+
+@cli.command("train")
+@click.option("--steps", type=int, default=120, help="Training iterations.")
+@click.option("--lr", type=float, default=0.05, help="Learning rate.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def train_cmd(steps: int, lr: float, level: str) -> None:
+    """Train a tiny MLP on a toy set and watch the loss fall."""
+    train_demo(steps=steps, lr=lr).render(level)
+
+
+@cli.command("jepa")
+@click.option("--demo", "use_demo", is_flag=True, help="Run the built-in JEPA example.")
+@click.option("--seed", type=int, default=0, help="Random seed for --demo.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def jepa_cmd(use_demo: bool, seed: int, level: str) -> None:
+    """JEPA world model — predict in representation space, not pixels (LeCun)."""
+    if not use_demo:
+        raise click.UsageError("pass --demo to run the built-in JEPA example")
+    JEPA.demo(seed=seed).render(level)
+
+
+@cli.command("superposition")
+@click.option("--features", type=int, default=5, help="Number of features (> neurons).")
+@click.option("--neurons", type=int, default=2, help="Number of neurons / dimensions.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def superposition_cmd(features: int, neurons: int, level: str) -> None:
+    """Toy model of superposition — why neurons are polysemantic (Anthropic)."""
+    superposition_trace(features, neurons).render(level)
+
+
 # ----------------------------------------------------------------------- learn
 @cli.command("learn")
 @click.argument("topic", required=False)
@@ -134,8 +243,8 @@ def learn_cmd(topic: str | None, level: str) -> None:
     if topic is None:
         click.echo("Available topics:\n")
         for name, (desc, _) in _TOPICS.items():
-            click.echo(f"  {name:<12} {desc}")
-        click.echo('\nTry:  optimumai learn attention --level engineer')
+            click.echo(f"  {name:<14} {desc}")
+        click.echo("\nTry:  optimumai learn backprop --level engineer")
         return
     key = topic.lower()
     if key not in _TOPICS:

@@ -80,15 +80,47 @@ trace.steps       # [Step(...), Step(...), ...]
 trace.why_ai      # ['Similarity between two embedding vectors', ...]
 ```
 
+## The fundamentals (v0.2)
+
+The same `explain=True` philosophy now runs all the way down to the atoms of
+modern AI. Inspired by Karpathy's [micrograd](https://github.com/karpathy/micrograd)/[nanoGPT](https://github.com/karpathy/nanoGPT),
+Yann LeCun's world models, and Anthropic's interpretability research
+(see [PHILOSOPHY.md](PHILOSOPHY.md)):
+
+```python
+from optimumai import Value, MLP, MultiHeadAttention, JEPA, superposition
+
+# Autograd — a scalar computation graph that differentiates itself (micrograd)
+a = Value(2.0, label="a"); b = Value(-3.0, label="b")
+L = (a * b).tanh(); L.label = "L"
+L.backprop(explain=True)          # watch the chain rule flow backwards
+
+# Neural net — real backprop, trained by gradient descent
+from optimumai.neural_networks import train_demo
+train_demo(steps=150).render("intermediate")   # loss falls to ~0
+
+# Transformers — multi-head attention with a causal mask (the GPT decoder)
+MultiHeadAttention.demo().render("engineer")
+
+# World models — LeCun's JEPA: predict in latent space, not pixels
+JEPA.demo().render("engineer")    # energy = ‖predicted embedding − target embedding‖²
+
+# Interpretability — Anthropic's superposition: why neurons are polysemantic
+superposition(n_features=5, n_neurons=2, explain=True)
+```
+
 ## Quickstart — CLI
 
 ```bash
 optimumai algebra dot "[1,2,3]" "[4,5,6]"
-optimumai algebra matmul "[[1,2],[3,4]]" "[[5,6],[7,8]]"
 optimumai softmax "[2,1,0.1]" --temperature 0.5
 optimumai attention --demo --level engineer
-optimumai learn                       # list every topic
-optimumai learn attention --level researcher
+optimumai backprop                    # chain rule through a scalar graph
+optimumai train --steps 150           # train a tiny MLP, watch loss fall
+optimumai jepa --demo                 # LeCun's world-model energy
+optimumai superposition               # Anthropic's polysemantic neurons
+optimumai learn                       # list every topic (16 and counting)
+optimumai learn transformer --level researcher
 ```
 
 ## Explain levels
@@ -110,21 +142,31 @@ optimumai/
 ├── core/            # Tracer, Step/Trace model, ExplainLevel, BaseOp
 ├── algebra/         # Vector (dot, norm, cosine), Matrix (matmul)
 ├── probability/     # softmax (with temperature + stability)
-├── transformers/    # scaled dot-product Attention
+├── autograd/        # Value — a micrograd-style scalar autograd engine  ✨v0.2
+├── calculus/        # derivatives, gradients, the chain rule            ✨v0.2
+├── optimization/    # SGD, Adam, the training loop                      ✨v0.2
+├── neural_networks/ # Neuron/Layer/MLP + full backprop                  ✨v0.2
+├── transformers/    # Attention, MultiHeadAttention (causal), PE, Block ✨v0.2
+├── world_models/    # JEPA — LeCun's predict-in-latent-space energy     ✨v0.2
+├── interpretability/# superposition — Anthropic's polysemantic neurons  ✨v0.2
 ├── visualization/   # Rich terminal renderer
 └── cli/             # the `optimumai` command
 ```
 
 ## Roadmap
 
-`v0.1` ships the spine — algebra → probability → attention — plus the tracer,
-CLI, and terminal visualization. Next up:
+**v0.1** — the spine: algebra → probability → attention, plus the tracer, CLI,
+and terminal visualization.
 
-- **Calculus & optimization** — derivatives, gradients, SGD/Adam convergence
-- **Neural networks** — dense layers, activations, full backprop trace
-- **Multi-head attention, positional encoding, a full transformer block**
+**v0.2** ✅ — the fundamentals: a micrograd-style autograd engine, calculus,
+SGD/Adam, neural networks with real backprop, multi-head attention + causal mask
++ positional encoding + a full transformer block, LeCun's JEPA world model, and
+Anthropic-style superposition. See [PHILOSOPHY.md](PHILOSOPHY.md).
+
+**v0.3** (next):
+
 - **Embeddings, RAG pipeline traces, diffusion schedules**
-- **LLM tutor** — `Tutor().ask("Why is LayerNorm after attention?")`
+- **LLM tutor** — `Tutor().ask("Why is LayerNorm after attention?")` (`optimumai[llm]`)
 - **Streamlit explorer** for visual, interactive pipelines
 
 ## Development
