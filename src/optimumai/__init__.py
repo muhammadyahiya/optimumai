@@ -22,6 +22,10 @@ model, tiled matmul kernels, the KV cache, and a VRAM budget calculator.
 v0.5 makes it interactive: feed your own input and watch it flow — a REPL, a
 text-to-transformer pipeline, op comparisons, parameter sweeps, and symbolic
 differentiation of your own equations.
+
+v0.6 adds graphs: matplotlib figures (via ``optimumai.visualization``) for
+activation curves, attention heatmaps, embedding scatter, and a 3D loss
+landscape with the gradient-descent trajectory carved across it.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -53,7 +57,7 @@ from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 __all__ = [
     "COURSE",

@@ -2106,6 +2106,8 @@ dashboard = [
     { name = "streamlit" },
 ]
 dev = [
+    { name = "matplotlib", version = "3.10.9", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "matplotlib", version = "3.11.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "ruff" },
@@ -2135,6 +2137,7 @@ requires-dist = [
     { name = "litellm", marker = "extra == 'all'", specifier = ">=1.0" },
     { name = "litellm", marker = "extra == 'llm'", specifier = ">=1.0" },
     { name = "matplotlib", marker = "extra == 'all'", specifier = ">=3.8" },
+    { name = "matplotlib", marker = "extra == 'dev'", specifier = ">=3.8" },
     { name = "matplotlib", marker = "extra == 'viz'", specifier = ">=3.8" },
     { name = "numpy", specifier = ">=1.26" },
     { name = "plotext", marker = "extra == 'all'", specifier = ">=5.2" },

@@ -39,6 +39,14 @@ from optimumai.symbolic.differentiate import differentiate_trace
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.visualization.landscape import plot_loss_landscape
+from optimumai.visualization.plots import (
+    plot_activation,
+    plot_attention,
+    plot_embeddings,
+    plot_softmax_temperature,
+    plot_training_curve,
+)
 from optimumai.world_models.jepa import JEPA
 
 _LEVEL_CHOICE = click.Choice([lvl.value for lvl in ExplainLevel], case_sensitive=False)
@@ -331,6 +339,45 @@ def compare_cmd(op_a: str, op_b: str, input_: str, level: str) -> None:
 def sweep_cmd(op: str, param: str, values: str, level: str) -> None:
     """Sweep a parameter and watch the output evolve, e.g. optimumai sweep softmax."""
     sweep_trace(op, param, _parse_literal(values, "values")).render(level)
+
+
+# ---------------------------------------------------------------- visualization
+@cli.command("plot")
+@click.argument("kind", type=click.Choice(
+    ["activation", "softmax", "attention", "embeddings", "training"]))
+@click.option("--out", default="optimumai_plot.png", help="Output PNG path.")
+@click.option("--name", default="gelu", help="Activation name (kind=activation).")
+@click.option("--text", default=None, help="Text to attend over (kind=attention).")
+def plot_cmd(kind: str, out: str, name: str, text: str | None) -> None:
+    """Save a matplotlib graph to PNG (needs the [viz] extra)."""
+    plotters = {
+        "activation": lambda: plot_activation(name=name, out=out),
+        "softmax": lambda: plot_softmax_temperature(out=out),
+        "attention": lambda: plot_attention(text=text, out=out),
+        "embeddings": lambda: plot_embeddings(out=out),
+        "training": lambda: plot_training_curve(out=out),
+    }
+    try:
+        path = plotters[kind]()
+    except ImportError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(f"saved → {path}")
+
+
+@cli.command("landscape")
+@click.argument("func", default="rosenbrock")
+@click.option("--out", default="optimumai_landscape.png", help="Output PNG path.")
+@click.option("--kind", type=click.Choice(["contour", "surface", "both"]), default="both")
+def landscape_cmd(func: str, out: str, kind: str) -> None:
+    """Plot a 2D/3D loss landscape + gradient-descent trajectory (needs [viz]).
+
+    FUNC is a preset (bowl, saddle, rosenbrock) or an expression in x and y.
+    """
+    try:
+        path = plot_loss_landscape(func, out=out, kind=kind)
+    except (ImportError, ValueError) as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(f"saved → {path}")
 
 
 if __name__ == "__main__":  # pragma: no cover

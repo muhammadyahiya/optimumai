@@ -159,6 +159,25 @@ pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
 ```
 
+## See the graphs (v0.6)
+
+Beyond terminal traces, render real **matplotlib** figures (needs `optimumai[viz]`):
+
+```bash
+optimumai plot activation --name gelu --out gelu.png     # activation + its derivative
+optimumai plot softmax --out temps.png                   # distribution vs temperature
+optimumai plot attention --text "the cat sat" --out att.png
+optimumai plot embeddings --out emb.png                  # PCA scatter
+optimumai landscape rosenbrock --out land.png            # 3D loss surface + descent path
+```
+
+```python
+from optimumai.visualization import plot_loss_landscape, plot_attention
+
+plot_loss_landscape("rosenbrock", kind="both", out="landscape.png")  # 2D contour + 3D surface
+plot_attention(text="attention is all you need", out="heatmap.png")
+```
+
 ## Give it your own input (v0.5)
 
 Stop watching demos — feed OptimumAI *your* numbers, text, and equations and
@@ -241,7 +260,7 @@ optimumai/
 ├── interactive/     # prompts + REPL — give it your own input             ✨v0.5
 ├── symbolic/        # differentiate your own equations (SymPy)            ✨v0.5
 ├── analysis/        # compare ops & sweep parameters                      ✨v0.5
-├── visualization/   # Rich terminal renderer
+├── visualization/   # Rich terminal renderer + matplotlib graphs          ✨v0.6
 └── cli/             # the `optimumai` command
 ```
 
@@ -269,11 +288,11 @@ lessons across 9 tracks**.
 `--interactive` prompts, op `compare`, parameter `sweep`, and symbolic `diff` of
 your own equations. The course now spans **31 lessons across 10 tracks**.
 
-**v0.6** (next) — visualization: matplotlib 2D/3D → PNG. Activation curves,
-attention heatmaps, embedding scatter, and a **3D loss landscape with the
-gradient-descent trajectory** carved across it.
+**v0.6** ✅ — visualization: matplotlib 2D/3D → PNG. Activation curves, softmax
+vs temperature, attention heatmaps, embedding scatter, training curves, and a
+**3D loss landscape with the gradient-descent trajectory** carved across it.
 
-**v0.7** (after) — the **circuit**: render any `Value`/`Trace` as an interactive
+**v0.7** (next) — the **circuit**: render any `Value`/expression as an interactive
 computation graph (HTML + Graphviz + terminal) with data and gradients lighting
 up the wires — Karpathy's `draw_dot` meets Anthropic's circuits.
 

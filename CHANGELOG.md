@@ -4,6 +4,25 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.6.0] — 2026-07-03
+
+Adds real **graphs** — matplotlib figures rendered headlessly to PNG (via the
+`optimumai[viz]` extra; matplotlib is imported lazily so the base package is
+unaffected).
+
+### Added
+
+- **visualization.plots** — `plot_activation` (activation + derivative),
+  `plot_softmax_temperature`, `plot_heatmap`, `plot_attention` (attention map for
+  your own text), `plot_embeddings` (PCA scatter), `plot_training_curve`.
+- **visualization.landscape** — `plot_loss_landscape`: a 2D contour and/or 3D
+  surface of a preset (bowl/saddle/rosenbrock) or a custom `x,y` expression, with
+  the numeric **gradient-descent trajectory** overlaid; safe AST-checked
+  expression parsing.
+- CLI: `plot <kind> --out fig.png` and `landscape <func> --out land.png`.
+- Every plotting function returns the saved path (with `out=`) or the Figure.
+- 19 new tests (164 total; auto-skipped when matplotlib is absent).
+
 ## [0.5.0] — 2026-07-03
 
 Makes OptimumAI interactive — feed it your own numbers, text, and equations and
@@ -130,6 +149,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.6.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.6.0
 [0.5.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.5.0
 [0.4.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.4.0
 [0.3.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.3.0
