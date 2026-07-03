@@ -47,6 +47,14 @@ v1.0 is the stable release: real token generation (Ollama / Hugging Face /
 Anthropic / a toy fallback), interactive drag-the-inputs circuits, a
 visualize-any-concept registry (PNG + GIF), a notebook launcher, and a docs site.
 
+v1.1 broadens from the deep-learning stack to the whole field: classical machine
+learning (regression, trees, k-means, KNN, naive Bayes, PCA, metrics), classical
+AI search (BFS/DFS/UCS, A*, minimax + alpha-beta), reinforcement learning (MDPs &
+the Bellman equation, Q-learning/SARSA, REINFORCE, PPO), NLP fundamentals (BPE,
+TF-IDF, n-grams, edit distance, word2vec), computer vision (convolution, pooling,
+Sobel edges, a tiny CNN), and LLM evaluation (BLEU/ROUGE, perplexity, calibration,
+and a candid hallucination/faithfulness heuristic) — each an explainable trace.
+
 Public-API stability
 ---------------------
 Everything exported from the top-level ``optimumai`` namespace (the names in
@@ -65,6 +73,22 @@ from optimumai.core.trace import Step, Trace
 from optimumai.curriculum import COURSE, Course, Lesson
 from optimumai.diffusion.schedule import forward_diffusion
 from optimumai.embeddings.lookup import embedding_lookup, nearest_neighbors
+
+# --- v1.1: the classical-AI breadth layer (ML · search · RL · NLP · vision · eval) ---
+# Package-level imports; each subpackage __init__ is the stable contract.
+# Note: nlp.perplexity(model, corpus) is intentionally NOT re-exported here — the
+# generic evaluation.perplexity(logprobs) owns the top-level name; reach the
+# n-gram variant via `optimumai.nlp.perplexity`.
+from optimumai.evaluation import (
+    bleu,
+    ece,
+    exact_match,
+    faithfulness_score,
+    perplexity,
+    rouge_l,
+    rouge_n,
+    token_f1,
+)
 from optimumai.exercises.engine import Workbook
 from optimumai.foundations.kv_cache import kv_cache_size
 from optimumai.foundations.math_foundations import integrate
@@ -78,13 +102,47 @@ from optimumai.interpretability.superposition import superposition
 from optimumai.kernels.exercises import KernelWorkbench
 from optimumai.kernels.sim import GpuSim
 from optimumai.llm.generate import generate
+from optimumai.ml import (
+    KNN,
+    PCA,
+    DecisionTree,
+    GaussianNB,
+    KMeans,
+    LinearRegression,
+    LogisticRegression,
+)
 from optimumai.neural_networks.mlp import MLP
+from optimumai.nlp import (
+    BPETokenizer,
+    NGramModel,
+    SkipGramModel,
+    TfidfVectorizer,
+    edit_distance,
+)
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
 from optimumai.progress import ProgressTracker
 from optimumai.quiz.engine import Quiz
 from optimumai.rag.pipeline import RAGPipeline
 from optimumai.review.scheduler import ReviewScheduler
+from optimumai.rl import (
+    MDP,
+    policy_iteration,
+    ppo_clip,
+    q_learning,
+    reinforce,
+    sarsa,
+    value_iteration,
+)
+from optimumai.search import (
+    alpha_beta,
+    astar,
+    bfs,
+    dfs,
+    greedy_best_first,
+    minimax,
+    uniform_cost_search,
+)
 from optimumai.symbolic.differentiate import differentiate
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.block import TransformerBlock
@@ -92,11 +150,18 @@ from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.vision import (
+    avg_pool2d,
+    cnn_forward,
+    conv2d,
+    max_pool2d,
+    sobel_edges,
+)
 from optimumai.visualization.concepts import render_concept
 from optimumai.visualization.interactive import editable_plot
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 __all__ = [
     "COURSE",
@@ -148,5 +213,50 @@ __all__ = [
     "superposition",
     "sweep",
     "vram_estimate",
+    # v1.1 — classical machine learning
+    "LinearRegression",
+    "LogisticRegression",
+    "KMeans",
+    "KNN",
+    "DecisionTree",
+    "GaussianNB",
+    "PCA",
+    # v1.1 — classical AI search
+    "bfs",
+    "dfs",
+    "uniform_cost_search",
+    "greedy_best_first",
+    "astar",
+    "minimax",
+    "alpha_beta",
+    # v1.1 — reinforcement learning
+    "MDP",
+    "value_iteration",
+    "policy_iteration",
+    "q_learning",
+    "sarsa",
+    "reinforce",
+    "ppo_clip",
+    # v1.1 — NLP
+    "BPETokenizer",
+    "TfidfVectorizer",
+    "NGramModel",
+    "edit_distance",
+    "SkipGramModel",
+    # v1.1 — computer vision
+    "conv2d",
+    "max_pool2d",
+    "avg_pool2d",
+    "sobel_edges",
+    "cnn_forward",
+    # v1.1 — LLM evaluation
+    "bleu",
+    "rouge_n",
+    "rouge_l",
+    "exact_match",
+    "token_f1",
+    "perplexity",
+    "ece",
+    "faithfulness_score",
     "__version__",
 ]

@@ -12,6 +12,7 @@ from __future__ import annotations
 from typing import Any
 
 from rich.console import Console
+from rich.markup import escape
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
@@ -57,10 +58,13 @@ def render_trace(
 
     show_detail = level.at_least(ExplainLevel.INTERMEDIATE)
     for step in trace.steps:
-        computation = step.expression
+        # Escape content so literal brackets in the math (e.g. state "[s0]",
+        # token "[the]", "relu[x]") aren't swallowed as Rich style tags. The
+        # only markup we want interpreted is the dim-italic wrapper we add here.
+        computation = escape(step.expression)
         if show_detail and step.detail:
-            computation += f"\n[dim italic]{step.detail}[/dim italic]"
-        row = [str(step.index), step.title, computation]
+            computation += f"\n[dim italic]{escape(step.detail)}[/dim italic]"
+        row = [str(step.index), escape(step.title), computation]
         if level.at_least(ExplainLevel.ENGINEER):
             row.append(_fmt_step_value(step.value))
         table.add_row(*row)
@@ -78,7 +82,7 @@ def render_trace(
 
     # ---- Why AI uses this -------------------------------------------------
     if trace.why_ai:
-        bullets = "\n".join(f"• {reason}" for reason in trace.why_ai)
+        bullets = "\n".join(f"• {escape(reason)}" for reason in trace.why_ai)
         console.print(
             Panel(bullets, title="Why AI uses this", border_style="magenta")
         )

@@ -30,6 +30,14 @@ from optimumai.circuit.interactive import interactive as interactive_circuit
 from optimumai.circuit.render import to_dot, to_html, to_terminal
 from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
+
+# --- v1.1 groups: classical ML · search · RL · NLP · vision · evaluation ---
+from optimumai.evaluation.calibration import demo as eval_cal_demo
+from optimumai.evaluation.hallucination import demo as eval_faith_demo
+from optimumai.evaluation.perplexity import demo as eval_ppl_demo
+from optimumai.evaluation.perplexity import perplexity_trace
+from optimumai.evaluation.text_metrics import bleu_trace, rouge_n_trace
+from optimumai.evaluation.text_metrics import demo as eval_text_demo
 from optimumai.exercises.engine import Workbook, available_exercises
 from optimumai.foundations.kv_cache import kv_cache_trace
 from optimumai.foundations.vram import vram_trace
@@ -40,15 +48,45 @@ from optimumai.interpretability.superposition import superposition_trace
 from optimumai.kernels.backends import backend_report
 from optimumai.kernels.kernels import list_kernels, run_kernel
 from optimumai.llm.generate import available_providers, generate_trace
+from optimumai.ml.decision_tree import demo as ml_tree_demo
+from optimumai.ml.kmeans import demo as ml_kmeans_demo
+from optimumai.ml.kmeans import kmeans_trace
+from optimumai.ml.knn import demo as ml_knn_demo
+from optimumai.ml.linear_regression import demo as ml_linreg_demo
+from optimumai.ml.linear_regression import linear_regression_trace
+from optimumai.ml.logistic_regression import demo as ml_logreg_demo
+from optimumai.ml.metrics import demo as ml_metrics_demo
+from optimumai.ml.naive_bayes import demo as ml_nb_demo
+from optimumai.ml.pca import demo as ml_pca_demo
 from optimumai.neural_networks.backprop import train_demo
+from optimumai.nlp.bpe import bpe_trace
+from optimumai.nlp.bpe import demo as nlp_bpe_demo
+from optimumai.nlp.edit_distance import demo as nlp_edit_demo
+from optimumai.nlp.edit_distance import edit_distance_trace
+from optimumai.nlp.ngram import demo as nlp_ngram_demo
+from optimumai.nlp.tfidf import demo as nlp_tfidf_demo
+from optimumai.nlp.tfidf import tfidf_trace
+from optimumai.nlp.word2vec import demo as nlp_word2vec_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.progress import ProgressTracker
 from optimumai.quiz.engine import Quiz, available_quizzes
 from optimumai.review.scheduler import ReviewScheduler
+from optimumai.rl.mdp import demo as rl_mdp_demo
+from optimumai.rl.policy_gradient import demo as rl_reinforce_demo
+from optimumai.rl.ppo import demo as rl_ppo_demo
+from optimumai.rl.q_learning import demo as rl_q_demo
+from optimumai.search.adversarial import demo as algo_adversarial_demo
+from optimumai.search.informed import demo as algo_informed_demo
+from optimumai.search.uninformed import demo as algo_uninformed_demo
 from optimumai.symbolic.differentiate import differentiate_trace
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.vision.cnn import demo as vision_cnn_demo
+from optimumai.vision.convolution import conv2d_trace
+from optimumai.vision.convolution import demo as vision_conv_demo
+from optimumai.vision.edges import demo as vision_sobel_demo
+from optimumai.vision.pooling import demo as vision_pool_demo
 from optimumai.visualization.animate import (
     animate_diffusion,
     animate_gradient_descent,
@@ -688,6 +726,303 @@ def playground_cmd(concept: str, out: str | None) -> None:
     except ValueError as exc:
         raise click.BadParameter(str(exc)) from exc
     click.echo(f"saved → {path}  (open it in a browser and drag the sliders)")
+
+
+# ============================ v1.1 command groups ============================
+
+
+# --------------------------------------------------------------------- ml
+@cli.group()
+def ml() -> None:
+    """Classical machine learning — fit a small model and see every step."""
+
+
+@ml.command("linreg")
+@click.argument("x", required=False)
+@click.argument("y", required=False)
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_linreg(x: str | None, y: str | None, level: str) -> None:
+    """OLS linear regression via the normal equation. Omit args for the demo."""
+    if x and y:
+        linear_regression_trace(_parse_literal(x, "X"), _parse_literal(y, "y")).render(level)
+    else:
+        ml_linreg_demo().render(level)
+
+
+@ml.command("kmeans")
+@click.argument("points", required=False)
+@click.option("--k", type=int, default=2, help="Number of clusters.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_kmeans(points: str | None, k: int, level: str) -> None:
+    """k-means (Lloyd's algorithm). Omit POINTS for the demo."""
+    if points:
+        kmeans_trace(_parse_literal(points, "points"), k=k).render(level)
+    else:
+        ml_kmeans_demo().render(level)
+
+
+@ml.command("logreg")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_logreg(level: str) -> None:
+    """Logistic regression: sigmoid + cross-entropy + gradient descent."""
+    ml_logreg_demo().render(level)
+
+
+@ml.command("knn")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_knn(level: str) -> None:
+    """k-nearest-neighbors classification by majority vote."""
+    ml_knn_demo().render(level)
+
+
+@ml.command("tree")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_tree(level: str) -> None:
+    """Decision tree: best split by Gini / entropy information gain."""
+    ml_tree_demo().render(level)
+
+
+@ml.command("nb")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_nb(level: str) -> None:
+    """Gaussian Naive Bayes via Bayes' rule."""
+    ml_nb_demo().render(level)
+
+
+@ml.command("pca")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_pca(level: str) -> None:
+    """PCA via covariance eigendecomposition."""
+    ml_pca_demo().render(level)
+
+
+@ml.command("metrics")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def ml_metrics(level: str) -> None:
+    """Classification & regression metrics (accuracy, F1, MSE, R², ROC-AUC)."""
+    ml_metrics_demo().render(level)
+
+
+# ------------------------------------------------------------------- algo
+@cli.group()
+def algo() -> None:
+    """Classical AI search — BFS/DFS/UCS, A*, minimax (distinct from `search`)."""
+
+
+@algo.command("bfs")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def algo_bfs(level: str) -> None:
+    """Uninformed search (BFS / DFS / UCS) on a demo graph."""
+    algo_uninformed_demo().render(level)
+
+
+@algo.command("astar")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def algo_astar(level: str) -> None:
+    """Informed search — greedy best-first & A* — on a demo grid."""
+    algo_informed_demo().render(level)
+
+
+@algo.command("minimax")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def algo_minimax(level: str) -> None:
+    """Adversarial search — minimax + alpha-beta pruning — on a demo tree."""
+    algo_adversarial_demo().render(level)
+
+
+# --------------------------------------------------------------------- rl
+@cli.group()
+def rl() -> None:
+    """Reinforcement learning — MDPs, Q-learning/SARSA, REINFORCE, PPO."""
+
+
+@rl.command("mdp")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def rl_mdp(level: str) -> None:
+    """Value iteration on a demo MDP (the Bellman equation in action)."""
+    rl_mdp_demo().render(level)
+
+
+@rl.command("q-learning")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def rl_qlearning(level: str) -> None:
+    """Tabular Q-learning / SARSA on a demo gridworld."""
+    rl_q_demo().render(level)
+
+
+@rl.command("reinforce")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def rl_reinforce(level: str) -> None:
+    """Policy-gradient REINFORCE on a demo bandit."""
+    rl_reinforce_demo().render(level)
+
+
+@rl.command("ppo")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def rl_ppo(level: str) -> None:
+    """The PPO clipped surrogate objective on a demo batch."""
+    rl_ppo_demo().render(level)
+
+
+# -------------------------------------------------------------------- nlp
+@cli.group()
+def nlp() -> None:
+    """Classical NLP — BPE, TF-IDF, n-grams, edit distance, word2vec."""
+
+
+@nlp.command("bpe")
+@click.argument("word", required=False)
+@click.option("--merges", type=int, default=8, help="Number of merge rules to learn.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def nlp_bpe(word: str | None, merges: int, level: str) -> None:
+    """Learn BPE merges on a toy corpus, then tokenize WORD. Omit WORD for the demo."""
+    if word:
+        corpus = ["low", "lower", "lowest", "newer", "newest", "wider", "widest"]
+        bpe_trace(corpus, num_merges=merges, encode_word=word).render(level)
+    else:
+        nlp_bpe_demo().render(level)
+
+
+@nlp.command("tfidf")
+@click.argument("docs", nargs=-1)
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def nlp_tfidf(docs: tuple[str, ...], level: str) -> None:
+    """TF-IDF over the given DOCS (quoted strings). Omit for the demo."""
+    if docs:
+        tfidf_trace(list(docs)).render(level)
+    else:
+        nlp_tfidf_demo().render(level)
+
+
+@nlp.command("ngram")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def nlp_ngram(level: str) -> None:
+    """N-gram language model with add-k smoothing + perplexity."""
+    nlp_ngram_demo().render(level)
+
+
+@nlp.command("edit-distance")
+@click.argument("a", required=False)
+@click.argument("b", required=False)
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def nlp_edit_distance(a: str | None, b: str | None, level: str) -> None:
+    """Levenshtein edit distance between A and B. Omit args for the demo."""
+    if a and b:
+        edit_distance_trace(a, b).render(level)
+    else:
+        nlp_edit_demo().render(level)
+
+
+@nlp.command("word2vec")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def nlp_word2vec(level: str) -> None:
+    """Skip-gram word2vec — one SGD step on a tiny corpus."""
+    nlp_word2vec_demo().render(level)
+
+
+# ----------------------------------------------------------------- vision
+@cli.group()
+def vision() -> None:
+    """Computer vision — convolution, pooling, Sobel edges, a tiny CNN."""
+
+
+@vision.command("conv")
+@click.argument("image", required=False)
+@click.argument("kernel", required=False)
+@click.option("--stride", type=int, default=1)
+@click.option("--padding", type=int, default=0)
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def vision_conv(
+    image: str | None, kernel: str | None, stride: int, padding: int, level: str
+) -> None:
+    """2D convolution of IMAGE with KERNEL (nested lists). Omit args for the demo."""
+    if image and kernel:
+        conv2d_trace(
+            _parse_literal(image, "image"),
+            _parse_literal(kernel, "kernel"),
+            stride=stride,
+            padding=padding,
+        ).render(level)
+    else:
+        vision_conv_demo().render(level)
+
+
+@vision.command("pool")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def vision_pool(level: str) -> None:
+    """Max & average pooling on a demo feature map."""
+    vision_pool_demo().render(level)
+
+
+@vision.command("sobel")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def vision_sobel(level: str) -> None:
+    """Sobel edge detection on a demo image."""
+    vision_sobel_demo().render(level)
+
+
+@vision.command("cnn")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def vision_cnn(level: str) -> None:
+    """A tiny CNN forward pass — watch the tensor shapes flow."""
+    vision_cnn_demo().render(level)
+
+
+# ------------------------------------------------------------------- eval
+@cli.group("eval")
+def eval_group() -> None:
+    """LLM evaluation — BLEU/ROUGE, perplexity, calibration, faithfulness."""
+
+
+@eval_group.command("bleu")
+@click.argument("candidate", required=False)
+@click.argument("reference", required=False)
+@click.option("--max-n", type=int, default=4, help="Max n-gram order.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def eval_bleu(candidate: str | None, reference: str | None, max_n: int, level: str) -> None:
+    """BLEU of CANDIDATE against REFERENCE. Omit args for the demo."""
+    if candidate and reference:
+        bleu_trace(candidate, reference, max_n=max_n).render(level)
+    else:
+        eval_text_demo().render(level)
+
+
+@eval_group.command("rouge")
+@click.argument("candidate", required=False)
+@click.argument("reference", required=False)
+@click.option("-n", type=int, default=1, help="ROUGE-N order.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def eval_rouge(candidate: str | None, reference: str | None, n: int, level: str) -> None:
+    """ROUGE-N of CANDIDATE against REFERENCE. Omit args for the demo."""
+    if candidate and reference:
+        rouge_n_trace(candidate, reference, n=n).render(level)
+    else:
+        eval_text_demo().render(level)
+
+
+@eval_group.command("perplexity")
+@click.argument("probs", required=False)
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def eval_perplexity(probs: str | None, level: str) -> None:
+    """Perplexity from token probabilities, e.g. "[0.5,0.25,0.8]". Omit for the demo."""
+    if probs:
+        perplexity_trace(_parse_literal(probs, "probs")).render(level)
+    else:
+        eval_ppl_demo().render(level)
+
+
+@eval_group.command("calibration")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def eval_calibration(level: str) -> None:
+    """Expected Calibration Error (ECE) with reliability bins."""
+    eval_cal_demo().render(level)
+
+
+@eval_group.command("faithfulness")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def eval_faithfulness(level: str) -> None:
+    """A grounding/faithfulness heuristic (an educational hallucination proxy)."""
+    eval_faith_demo().render(level)
 
 
 if __name__ == "__main__":  # pragma: no cover
