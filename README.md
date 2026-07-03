@@ -159,6 +159,32 @@ pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
 ```
 
+## Generate, visualize, launch (v1.0)
+
+The stable release. **Generate real tokens** (auto-detects local Ollama — zero keys):
+
+```bash
+optimumai generate "The math behind attention is"   # → real tokens, streamed live
+optimumai providers                                  # ollama | huggingface | anthropic | toy
+```
+
+**Visualize any concept** as a PNG or GIF, and drag-the-inputs **interactive circuits**:
+
+```bash
+optimumai visualize attention --fmt gif --out attn.gif   # any of 14 concepts, png or gif
+optimumai playground softmax                             # drag the logits, watch probs move
+optimumai playground backprop                            # drag a/b/c/f, watch gradients update
+```
+
+**Launch the notebooks** and read the **[docs site](https://muhammadyahiya.github.io/optimumai/)**:
+
+```bash
+optimumai notebooks                  # copies the bundled notebooks locally + opens Jupyter
+```
+
+From v1.0 the top-level `optimumai` API follows semantic versioning — see
+[API stability](https://muhammadyahiya.github.io/optimumai/stability/).
+
 ## Get your hands dirty (v0.10)
 
 The flagship release — build, edit, animate, and grade, not just watch.
@@ -415,7 +441,11 @@ equation↔graph** in the browser, **animated GIF export**, compute-the-answer
 exercises, and runnable Jupyter notebooks. The course now spans **39 lessons
 across 12 tracks**.
 
-**v1.0** (next) — the stable release: polish, docs site, and API guarantees.
+**v1.0** ✅ — the stable release: real token generation (Ollama / Hugging Face /
+Anthropic / toy fallback), a visualize-any-concept registry (PNG + GIF),
+interactive drag-the-inputs circuits, a `notebooks` launcher, a
+[docs site](https://muhammadyahiya.github.io/optimumai/), and **semver API
+guarantees** on the top-level namespace.
 
 ## Development
 

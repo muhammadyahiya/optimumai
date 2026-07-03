@@ -1,0 +1,32 @@
+name: Docs
+
+# Builds the MkDocs Material site and publishes it to the gh-pages branch.
+# One-time: in the repo Settings → Pages, set Source = "Deploy from a branch",
+# branch = gh-pages. Then the docs live at
+# https://muhammadyahiya.github.io/optimumai/
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "src/optimumai/**"
+      - ".github/workflows/docs.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Install docs deps + package
+        run: uv pip install mkdocs-material "mkdocstrings[python]" -e .
+      - name: Build & deploy
+        run: uv run mkdocs gh-deploy --force

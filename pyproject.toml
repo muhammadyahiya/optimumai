@@ -51,6 +51,8 @@ repl = ["prompt_toolkit>=3.0"]
 symbolic = ["sympy>=1.12"]
 tokenize = ["tiktoken>=0.7"]
 gpu = ["numba>=0.59"]
+notebooks = ["jupyterlab>=4.0"]
+docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.24"]
 all = [
     "litellm>=1.0",
     "anthropic>=0.39",
@@ -85,6 +87,7 @@ path = "src/optimumai/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/optimumai"]
+artifacts = ["src/optimumai/_notebooks/*.ipynb"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -105,3 +108,7 @@ ignore = ["N803", "N806"]
 # Kernel modules carry long teaching strings and reference-solution source.
 "src/optimumai/kernels/kernels.py" = ["E501"]
 "src/optimumai/kernels/exercises.py" = ["E501"]
+# Concept registry is a dense table of one-line lambdas.
+"src/optimumai/visualization/concepts.py" = ["E501"]
+# Interactive circuits embed HTML/JS templates.
+"src/optimumai/circuit/interactive.py" = ["E501"]

@@ -42,6 +42,17 @@ guided onboarding, and course search.
 v0.10 is hands-on: GPU kernels from scratch on a pure-Python simulator (write &
 grade your own), an editable equation↔graph in the browser, animated GIF export,
 and compute-the-answer exercises. Get your hands dirty.
+
+v1.0 is the stable release: real token generation (Ollama / Hugging Face /
+Anthropic / a toy fallback), interactive drag-the-inputs circuits, a
+visualize-any-concept registry (PNG + GIF), a notebook launcher, and a docs site.
+
+Public-API stability
+---------------------
+Everything exported from the top-level ``optimumai`` namespace (the names in
+``__all__`` below) is considered **stable** and follows semantic versioning: no
+breaking changes without a major-version bump. Submodule internals and any
+name prefixed with ``_`` may change between minor releases.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -66,6 +77,7 @@ from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition
 from optimumai.kernels.exercises import KernelWorkbench
 from optimumai.kernels.sim import GpuSim
+from optimumai.llm.generate import generate
 from optimumai.neural_networks.mlp import MLP
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
@@ -80,10 +92,11 @@ from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.visualization.concepts import render_concept
 from optimumai.visualization.interactive import editable_plot
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.10.0"
+__version__ = "1.0.0"
 
 __all__ = [
     "COURSE",
@@ -121,8 +134,10 @@ __all__ = [
     "editable_plot",
     "embedding_lookup",
     "forward_diffusion",
+    "generate",
     "gradient",
     "integrate",
+    "render_concept",
     "kv_cache_size",
     "minimize",
     "nearest_neighbors",

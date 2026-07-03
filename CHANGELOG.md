@@ -4,6 +4,36 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.0.0] — 2026-07-03
+
+The **stable release**. From here the top-level `optimumai` API follows semantic
+versioning (see `docs/stability.md`).
+
+### Added
+
+- **llm** — real token generation: `generate` / `generate_trace` auto-detect a
+  local **Ollama** server (zero keys), then **Hugging Face** (`HF_TOKEN`),
+  **Anthropic** (via the tutor), and finally a built-in **toy** bigram so a demo
+  always produces tokens. Stdlib-only HTTP (no new deps). CLI: `generate`,
+  `providers`.
+- **visualization.concepts** — a `render_concept(name, fmt)` registry: **PNG for
+  every concept, GIF where motion helps**, across 14 concepts. CLI: `visualize`.
+- **circuit.interactive** — drag-the-inputs circuits as standalone HTML: live
+  **softmax** (drag logits → probabilities move) and **backprop** (drag a/b/c/f →
+  forward values + gradients recompute). CLI: `playground`.
+- **notebooks** — the three notebooks now ship *inside* the wheel; `optimumai
+  notebooks` copies them locally and launches Jupyter (`optimumai[notebooks]`).
+- **docs site** — MkDocs Material + mkdocstrings, auto-deployed to GitHub Pages.
+- **API stability** — a documented semver guarantee on `optimumai.__all__`.
+- The tutor now auto-detects the Anthropic SDK + `ANTHROPIC_API_KEY` so `ask`
+  answers out of the box. New extras: `[notebooks]`, `[docs]`.
+
+### Notes
+
+- The core install stays light (numpy, rich, click, pydantic-settings); heavy
+  features are optional extras. If `pip` can't find a just-released version, that
+  is PyPI index propagation lag — wait a moment and retry (or `--no-cache-dir`).
+
 ## [0.10.0] — 2026-07-03
 
 The hands-on release — build, edit, animate, and grade, not just watch. Adds a
@@ -230,6 +260,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[1.0.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v1.0.0
 [0.10.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.10.0
 [0.9.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.9.0
 [0.8.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.8.0

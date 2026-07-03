@@ -26,6 +26,7 @@ from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
 from optimumai.analysis.compare import compare_trace, sweep_trace
 from optimumai.circuit.graph import build_from_expression
+from optimumai.circuit.interactive import interactive as interactive_circuit
 from optimumai.circuit.render import to_dot, to_html, to_terminal
 from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
@@ -38,6 +39,7 @@ from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition_trace
 from optimumai.kernels.backends import backend_report
 from optimumai.kernels.kernels import list_kernels, run_kernel
+from optimumai.llm.generate import available_providers, generate_trace
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.progress import ProgressTracker
@@ -52,6 +54,7 @@ from optimumai.visualization.animate import (
     animate_gradient_descent,
     animate_softmax_temperature,
 )
+from optimumai.visualization.concepts import concept_formats, list_concepts, render_concept
 from optimumai.visualization.interactive import editable_plot
 from optimumai.visualization.landscape import plot_loss_landscape
 from optimumai.visualization.plots import (
@@ -601,6 +604,90 @@ def exercise_cmd(lesson: str | None) -> None:
             click.echo(click.style(f"  ✗ expected {result.expected}", fg="red"))
         click.echo(click.style(f"    {ex.explanation}", dim=True))
     click.echo(f"\nScore: {correct}/{len(workbook.exercises)}")
+
+
+# ------------------------------------------------------------- notebooks + LLM
+@cli.command("notebooks")
+@click.option("--dir", "dest", default="optimumai-notebooks", help="Where to copy the notebooks.")
+@click.option("--launch/--no-launch", default=True, help="Launch Jupyter after copying.")
+def notebooks_cmd(dest: str, launch: bool) -> None:
+    """Copy the bundled notebooks locally and (optionally) launch Jupyter."""
+    import importlib.resources as resources
+    import importlib.util as util
+
+    dest_path = Path(dest)
+    dest_path.mkdir(parents=True, exist_ok=True)
+    src = resources.files("optimumai") / "_notebooks"
+    copied = []
+    for nb in src.iterdir():
+        if nb.name.endswith(".ipynb"):
+            (dest_path / nb.name).write_bytes(nb.read_bytes())
+            copied.append(nb.name)
+    click.echo(f"Copied {len(copied)} notebooks → {dest_path}/")
+    if not launch:
+        return
+    lab = util.find_spec("jupyterlab") is not None
+    if lab or util.find_spec("notebook") is not None:
+        subprocess.run(
+            [sys.executable, "-m", "jupyter", "lab" if lab else "notebook", str(dest_path)],
+            check=False,
+        )
+    else:
+        click.echo('Jupyter isn\'t installed. Install it:  pip install "optimumai[notebooks]"')
+        click.echo(f"Then run:  jupyter lab {dest_path}")
+
+
+@cli.command("generate")
+@click.argument("prompt")
+@click.option("--provider", default="auto", help="ollama | huggingface | anthropic | toy | auto.")
+@click.option("--model", default=None, help="Model name (provider-specific).")
+@click.option("--max-tokens", type=int, default=64, help="Max tokens to generate.")
+@click.option("--temperature", "-t", type=float, default=0.7, help="Sampling temperature.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def generate_cmd(
+    prompt: str, provider: str, model: str | None, max_tokens: int, temperature: float, level: str
+) -> None:
+    """Generate tokens from a prompt via a local/remote model (auto-detects Ollama)."""
+    generate_trace(
+        prompt, provider=provider, model=model, max_tokens=max_tokens, temperature=temperature
+    ).render(level)
+
+
+@cli.command("providers")
+def providers_cmd() -> None:
+    """List the generation providers available on this machine."""
+    click.echo("Generation providers: " + ", ".join(available_providers()))
+
+
+# --------------------------------------------------------- visualize / playground
+@cli.command("visualize")
+@click.argument("concept", required=False)
+@click.option("--fmt", type=click.Choice(["png", "gif"]), default="png", help="Output format.")
+@click.option("--out", default=None, help="Output path.")
+def visualize_cmd(concept: str | None, fmt: str, out: str | None) -> None:
+    """Render any concept to a PNG or GIF (needs [viz]). Omit CONCEPT to list them."""
+    if concept is None:
+        for name in list_concepts():
+            click.echo(f"  {name:<18} {', '.join(concept_formats(name))}")
+        return
+    try:
+        path = render_concept(concept.lower(), fmt=fmt, out=out)
+    except (ValueError, ImportError) as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(f"saved → {path}")
+
+
+@cli.command("playground")
+@click.argument("concept", default="softmax")
+@click.option("--out", default=None, help="Output HTML path.")
+def playground_cmd(concept: str, out: str | None) -> None:
+    """Interactive circuit — drag inputs, watch the math update (softmax | backprop)."""
+    target = out or f"interactive_{concept.lower()}.html"
+    try:
+        path = interactive_circuit(concept.lower(), out=target)
+    except ValueError as exc:
+        raise click.BadParameter(str(exc)) from exc
+    click.echo(f"saved → {path}  (open it in a browser and drag the sliders)")
 
 
 if __name__ == "__main__":  # pragma: no cover
