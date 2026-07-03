@@ -1,0 +1,76 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "optimumai"
+dynamic = ["version"]
+description = "Unlock the math behind AI — run any operation with explain=True for a step-by-step trace, terminal visualization, and the intuition of why AI uses it."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Muhammad Yahiya" }]
+keywords = [
+    "ai",
+    "machine-learning",
+    "deep-learning",
+    "education",
+    "mathematics",
+    "transformers",
+    "attention",
+    "explainable",
+    "tutorial",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Education",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Education",
+]
+dependencies = [
+    "numpy>=1.26",
+    "rich>=13.0",
+    "click>=8.1",
+    "pydantic-settings>=2.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+llm = ["litellm>=1.0"]
+viz = ["plotext>=5.2", "matplotlib>=3.8"]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5"]
+
+[project.scripts]
+optimumai = "optimumai.cli.main:cli"
+
+[project.urls]
+Homepage = "https://github.com/muhammadyahiya/optimumai"
+Repository = "https://github.com/muhammadyahiya/optimumai"
+Issues = "https://github.com/muhammadyahiya/optimumai/issues"
+
+[tool.hatch.version]
+path = "src/optimumai/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/optimumai"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B"]
+# Uppercase names (Q, K, V, A, B, W, ...) are standard mathematical notation here.
+ignore = ["N803", "N806"]
