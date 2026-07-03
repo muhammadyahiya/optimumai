@@ -8,6 +8,8 @@ Examples:
     optimumai ask "why softmax?"         # the (optional) LLM tutor
     optimumai algebra dot "[1,2,3]" "[4,5,6]"
     optimumai train --steps 150
+    optimumai kvcache --seq-len 8192      # KV cache VRAM for a config
+    optimumai vram --params 70            # VRAM to train a 70B model
 """
 
 from __future__ import annotations
@@ -24,6 +26,8 @@ from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
 from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
+from optimumai.foundations.kv_cache import kv_cache_trace
+from optimumai.foundations.vram import vram_trace
 from optimumai.interpretability.superposition import superposition_trace
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.probability.softmax import softmax_trace
@@ -239,6 +243,33 @@ def jepa_cmd(use_demo: bool, seed: int, level: str) -> None:
 def superposition_cmd(features: int, neurons: int, level: str) -> None:
     """Toy model of superposition — why neurons are polysemantic (Anthropic)."""
     superposition_trace(features, neurons).render(level)
+
+
+# --------------------------------------------------------- systems / foundations
+@cli.command("kvcache")
+@click.option("--layers", type=int, default=32, help="Number of transformer layers.")
+@click.option("--heads", type=int, default=32, help="Number of attention heads.")
+@click.option("--head-dim", type=int, default=128, help="Dimension per head.")
+@click.option("--seq-len", type=int, default=4096, help="Context length in tokens.")
+@click.option("--batch", type=int, default=1, help="Batch size.")
+@click.option("--kv-heads", type=int, default=None, help="Fewer than heads = GQA; 1 = MQA.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def kvcache_cmd(
+    layers: int, heads: int, head_dim: int, seq_len: int, batch: int,
+    kv_heads: int | None, level: str,
+) -> None:
+    """KV cache memory for a transformer config (why context length eats VRAM)."""
+    kv_cache_trace(layers, heads, head_dim, seq_len, batch, kv_heads=kv_heads).render(level)
+
+
+@cli.command("vram")
+@click.option("--params", "params_billions", type=float, default=7.0, help="Model size (billions).")
+@click.option("--precision", type=int, default=2, help="Bytes per parameter (2=fp16, 4=fp32).")
+@click.option("--inference", is_flag=True, help="Estimate inference instead of training.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def vram_cmd(params_billions: float, precision: int, inference: bool, level: str) -> None:
+    """Estimate GPU VRAM for training or inference of an LLM."""
+    vram_trace(params_billions, precision_bytes=precision, training=not inference).render(level)
 
 
 if __name__ == "__main__":  # pragma: no cover

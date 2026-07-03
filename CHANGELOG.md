@@ -4,6 +4,33 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] — 2026-07-03
+
+Foundations of the stack — the math, frameworks, and hardware modern AI runs on,
+each with the same `explain=True` treatment and folded into the course as three
+new tracks (Math Foundations, Framework Internals, Systems & Hardware). The
+course now spans **28 lessons across 9 tracks**.
+
+### Added
+
+- **foundations.math_foundations** — `tensor_intro_trace` (rank/shape/broadcasting)
+  and `integrate` (trapezoid + Monte Carlo; expectations are integrals).
+- **foundations.pytorch_foundations** — `pytorch_autograd_trace` maps
+  `torch.Tensor`/`requires_grad`/dynamic-graph/`backward` onto OptimumAI's own
+  `Value` engine (the micrograd → PyTorch line).
+- **foundations.jax_foundations** — `grad`, `vmap`, and `pytree` traces:
+  composable transformations of pure functions.
+- **foundations.gpu_foundations** — `thread_hierarchy_trace` (grid → block → warp
+  → thread) and `memory_hierarchy_trace` (registers → shared → global).
+- **foundations.cuda_kernel** — `tiled_matmul_trace`: naive vs tiled matmul,
+  shared-memory reuse, and memory coalescing (verified against NumPy).
+- **foundations.kv_cache** — `kv_cache_size`/`kv_cache_trace`: why context length
+  eats VRAM, with MHA vs GQA vs MQA comparisons.
+- **foundations.vram** — `vram_estimate`/`vram_trace`: weights + gradients +
+  optimizer states + activations + KV cache, training vs inference.
+- CLI: `kvcache` and `vram` calculators, plus 9 new `learn` topics.
+- 15 new tests (128 total).
+
 ## [0.3.0] — 2026-07-03
 
 Turns OptimumAI into a first-principles **AI learning path** you can walk one
@@ -81,6 +108,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.4.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.4.0
 [0.3.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.3.0
 [0.2.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.2.0
 [0.1.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.1.0

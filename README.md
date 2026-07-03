@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (16 and counting)
+optimumai learn                       # list every topic (28 across 9 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -159,6 +159,29 @@ pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
 ```
 
+## Foundations of the stack (v0.4)
+
+Beyond the math, OptimumAI now explains the *systems* modern AI runs on — the
+same `explain=True` treatment for the frameworks and hardware:
+
+```bash
+optimumai learn tensors           # rank, shape, broadcasting
+optimumai learn integration       # trapezoid & Monte Carlo (expectations are integrals)
+optimumai learn pytorch           # what torch.autograd does under the hood
+optimumai learn jax               # grad / jit / vmap / pytrees
+optimumai learn cuda_matmul       # naive vs tiled matmul + memory coalescing
+optimumai kvcache --seq-len 8192  # why context length eats VRAM (MHA vs GQA vs MQA)
+optimumai vram --params 70        # VRAM budget to train a 70B model
+```
+
+```python
+from optimumai import kv_cache_size, vram_estimate, integrate
+
+kv_cache_size(n_layers=32, n_heads=32, head_dim=128, seq_len=4096)  # bytes
+vram_estimate(params_billions=7, training=True)                      # GB
+integrate(lambda x: x**2, 0, 1, method="monte_carlo")                # ≈ 1/3
+```
+
 ## Explain levels
 
 The same math, revealed for four audiences (`--level` on the CLI, `level=` in
@@ -192,6 +215,7 @@ optimumai/
 ├── progress/        # ProgressTracker — how far you've come              ✨v0.3
 ├── tutor/           # optional LLM tutor (optimumai[llm])                ✨v0.3
 ├── dashboard/       # Streamlit progress dashboard (optimumai[dashboard])✨v0.3
+├── foundations/     # tensors, integration, PyTorch/JAX, GPU/CUDA, KV, VRAM ✨v0.4
 ├── visualization/   # Rich terminal renderer
 └── cli/             # the `optimumai` command
 ```
@@ -210,10 +234,14 @@ Anthropic-style superposition. See [PHILOSOPHY.md](PHILOSOPHY.md).
 Streamlit dashboard, embeddings, a RAG pipeline trace, diffusion schedules, and
 an optional LLM tutor (`optimumai[llm]`).
 
-**v0.4** (next) — foundations of the stack: tensors & numerical integration,
-PyTorch & JAX internals (autograd, `grad`/`jit`/`vmap`), and GPU/systems math —
-the CUDA execution & memory model, tiled matmul kernels, the KV cache, and a
-VRAM budget calculator — all as a new "Systems & Foundations" course track.
+**v0.4** ✅ — foundations of the stack: tensors & numerical integration, PyTorch
+& JAX internals (autograd, `grad`/`jit`/`vmap`, pytrees), and the systems layer —
+the CUDA execution & memory model, tiled matmul kernels + coalescing, the KV
+cache (MHA/GQA/MQA), and a VRAM budget calculator. The course now spans **28
+lessons across 9 tracks**.
+
+**v0.5** (next) — deeper systems (FlashAttention, quantization, LoRA/PEFT),
+reinforcement learning & RLHF, and an interactive REPL.
 
 ## Development
 

@@ -14,6 +14,10 @@ transformer blocks, LeCun's JEPA world model, and Anthropic-style superposition.
 
 v0.3 turns it into a learning path: a structured Course, progress tracking, a
 Streamlit dashboard, plus embeddings, RAG, diffusion, and an optional LLM tutor.
+
+v0.4 adds the foundations of the stack: tensors & integration, the PyTorch and
+JAX programming models, and the systems layer — the CUDA execution & memory
+model, tiled matmul kernels, the KV cache, and a VRAM budget calculator.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -25,6 +29,9 @@ from optimumai.core.trace import Step, Trace
 from optimumai.curriculum import COURSE, Course, Lesson
 from optimumai.diffusion.schedule import forward_diffusion
 from optimumai.embeddings.lookup import embedding_lookup, nearest_neighbors
+from optimumai.foundations.kv_cache import kv_cache_size
+from optimumai.foundations.math_foundations import integrate
+from optimumai.foundations.vram import vram_estimate
 from optimumai.interpretability.superposition import superposition
 from optimumai.neural_networks.mlp import MLP
 from optimumai.optimization.optimizers import SGD, Adam, minimize
@@ -38,7 +45,7 @@ from optimumai.transformers.positional import positional_encoding
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 __all__ = [
     "COURSE",
@@ -64,11 +71,14 @@ __all__ = [
     "embedding_lookup",
     "forward_diffusion",
     "gradient",
+    "integrate",
+    "kv_cache_size",
     "minimize",
     "nearest_neighbors",
     "positional_encoding",
     "softmax",
     "softmax_trace",
     "superposition",
+    "vram_estimate",
     "__version__",
 ]

@@ -23,6 +23,13 @@ from optimumai.calculus.derivative import chain_rule_trace, derivative_trace, gr
 from optimumai.core.trace import Trace
 from optimumai.diffusion.schedule import demo as diffusion_demo
 from optimumai.embeddings.lookup import demo as embeddings_demo
+from optimumai.foundations.cuda_kernel import tiled_matmul_trace
+from optimumai.foundations.gpu_foundations import memory_hierarchy_trace, thread_hierarchy_trace
+from optimumai.foundations.jax_foundations import demo as jax_demo
+from optimumai.foundations.kv_cache import demo as kv_cache_demo
+from optimumai.foundations.math_foundations import integrate_demo, tensor_intro_trace
+from optimumai.foundations.pytorch_foundations import demo as pytorch_demo
+from optimumai.foundations.vram import demo as vram_demo
 from optimumai.interpretability.superposition import superposition_trace
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.optimization.optimizers import descent_demo
@@ -132,6 +139,36 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("superposition", "Superposition", "6 · World Models & Interpretability",
            "Anthropic: why single neurons are polysemantic.",
            lambda: superposition_trace(5, 2), ("matmul",)),
+    # --- Math Foundations ----------------------------------------------------
+    Lesson("tensors", "Tensors", "7 · Math Foundations",
+           "Scalars → vectors → matrices → n-D arrays, shapes, broadcasting.",
+           tensor_intro_trace),
+    Lesson("integration", "Numerical integration", "7 · Math Foundations",
+           "Trapezoid & Monte Carlo — every expectation is an integral.",
+           integrate_demo, ("derivative",)),
+    # --- Framework Internals -------------------------------------------------
+    Lesson("pytorch", "PyTorch autograd", "8 · Framework Internals",
+           "What torch.autograd does under the hood — it's the Value engine.",
+           pytorch_demo, ("backprop",)),
+    Lesson("jax", "JAX transforms", "8 · Framework Internals",
+           "grad / jit / vmap / pytrees — transforming pure functions.",
+           jax_demo, ("backprop",)),
+    # --- Systems & Hardware --------------------------------------------------
+    Lesson("gpu_threads", "GPU thread hierarchy", "9 · Systems & Hardware",
+           "Grid → block → warp → thread; the SIMT execution model.",
+           thread_hierarchy_trace),
+    Lesson("memory_hierarchy", "GPU memory hierarchy", "9 · Systems & Hardware",
+           "Registers → shared → global; why kernels are memory-bound.",
+           memory_hierarchy_trace),
+    Lesson("cuda_matmul", "Tiled matmul kernel", "9 · Systems & Hardware",
+           "Naive vs tiled + coalescing — the canonical GPU optimization.",
+           tiled_matmul_trace, ("matmul",)),
+    Lesson("kv_cache", "The KV cache", "9 · Systems & Hardware",
+           "Why context length eats VRAM; MHA vs GQA vs MQA.",
+           kv_cache_demo, ("attention",)),
+    Lesson("vram", "VRAM budget", "9 · Systems & Hardware",
+           "Weights + gradients + optimizer states + activations + KV cache.",
+           vram_demo, ("train",)),
 )
 
 
