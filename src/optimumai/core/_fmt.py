@@ -21,8 +21,17 @@ def num(x: Any, precision: int = 4) -> str:
 
 
 def arr(x: Any, precision: int = 4) -> str:
-    """Format a scalar, vector, or matrix as a compact string."""
-    a = np.asarray(x, dtype=float)
+    """Format a scalar, vector, or matrix as a compact string.
+
+    Non-numeric values (strings, dicts, lists of tuples, ...) that cannot be
+    coerced to a float array fall back to ``str(x)`` so any trace renders safely.
+    """
+    if isinstance(x, str):
+        return x
+    try:
+        a = np.asarray(x, dtype=float)
+    except (ValueError, TypeError):
+        return str(x)
     if a.ndim == 0:
         return num(float(a), precision)
     return np.array2string(
@@ -36,5 +45,10 @@ def arr(x: Any, precision: int = 4) -> str:
 
 def shape_of(x: Any) -> str:
     """Return a short shape label like ``(2, 3)`` or ``scalar``."""
-    a = np.asarray(x)
+    if isinstance(x, str):
+        return "text"
+    try:
+        a = np.asarray(x, dtype=float)
+    except (ValueError, TypeError):
+        return type(x).__name__
     return "scalar" if a.ndim == 0 else str(tuple(a.shape))

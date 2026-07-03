@@ -11,6 +11,9 @@ visualization, and the context for *why* AI uses it.
 v0.2 adds the fundamentals behind modern AI: a micrograd-style autograd engine,
 calculus, optimizers, neural networks with real backprop, multi-head attention,
 transformer blocks, LeCun's JEPA world model, and Anthropic-style superposition.
+
+v0.3 turns it into a learning path: a structured Course, progress tracking, a
+Streamlit dashboard, plus embeddings, RAG, diffusion, and an optional LLM tutor.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -19,35 +22,50 @@ from optimumai.autograd.value import Value
 from optimumai.calculus.derivative import derivative, gradient
 from optimumai.core.explain import ExplainLevel
 from optimumai.core.trace import Step, Trace
+from optimumai.curriculum import COURSE, Course, Lesson
+from optimumai.diffusion.schedule import forward_diffusion
+from optimumai.embeddings.lookup import embedding_lookup, nearest_neighbors
 from optimumai.interpretability.superposition import superposition
 from optimumai.neural_networks.mlp import MLP
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
+from optimumai.progress import ProgressTracker
+from optimumai.rag.pipeline import RAGPipeline
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.block import TransformerBlock
 from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding
+from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
+    "COURSE",
     "MLP",
     "SGD",
     "Adam",
     "Attention",
+    "Course",
     "ExplainLevel",
     "JEPA",
+    "Lesson",
     "Matrix",
     "MultiHeadAttention",
+    "ProgressTracker",
+    "RAGPipeline",
     "Step",
     "Trace",
     "TransformerBlock",
+    "Tutor",
     "Value",
     "Vector",
     "derivative",
+    "embedding_lookup",
+    "forward_diffusion",
     "gradient",
     "minimize",
+    "nearest_neighbors",
     "positional_encoding",
     "softmax",
     "softmax_trace",

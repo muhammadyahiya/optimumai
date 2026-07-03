@@ -4,6 +4,33 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] — 2026-07-03
+
+Turns OptimumAI into a first-principles **AI learning path** you can walk one
+step at a time, with progress tracked across sessions — plus the applied-AI
+modules from the roadmap.
+
+### Added
+
+- **curriculum** — a `Course` of ordered `Lesson`s grouped into tracks (linear
+  algebra → calculus & autograd → optimization & neural nets → transformers →
+  applied AI → world models & interpretability), each a runnable, explained
+  `Trace`. Lessons declare prerequisites that always precede them.
+- **progress** — `ProgressTracker` persists completed lessons to
+  `~/.optimumai/progress.json` (override with `OPTIMUMAI_PROGRESS_PATH`), shared
+  by the CLI and dashboard.
+- **dashboard** — a Streamlit app (`optimumai dashboard`, `optimumai[dashboard]`)
+  to browse the course, run any lesson, and track progress visually.
+- **embeddings** — token → dense-vector lookup and nearest-neighbour search.
+- **rag** — a full retrieval-augmented-generation pipeline trace: embed → cosine
+  search → top-k → prompt assembly.
+- **diffusion** — the DDPM forward noising schedule and the reverse denoising idea.
+- **tutor** — an optional LLM tutor (`optimumai[llm]`) that degrades gracefully
+  to a helpful offline message when litellm/an API key is absent.
+- CLI: `course`, `learn <topic>` (auto-tracks completion), `progress`,
+  `dashboard`, `ask`. `learn` is now backed by the curriculum.
+- New extras: `[dashboard]`, `[all]`. 32 new tests (113 total).
+
 ## [0.2.0] — 2026-07-03
 
 The fundamentals behind modern AI, each runnable with `explain=True`. Grounded in
@@ -54,5 +81,6 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.3.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.3.0
 [0.2.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.2.0
 [0.1.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.1.0

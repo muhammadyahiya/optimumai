@@ -123,6 +123,42 @@ optimumai learn                       # list every topic (16 and counting)
 optimumai learn transformer --level researcher
 ```
 
+## Learn it as a course (v0.3)
+
+OptimumAI isn't just a library — it's a **first-principles AI learning path** you
+can walk one step at a time, with your progress tracked across sessions.
+
+```bash
+optimumai course              # the full path, grouped by track, with ✓/○ progress
+optimumai learn dot           # run a lesson — it's marked complete automatically
+optimumai progress            # a progress bar + what to learn next
+optimumai dashboard           # a Streamlit dashboard to browse + track visually
+optimumai ask "why LayerNorm after attention?"   # optional LLM tutor
+```
+
+The lessons build on each other — linear algebra → calculus & autograd →
+optimization & neural nets → transformers → applied AI (embeddings, RAG,
+diffusion) → world models & interpretability — each one a runnable, explained
+`Trace`. From Python:
+
+```python
+from optimumai import COURSE, ProgressTracker
+
+for lesson in COURSE:
+    print(lesson.track, lesson.id, "—", lesson.summary)
+
+COURSE.get("rag").run("engineer")        # retrieval-augmented generation, traced
+ProgressTracker().mark_complete("rag")   # track your progress
+```
+
+Install the extras you want:
+
+```bash
+pip install "optimumai[dashboard]"   # Streamlit progress dashboard
+pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
+pip install "optimumai[all]"         # everything
+```
+
 ## Explain levels
 
 The same math, revealed for four audiences (`--level` on the CLI, `level=` in
@@ -149,6 +185,13 @@ optimumai/
 ├── transformers/    # Attention, MultiHeadAttention (causal), PE, Block ✨v0.2
 ├── world_models/    # JEPA — LeCun's predict-in-latent-space energy     ✨v0.2
 ├── interpretability/# superposition — Anthropic's polysemantic neurons  ✨v0.2
+├── embeddings/      # token → dense vector lookup, nearest neighbours    ✨v0.3
+├── rag/             # retrieval-augmented generation pipeline trace      ✨v0.3
+├── diffusion/       # forward noising schedule + reverse denoising       ✨v0.3
+├── curriculum/      # the Course: a first-principles AI learning path    ✨v0.3
+├── progress/        # ProgressTracker — how far you've come              ✨v0.3
+├── tutor/           # optional LLM tutor (optimumai[llm])                ✨v0.3
+├── dashboard/       # Streamlit progress dashboard (optimumai[dashboard])✨v0.3
 ├── visualization/   # Rich terminal renderer
 └── cli/             # the `optimumai` command
 ```
@@ -163,11 +206,14 @@ SGD/Adam, neural networks with real backprop, multi-head attention + causal mask
 + positional encoding + a full transformer block, LeCun's JEPA world model, and
 Anthropic-style superposition. See [PHILOSOPHY.md](PHILOSOPHY.md).
 
-**v0.3** (next):
+**v0.3** ✅ — the learning path: a structured `Course` with progress tracking, a
+Streamlit dashboard, embeddings, a RAG pipeline trace, diffusion schedules, and
+an optional LLM tutor (`optimumai[llm]`).
 
-- **Embeddings, RAG pipeline traces, diffusion schedules**
-- **LLM tutor** — `Tutor().ask("Why is LayerNorm after attention?")` (`optimumai[llm]`)
-- **Streamlit explorer** for visual, interactive pipelines
+**v0.4** (next) — foundations of the stack: tensors & numerical integration,
+PyTorch & JAX internals (autograd, `grad`/`jit`/`vmap`), and GPU/systems math —
+the CUDA execution & memory model, tiled matmul kernels, the KV cache, and a
+VRAM budget calculator — all as a new "Systems & Foundations" course track.
 
 ## Development
 
