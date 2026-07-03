@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (28 across 9 tracks)
+optimumai learn                       # list every topic (31 across 10 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -157,6 +157,28 @@ Install the extras you want:
 pip install "optimumai[dashboard]"   # Streamlit progress dashboard
 pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
+```
+
+## Give it your own input (v0.5)
+
+Stop watching demos — feed OptimumAI *your* numbers, text, and equations and
+watch them flow:
+
+```bash
+optimumai repl                              # interactive session (arrow keys w/ [repl] extra)
+optimumai trace-text "why is the sky blue"  # your words → tokens → transformer → next token
+optimumai algebra dot -i                    # prompts you for the vectors
+optimumai compare relu gelu --input "[-2,-1,0,1,2]"
+optimumai sweep softmax --values "[0.25,0.5,1,2]"    # watch temperature sharpen the distribution
+optimumai diff "x**3 + 2*x" --at 3          # symbolic derivative of YOUR equation (→ 29)
+```
+
+```python
+from optimumai import TextPipeline, compare, differentiate
+
+TextPipeline("attention is all you need", layers=2).forward(explain=True)
+compare("relu", "gelu", input=[-2, -1, 0, 1, 2], explain=True)
+differentiate("sin(x) * x**2", at=1.0, explain=True)   # needs optimumai[symbolic]
 ```
 
 ## Foundations of the stack (v0.4)
@@ -216,6 +238,9 @@ optimumai/
 ├── tutor/           # optional LLM tutor (optimumai[llm])                ✨v0.3
 ├── dashboard/       # Streamlit progress dashboard (optimumai[dashboard])✨v0.3
 ├── foundations/     # tensors, integration, PyTorch/JAX, GPU/CUDA, KV, VRAM ✨v0.4
+├── interactive/     # prompts + REPL — give it your own input             ✨v0.5
+├── symbolic/        # differentiate your own equations (SymPy)            ✨v0.5
+├── analysis/        # compare ops & sweep parameters                      ✨v0.5
 ├── visualization/   # Rich terminal renderer
 └── cli/             # the `optimumai` command
 ```
@@ -240,8 +265,17 @@ the CUDA execution & memory model, tiled matmul kernels + coalescing, the KV
 cache (MHA/GQA/MQA), and a VRAM budget calculator. The course now spans **28
 lessons across 9 tracks**.
 
-**v0.5** (next) — deeper systems (FlashAttention, quantization, LoRA/PEFT),
-reinforcement learning & RLHF, and an interactive REPL.
+**v0.5** ✅ — interactive input: a REPL, `trace-text` (your words → transformer),
+`--interactive` prompts, op `compare`, parameter `sweep`, and symbolic `diff` of
+your own equations. The course now spans **31 lessons across 10 tracks**.
+
+**v0.6** (next) — visualization: matplotlib 2D/3D → PNG. Activation curves,
+attention heatmaps, embedding scatter, and a **3D loss landscape with the
+gradient-descent trajectory** carved across it.
+
+**v0.7** (after) — the **circuit**: render any `Value`/`Trace` as an interactive
+computation graph (HTML + Graphviz + terminal) with data and gradients lighting
+up the wires — Karpathy's `draw_dot` meets Anthropic's circuits.
 
 ## Development
 

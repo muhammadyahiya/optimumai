@@ -4,6 +4,28 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.5.0] — 2026-07-03
+
+Makes OptimumAI interactive — feed it your own numbers, text, and equations and
+watch them flow. Adds an "Interactive Playground" course track (now **31 lessons
+across 10 tracks**).
+
+### Added
+
+- **interactive** — `parse_vector`/`parse_matrix` prompt helpers and an
+  `optimumai repl` (prompt_toolkit when installed via `[repl]`, else plain input;
+  session vars auto-applied to commands).
+- **transformers.TextPipeline** — pass your own text and watch it flow: tokenize
+  → embed → +positional → N transformer blocks → next-token distribution.
+  `optimumai trace-text "your sentence"`.
+- **symbolic.differentiate** — symbolically differentiate your own equation via
+  SymPy (`[symbolic]` extra), checked numerically. `optimumai diff "x**3+2*x" --at 3`.
+- **analysis.compare / sweep** — put two activations side by side on your input,
+  or sweep a parameter (e.g. softmax temperature) and watch the output evolve.
+- CLI: `repl`, `trace-text`, `diff`, `compare`, `sweep`, plus `-i/--interactive`
+  on `algebra dot|cosine|matmul` and `softmax` to enter values at a prompt.
+- New extras: `[repl]`, `[symbolic]`, `[tokenize]`. 32 new tests (145 total).
+
 ## [0.4.0] — 2026-07-03
 
 Foundations of the stack — the math, frameworks, and hardware modern AI runs on,
@@ -108,6 +130,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.5.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.5.0
 [0.4.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.4.0
 [0.3.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.3.0
 [0.2.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.2.0

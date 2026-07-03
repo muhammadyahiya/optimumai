@@ -18,6 +18,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 
 from optimumai.algebra import Matrix, Vector
+from optimumai.analysis.compare import demo as compare_demo
+from optimumai.analysis.compare import sweep_trace
 from optimumai.autograd import Value
 from optimumai.calculus.derivative import chain_rule_trace, derivative_trace, gradient_trace
 from optimumai.core.trace import Trace
@@ -39,6 +41,7 @@ from optimumai.transformers.attention import Attention
 from optimumai.transformers.block import TransformerBlock
 from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding_trace
+from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.world_models.jepa import JEPA
 
 
@@ -169,6 +172,16 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("vram", "VRAM budget", "9 · Systems & Hardware",
            "Weights + gradients + optimizer states + activations + KV cache.",
            vram_demo, ("train",)),
+    # --- Interactive Playground ---------------------------------------------
+    Lesson("trace_text", "Text → transformer", "10 · Interactive Playground",
+           "Watch your own words flow to a next-token distribution.",
+           TextPipeline.demo, ("transformer",)),
+    Lesson("compare", "Compare activations", "10 · Interactive Playground",
+           "ReLU vs GELU side by side — how the activation shapes gradients.",
+           compare_demo, ("train",)),
+    Lesson("sweep", "Temperature sweep", "10 · Interactive Playground",
+           "How softmax sharpens (T→0) or flattens (T→∞).",
+           lambda: sweep_trace("softmax", "temperature", [0.25, 0.5, 1.0, 2.0]), ("softmax",)),
 )
 
 

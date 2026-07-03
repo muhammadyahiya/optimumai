@@ -24,15 +24,20 @@ import click
 from optimumai import __version__
 from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
+from optimumai.analysis.compare import compare_trace, sweep_trace
 from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
 from optimumai.foundations.kv_cache import kv_cache_trace
 from optimumai.foundations.vram import vram_trace
+from optimumai.interactive.prompts import prompt_matrix, prompt_vector
+from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition_trace
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.progress import ProgressTracker
+from optimumai.symbolic.differentiate import differentiate_trace
 from optimumai.transformers.attention import Attention
+from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
@@ -147,6 +152,21 @@ def ask_cmd(question: str, level: str) -> None:
     click.echo(Tutor().ask(question))
 
 
+@cli.command("repl")
+def repl_cmd() -> None:
+    """Start an interactive REPL (arrow keys + tab-complete with the [repl] extra)."""
+    run_repl()
+
+
+@cli.command("trace-text")
+@click.argument("text")
+@click.option("--layers", type=int, default=2, help="Number of transformer blocks.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def trace_text_cmd(text: str, layers: int, level: str) -> None:
+    """Watch your own text flow through a toy transformer to a next-token distribution."""
+    TextPipeline(text, layers=layers).trace().render(level)
+
+
 # --------------------------------------------------------------------- algebra
 @cli.group()
 def algebra() -> None:
@@ -154,46 +174,53 @@ def algebra() -> None:
 
 
 @algebra.command("dot")
-@click.argument("a")
-@click.argument("b")
+@click.argument("a", required=False)
+@click.argument("b", required=False)
+@click.option("-i", "--interactive", is_flag=True, help="Enter the vectors interactively.")
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
-def algebra_dot(a: str, b: str, level: str) -> None:
-    """Dot product of two vectors, e.g. optimumai algebra dot "[1,2,3]" "[4,5,6]"."""
-    Vector(_parse_literal(a, "vector A")).dot(
-        Vector(_parse_literal(b, "vector B")), explain=True, level=level
-    )
+def algebra_dot(a: str | None, b: str | None, interactive: bool, level: str) -> None:
+    """Dot product of two vectors. Omit args (or pass -i) to type them at the prompt."""
+    va = prompt_vector("vector A") if interactive or a is None else _parse_literal(a, "vector A")
+    vb = prompt_vector("vector B") if interactive or b is None else _parse_literal(b, "vector B")
+    Vector(va).dot(Vector(vb), explain=True, level=level)
 
 
 @algebra.command("cosine")
-@click.argument("a")
-@click.argument("b")
+@click.argument("a", required=False)
+@click.argument("b", required=False)
+@click.option("-i", "--interactive", is_flag=True, help="Enter the vectors interactively.")
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
-def algebra_cosine(a: str, b: str, level: str) -> None:
-    """Cosine similarity of two vectors."""
-    Vector(_parse_literal(a, "vector A")).cosine_similarity(
-        Vector(_parse_literal(b, "vector B")), explain=True, level=level
-    )
+def algebra_cosine(a: str | None, b: str | None, interactive: bool, level: str) -> None:
+    """Cosine similarity of two vectors (omit args or pass -i to type them)."""
+    va = prompt_vector("vector A") if interactive or a is None else _parse_literal(a, "vector A")
+    vb = prompt_vector("vector B") if interactive or b is None else _parse_literal(b, "vector B")
+    Vector(va).cosine_similarity(Vector(vb), explain=True, level=level)
 
 
 @algebra.command("matmul")
-@click.argument("a")
-@click.argument("b")
+@click.argument("a", required=False)
+@click.argument("b", required=False)
+@click.option("-i", "--interactive", is_flag=True, help="Enter the matrices interactively.")
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
-def algebra_matmul(a: str, b: str, level: str) -> None:
-    """Matrix product, e.g. optimumai algebra matmul "[[1,2],[3,4]]" "[[5,6],[7,8]]"."""
-    Matrix(_parse_literal(a, "matrix A")).matmul(
-        Matrix(_parse_literal(b, "matrix B")), explain=True, level=level
-    )
+def algebra_matmul(a: str | None, b: str | None, interactive: bool, level: str) -> None:
+    """Matrix product (omit args or pass -i to type them at the prompt)."""
+    ma = prompt_matrix("matrix A") if interactive or a is None else _parse_literal(a, "matrix A")
+    mb = prompt_matrix("matrix B") if interactive or b is None else _parse_literal(b, "matrix B")
+    Matrix(ma).matmul(Matrix(mb), explain=True, level=level)
 
 
 # --------------------------------------------------------------------- softmax
 @cli.command("softmax")
-@click.argument("logits")
+@click.argument("logits", required=False)
+@click.option("-i", "--interactive", is_flag=True, help="Enter the logits interactively.")
 @click.option("--temperature", "-t", type=float, default=1.0, help="Sampling temperature (>0).")
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
-def softmax_cmd(logits: str, temperature: float, level: str) -> None:
-    """Softmax of a logit vector, e.g. optimumai softmax "[2,1,0.1]"."""
-    softmax_trace(_parse_literal(logits, "logits"), temperature=temperature).render(level)
+def softmax_cmd(logits: str | None, interactive: bool, temperature: float, level: str) -> None:
+    """Softmax of a logit vector (omit the arg or pass -i to type it)."""
+    values = prompt_vector("logits") if interactive or logits is None else _parse_literal(
+        logits, "logits"
+    )
+    softmax_trace(values, temperature=temperature).render(level)
 
 
 # ------------------------------------------------------------------- attention
@@ -270,6 +297,40 @@ def kvcache_cmd(
 def vram_cmd(params_billions: float, precision: int, inference: bool, level: str) -> None:
     """Estimate GPU VRAM for training or inference of an LLM."""
     vram_trace(params_billions, precision_bytes=precision, training=not inference).render(level)
+
+
+# ----------------------------------------------------------- interactive analysis
+@cli.command("diff")
+@click.argument("expression")
+@click.option("--var", default="x", help="Variable to differentiate with respect to.")
+@click.option("--at", type=float, default=None, help="Evaluate f and f' at this point.")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def diff_cmd(expression: str, var: str, at: float | None, level: str) -> None:
+    """Symbolically differentiate YOUR equation, e.g. optimumai diff "x**3 + 2*x" --at 3."""
+    try:
+        differentiate_trace(expression, var=var, at=at).render(level)
+    except ImportError as exc:
+        raise click.ClickException(str(exc)) from exc
+
+
+@cli.command("compare")
+@click.argument("op_a")
+@click.argument("op_b")
+@click.option("--input", "input_", default="[-2,-1,0,1,2]", help="Input values.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def compare_cmd(op_a: str, op_b: str, input_: str, level: str) -> None:
+    """Compare two activations on your input, e.g. optimumai compare relu gelu."""
+    compare_trace(op_a, op_b, _parse_literal(input_, "input")).render(level)
+
+
+@cli.command("sweep")
+@click.argument("op")
+@click.option("--param", default="temperature", help="Parameter to sweep.")
+@click.option("--values", default="[0.25,0.5,1.0,2.0]", help="Values to sweep over.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def sweep_cmd(op: str, param: str, values: str, level: str) -> None:
+    """Sweep a parameter and watch the output evolve, e.g. optimumai sweep softmax."""
+    sweep_trace(op, param, _parse_literal(values, "values")).render(level)
 
 
 if __name__ == "__main__":  # pragma: no cover

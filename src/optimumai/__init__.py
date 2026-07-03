@@ -18,10 +18,15 @@ Streamlit dashboard, plus embeddings, RAG, diffusion, and an optional LLM tutor.
 v0.4 adds the foundations of the stack: tensors & integration, the PyTorch and
 JAX programming models, and the systems layer — the CUDA execution & memory
 model, tiled matmul kernels, the KV cache, and a VRAM budget calculator.
+
+v0.5 makes it interactive: feed your own input and watch it flow — a REPL, a
+text-to-transformer pipeline, op comparisons, parameter sweeps, and symbolic
+differentiation of your own equations.
 """
 
 from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
+from optimumai.analysis.compare import compare, sweep
 from optimumai.autograd.value import Value
 from optimumai.calculus.derivative import derivative, gradient
 from optimumai.core.explain import ExplainLevel
@@ -32,20 +37,23 @@ from optimumai.embeddings.lookup import embedding_lookup, nearest_neighbors
 from optimumai.foundations.kv_cache import kv_cache_size
 from optimumai.foundations.math_foundations import integrate
 from optimumai.foundations.vram import vram_estimate
+from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition
 from optimumai.neural_networks.mlp import MLP
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
 from optimumai.progress import ProgressTracker
 from optimumai.rag.pipeline import RAGPipeline
+from optimumai.symbolic.differentiate import differentiate
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.block import TransformerBlock
 from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding
+from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 __all__ = [
     "COURSE",
@@ -62,12 +70,15 @@ __all__ = [
     "ProgressTracker",
     "RAGPipeline",
     "Step",
+    "TextPipeline",
     "Trace",
     "TransformerBlock",
     "Tutor",
     "Value",
     "Vector",
+    "compare",
     "derivative",
+    "differentiate",
     "embedding_lookup",
     "forward_diffusion",
     "gradient",
@@ -76,9 +87,11 @@ __all__ = [
     "minimize",
     "nearest_neighbors",
     "positional_encoding",
+    "run_repl",
     "softmax",
     "softmax_trace",
     "superposition",
+    "sweep",
     "vram_estimate",
     "__version__",
 ]
