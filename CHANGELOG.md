@@ -4,6 +4,57 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-07-04
+
+The **breadth release** — OptimumAI grows from the deep-learning/LLM stack out to
+the *whole field* of AI. Six new packages, each concept an explainable `Trace`
+with tests, a CLI command, and a course lesson. The course grows from 39 lessons
+/ 12 tracks to **67 lessons / 18 tracks**; the suite from 234 to **455 tests**.
+
+### Added
+
+- **ml** — classical machine learning from scratch (numpy only): `LinearRegression`
+  (OLS via the normal equation), `LogisticRegression` (sigmoid + cross-entropy +
+  gradient descent), `KMeans` (Lloyd's), `KNN`, `DecisionTree` (Gini/entropy
+  information gain), `GaussianNB`, `PCA` (covariance eigendecomposition), and a
+  `metrics` module (accuracy, precision/recall/F1, confusion matrix, MSE, R²,
+  ROC-AUC). CLI: `optimumai ml {linreg,logreg,kmeans,knn,tree,nb,pca,metrics}`.
+- **search** — classical AI search: `bfs`, `dfs`, `uniform_cost_search` (Dijkstra),
+  `greedy_best_first`, `astar` (with admissibility notes), `minimax` and
+  `alpha_beta` (pruning), over reusable `Graph` / `GridWorld` problems. Each trace
+  shows the frontier, expansion order, path, cost, and nodes expanded/pruned.
+  CLI: `optimumai algo {bfs,astar,minimax}` (a new group — `search` stays the
+  course full-text search).
+- **rl** — reinforcement learning: `MDP` + `value_iteration` / `policy_iteration`
+  (Bellman backups), tabular `q_learning` / `sarsa` on a gridworld, `reinforce`
+  (policy gradient), and `ppo_clip` (the clipped surrogate objective behind
+  RLHF, contrasted with the existing DPO). CLI: `optimumai rl
+  {mdp,q-learning,reinforce,ppo}`.
+- **nlp** — statistical NLP fundamentals: `BPETokenizer`, `TfidfVectorizer`,
+  `NGramModel` (+ perplexity, add-k smoothing), `edit_distance` (Levenshtein DP
+  with backtrace), and skip-gram `word2vec`. CLI: `optimumai nlp
+  {bpe,tfidf,ngram,edit-distance,word2vec}`.
+- **vision** — computer-vision primitives: `conv2d` (stride/padding, with the
+  output-size formula), `max_pool2d` / `avg_pool2d`, `sobel_edges`, and a tiny
+  `cnn_forward` (conv → relu → pool → dense → softmax, narrating the tensor
+  shapes). CLI: `optimumai vision {conv,pool,sobel,cnn}`.
+- **evaluation** — LLM evaluation metrics: `bleu`, `rouge_n` / `rouge_l`,
+  `exact_match`, `token_f1`, `perplexity`, `ece` (calibration), and a candid
+  `faithfulness_score` hallucination *heuristic* (documented as an educational
+  proxy, not solved detection). CLI: `optimumai eval
+  {bleu,rouge,perplexity,calibration,faithfulness}`.
+- **notebook** — `04_classical_ai.ipynb`: a runnable tour of all six new
+  packages, bundled in the wheel and launchable via `optimumai notebooks`.
+
+### Fixed
+
+- **core._fmt.num** — non-finite floats (`±inf`, `nan`) now render as `∞ / -∞ /
+  nan` instead of raising (they occur legitimately in A\*/α-β windows and
+  perplexity).
+- **visualization.terminal** — step/`why_ai` text is now Rich-escaped, so literal
+  brackets in the math (a state `[s0]`, a token `[the]`, `relu[x]`) are no longer
+  swallowed as style tags.
+
 ## [1.0.0] — 2026-07-03
 
 The **stable release**. From here the top-level `optimumai` API follows semantic

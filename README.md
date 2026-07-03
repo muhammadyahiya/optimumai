@@ -119,9 +119,43 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (39 across 12 tracks)
+optimumai learn                       # list every topic (67 across 18 tracks)
 optimumai learn transformer --level researcher
 ```
+
+## The whole field — classical AI, ML & RL (v1.1)
+
+v1.1 broadens OptimumAI from the deep-learning/LLM stack to the rest of the field:
+six new packages, each concept an explainable trace with tests, a CLI command, and
+a course lesson — all pure NumPy, no GPU or API key required.
+
+```bash
+optimumai ml linreg "[[1],[2],[3],[4]]" "[2,4,6,8]"   # OLS via the normal equation
+optimumai ml kmeans "[[0,0],[0,1],[9,9],[9,8]]" --k 2 # Lloyd's algorithm
+optimumai algo astar                                  # A* with g, h, f per node
+optimumai algo minimax                                # minimax + alpha-beta pruning
+optimumai rl mdp                                      # value iteration (Bellman)
+optimumai rl ppo                                      # the PPO clipped objective
+optimumai nlp bpe lowest                              # byte-pair encoding merges
+optimumai nlp edit-distance kitten sitting            # Levenshtein DP + backtrace
+optimumai vision cnn --level engineer                 # a tiny CNN, shapes flowing
+optimumai eval bleu "a quick brown fox" "the quick brown fox"
+optimumai eval faithfulness                           # a candid hallucination proxy
+```
+
+```python
+from optimumai.ml import LinearRegression, KMeans, PCA, DecisionTree, GaussianNB
+from optimumai.search import bfs, astar, alpha_beta
+from optimumai.rl import value_iteration, q_learning, ppo_clip
+from optimumai.nlp import BPETokenizer, edit_distance
+from optimumai.vision import conv2d, sobel_edges, cnn_forward
+from optimumai.evaluation import bleu, rouge_n, perplexity, ece, faithfulness_score
+```
+
+New course tracks: **13 Classical ML · 14 Classical AI Search · 15 Reinforcement
+Learning · 16 NLP · 17 Computer Vision · 18 LLM Evaluation** — the path now spans
+**67 lessons across 18 tracks**. There's a runnable tour in `04_classical_ai.ipynb`
+(get it with `optimumai notebooks`).
 
 ## Learn it as a course (v0.3)
 
@@ -390,6 +424,12 @@ optimumai/
 ├── review/          # spaced-repetition scheduler (SM-2)                   ✨v0.9
 ├── kernels/         # GPU kernels from scratch — simulator + real backends ✨v0.10
 ├── exercises/       # compute-the-answer exercises                         ✨v0.10
+├── ml/              # linear/logistic reg, k-means, KNN, tree, NB, PCA      ✨v1.1
+├── search/          # BFS/DFS/UCS, A*, greedy, minimax + alpha-beta         ✨v1.1
+├── rl/              # MDP/Bellman, Q-learning/SARSA, REINFORCE, PPO         ✨v1.1
+├── nlp/             # BPE, TF-IDF, n-grams, edit distance, word2vec         ✨v1.1
+├── vision/          # convolution, pooling, Sobel edges, a tiny CNN         ✨v1.1
+├── evaluation/      # BLEU/ROUGE, perplexity, calibration, faithfulness     ✨v1.1
 ├── cli/             # the `optimumai` command
 └── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
@@ -446,6 +486,15 @@ Anthropic / toy fallback), a visualize-any-concept registry (PNG + GIF),
 interactive drag-the-inputs circuits, a `notebooks` launcher, a
 [docs site](https://muhammadyahiya.github.io/optimumai/), and **semver API
 guarantees** on the top-level namespace.
+
+**v1.1** ✅ — the **breadth release**: classical **ML** (regression, trees,
+k-means, KNN, naive Bayes, PCA, metrics), classical **AI search** (BFS/DFS/UCS,
+A\*, minimax + alpha-beta), **reinforcement learning** (MDPs & Bellman,
+Q-learning/SARSA, REINFORCE, PPO), **NLP** (BPE, TF-IDF, n-grams, edit distance,
+word2vec), **computer vision** (convolution, pooling, Sobel, a tiny CNN), and
+**LLM evaluation** (BLEU/ROUGE, perplexity, calibration, a candid hallucination
+heuristic). The course now spans **67 lessons across 18 tracks**; the test suite,
+**455 tests**.
 
 ## Development
 

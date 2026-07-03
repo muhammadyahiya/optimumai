@@ -71,7 +71,8 @@ def test_interactive_dispatch_and_unknown():
 def test_notebooks_are_bundled():
     nb_dir = resources.files("optimumai") / "_notebooks"
     names = [p.name for p in nb_dir.iterdir() if p.name.endswith(".ipynb")]
-    assert len(names) == 3
+    assert len(names) == 4
+    assert "04_classical_ai.ipynb" in names
 
 
 # --- CLI ----------------------------------------------------------------------
@@ -104,4 +105,6 @@ def test_cli_notebooks_copy(tmp_path):
     dest = str(tmp_path / "nb")
     result = _run("notebooks", "--dir", dest, "--no-launch")
     assert result.exit_code == 0
-    assert len([f for f in os.listdir(dest) if f.endswith(".ipynb")]) == 3
+    copied = [f for f in os.listdir(dest) if f.endswith(".ipynb")]
+    assert len(copied) == 4
+    assert "04_classical_ai.ipynb" in copied

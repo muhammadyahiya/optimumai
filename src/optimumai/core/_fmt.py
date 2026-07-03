@@ -7,14 +7,24 @@ without importing each other.
 
 from __future__ import annotations
 
+import math
 from typing import Any
 
 import numpy as np
 
 
 def num(x: Any, precision: int = 4) -> str:
-    """Format a scalar compactly: integers stay integers, floats get trimmed."""
+    """Format a scalar compactly: integers stay integers, floats get trimmed.
+
+    Non-finite floats (``±inf``, ``nan``) are rendered symbolically rather than
+    crashing — they turn up legitimately in search windows (α/β = ±∞), diverging
+    losses, and perplexity, and ``int(inf)`` would otherwise raise.
+    """
     val = float(x)
+    if math.isnan(val):
+        return "nan"
+    if math.isinf(val):
+        return "∞" if val > 0 else "-∞"
     if val == int(val) and abs(val) < 1e15:
         return str(int(val))
     return f"{val:.{precision}g}"

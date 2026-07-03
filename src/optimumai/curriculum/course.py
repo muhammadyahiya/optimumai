@@ -25,6 +25,12 @@ from optimumai.calculus.derivative import chain_rule_trace, derivative_trace, gr
 from optimumai.core.trace import Trace
 from optimumai.diffusion.schedule import demo as diffusion_demo
 from optimumai.embeddings.lookup import demo as embeddings_demo
+
+# --- v1.1 demos: classical ML, search, RL, NLP, vision, evaluation ---
+from optimumai.evaluation.calibration import demo as calibration_demo
+from optimumai.evaluation.hallucination import demo as hallucination_demo
+from optimumai.evaluation.perplexity import demo as perplexity_demo
+from optimumai.evaluation.text_metrics import demo as text_metrics_demo
 from optimumai.foundations.cuda_kernel import tiled_matmul_trace
 from optimumai.foundations.gpu_foundations import memory_hierarchy_trace, thread_hierarchy_trace
 from optimumai.foundations.jax_foundations import demo as jax_demo
@@ -43,15 +49,39 @@ from optimumai.kernels.kernels import (
     softmax_rows_trace,
     vector_add_trace,
 )
+from optimumai.ml.decision_tree import demo as decision_tree_demo
+from optimumai.ml.kmeans import demo as kmeans_demo
+from optimumai.ml.knn import demo as knn_demo
+from optimumai.ml.linear_regression import demo as linear_regression_demo
+from optimumai.ml.logistic_regression import demo as logistic_regression_demo
+from optimumai.ml.metrics import demo as ml_metrics_demo
+from optimumai.ml.naive_bayes import demo as naive_bayes_demo
+from optimumai.ml.pca import demo as pca_demo
 from optimumai.neural_networks.backprop import train_demo
+from optimumai.nlp.bpe import demo as bpe_demo
+from optimumai.nlp.edit_distance import demo as edit_distance_demo
+from optimumai.nlp.ngram import demo as ngram_demo
+from optimumai.nlp.tfidf import demo as tfidf_demo
+from optimumai.nlp.word2vec import demo as word2vec_demo
 from optimumai.optimization.optimizers import descent_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.rag.pipeline import RAGPipeline
+from optimumai.rl.mdp import demo as value_iteration_demo
+from optimumai.rl.policy_gradient import demo as reinforce_demo
+from optimumai.rl.ppo import demo as ppo_demo
+from optimumai.rl.q_learning import demo as q_learning_demo
+from optimumai.search.adversarial import demo as adversarial_demo
+from optimumai.search.informed import demo as informed_demo
+from optimumai.search.uninformed import demo as uninformed_demo
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.block import TransformerBlock
 from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding_trace
 from optimumai.transformers.text_pipeline import TextPipeline
+from optimumai.vision.cnn import demo as cnn_demo
+from optimumai.vision.convolution import demo as conv2d_demo
+from optimumai.vision.edges import demo as sobel_demo
+from optimumai.vision.pooling import demo as pooling_demo
 from optimumai.world_models.jepa import JEPA
 
 
@@ -218,6 +248,96 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("kernel_flash", "Kernel: flash attention", "12 · GPU Kernels",
            "Fused online-softmax attention — exact, no N×N matrix in VRAM.",
            flash_attention_kernel_trace, ("flash_attention",)),
+    # --- Classical Machine Learning -----------------------------------------
+    Lesson("linear_regression", "Linear regression", "13 · Classical ML",
+           "OLS via the normal equation θ=(XᵀX)⁻¹Xᵀy — the calculus behind the fit.",
+           linear_regression_demo, ("matmul",)),
+    Lesson("logistic_regression", "Logistic regression", "13 · Classical ML",
+           "Sigmoid + cross-entropy + gradient descent — the atomic classifier.",
+           logistic_regression_demo, ("linear_regression", "gradient")),
+    Lesson("kmeans", "k-means clustering", "13 · Classical ML",
+           "Lloyd's algorithm: assign to the nearest centroid, re-center, repeat.",
+           kmeans_demo),
+    Lesson("knn", "k-nearest neighbors", "13 · Classical ML",
+           "Classify by majority vote of the closest points — no training phase.",
+           knn_demo),
+    Lesson("decision_tree", "Decision trees", "13 · Classical ML",
+           "Best split by Gini / entropy information gain — the atom of forests.",
+           decision_tree_demo),
+    Lesson("naive_bayes", "Gaussian Naive Bayes", "13 · Classical ML",
+           "Bayes' rule + a conditional-independence assumption — the text baseline.",
+           naive_bayes_demo),
+    Lesson("pca", "Principal component analysis", "13 · Classical ML",
+           "Covariance eigendecomposition — compress data to its top-variance axes.",
+           pca_demo, ("matmul",)),
+    Lesson("ml_metrics", "Classification & regression metrics", "13 · Classical ML",
+           "Accuracy, precision/recall/F1, confusion matrix, MSE, R², ROC-AUC.",
+           ml_metrics_demo),
+    # --- Classical AI Search ------------------------------------------------
+    Lesson("uninformed_search", "BFS, DFS & uniform-cost search", "14 · Classical AI Search",
+           "Frontier order is everything: FIFO (BFS), LIFO (DFS), cheapest-g (UCS).",
+           uninformed_demo),
+    Lesson("informed_search", "Greedy best-first & A*", "14 · Classical AI Search",
+           "Add a heuristic h(n): A* orders by f=g+h and is optimal when h is admissible.",
+           informed_demo, ("uninformed_search",)),
+    Lesson("adversarial_search", "Minimax & alpha-beta pruning", "14 · Classical AI Search",
+           "Optimal play on a game tree; α-β prunes provably-irrelevant branches.",
+           adversarial_demo),
+    # --- Reinforcement Learning ---------------------------------------------
+    Lesson("value_iteration", "Value iteration (Bellman)", "15 · Reinforcement Learning",
+           "Solve a known MDP exactly via Bellman backups until the values converge.",
+           value_iteration_demo),
+    Lesson("q_learning", "Q-learning & SARSA", "15 · Reinforcement Learning",
+           "Learn to act from experience alone — off-policy vs on-policy TD updates.",
+           q_learning_demo, ("value_iteration",)),
+    Lesson("reinforce", "Policy gradients (REINFORCE)", "15 · Reinforcement Learning",
+           "Differentiate through sampled actions with the score-function trick.",
+           reinforce_demo, ("q_learning", "softmax")),
+    Lesson("ppo", "PPO — the clipped surrogate objective", "15 · Reinforcement Learning",
+           "The stabilized policy gradient behind RLHF's RL stage; contrast with DPO.",
+           ppo_demo, ("reinforce",)),
+    # --- NLP -----------------------------------------------------------------
+    Lesson("bpe", "Byte-pair encoding", "16 · NLP",
+           "Learn merges from a corpus, then tokenize a word the way an LLM does.",
+           bpe_demo),
+    Lesson("tfidf", "TF-IDF", "16 · NLP",
+           "Weight words by how much they distinguish one document from the rest.",
+           tfidf_demo),
+    Lesson("ngram", "N-gram language models", "16 · NLP",
+           "Count your way to 'what comes next,' with add-k smoothing + perplexity.",
+           ngram_demo, ("tfidf",)),
+    Lesson("edit_distance", "Edit distance", "16 · NLP",
+           "Levenshtein DP — the yardstick behind spell-check and fuzzy match.",
+           edit_distance_demo),
+    Lesson("word2vec", "Skip-gram word2vec", "16 · NLP",
+           "Predict-the-context SGD — the seed idea behind every learned embedding.",
+           word2vec_demo, ("embeddings", "softmax")),
+    # --- Computer Vision -----------------------------------------------------
+    Lesson("conv2d", "2D convolution", "17 · Computer Vision",
+           "Slide a kernel over an image to detect local patterns.",
+           conv2d_demo, ("matmul",)),
+    Lesson("pooling", "Max & average pooling", "17 · Computer Vision",
+           "Downsample a feature map for translation tolerance.",
+           pooling_demo, ("conv2d",)),
+    Lesson("sobel_edges", "Sobel edge detection", "17 · Computer Vision",
+           "Two fixed convolutions that find image boundaries.",
+           sobel_demo, ("conv2d",)),
+    Lesson("tiny_cnn", "A tiny CNN forward pass", "17 · Computer Vision",
+           "Watch the tensor shapes flow: conv → relu → pool → dense → softmax.",
+           cnn_demo, ("conv2d", "pooling", "softmax")),
+    # --- LLM Evaluation ------------------------------------------------------
+    Lesson("bleu_rouge", "Text overlap metrics (BLEU / ROUGE / F1)", "18 · LLM Evaluation",
+           "Score generated text against a reference — and see why paraphrase breaks it.",
+           text_metrics_demo),
+    Lesson("perplexity", "Perplexity", "18 · LLM Evaluation",
+           "Cross-entropy of a token sequence, exponentiated into a branching factor.",
+           perplexity_demo, ("softmax",)),
+    Lesson("calibration", "Calibration (ECE)", "18 · LLM Evaluation",
+           "Bin predictions by confidence and check it matches empirical accuracy.",
+           calibration_demo, ("softmax",)),
+    Lesson("hallucination", "Hallucination / faithfulness heuristic", "18 · LLM Evaluation",
+           "A claim-overlap grounding proxy — plus why real detection is unsolved.",
+           hallucination_demo, ("rag",)),
 )
 
 
