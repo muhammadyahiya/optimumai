@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (35 across 11 tracks)
+optimumai learn                       # list every topic (39 across 12 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -158,6 +158,45 @@ pip install "optimumai[dashboard]"   # Streamlit progress dashboard
 pip install "optimumai[llm]"         # LLM tutor (set OPTIMUMAI_API_KEY)
 pip install "optimumai[all]"         # everything
 ```
+
+## Get your hands dirty (v0.10)
+
+The flagship release — build, edit, animate, and grade, not just watch.
+
+**Write GPU kernels from scratch** on a pure-Python simulator (no GPU needed) —
+simple → complex, checked against NumPy, with the thread/memory model and IO cost:
+
+```bash
+optimumai kernel matmul            # tiled matmul on the simulator (+ the tiling win)
+optimumai kernel flash_attention   # fused online-softmax attention — provably exact
+optimumai kernel --backends        # what real backends (Numba/CuPy/Triton) are available
+```
+
+```python
+from optimumai.kernels import KernelWorkbench
+wb = KernelWorkbench()
+def my_kernel(ctx, inp, out):         # you write the per-thread body
+    i = ctx.idx.global_id
+    if i < out.size:
+        out[i] = ctx.gload(inp["a"], i) + ctx.gload(inp["b"], i)
+print(wb.submit("vector_add", my_kernel).feedback)   # ✓ graded against NumPy
+```
+
+**Edit the equation, watch the graph — and vice versa** (self-contained HTML):
+
+```bash
+optimumai editor "a*x^2 + b*x + c"   # → editable_plot.html: edit the eq, drag the sliders
+```
+
+**Download animated GIFs** of the algorithms, and **do compute-the-answer exercises**:
+
+```bash
+optimumai animate descent --out descent.gif    # gradient descent rolling downhill
+optimumai animate diffusion                     # a signal being noised
+optimumai exercise backprop                     # you compute the gradient; it grades you
+```
+
+Plus runnable **Jupyter notebooks** in [`notebooks/`](notebooks/).
 
 ## Actually learn it — quiz & spaced review (v0.9)
 
@@ -323,7 +362,10 @@ optimumai/
 ├── frontier/        # FlashAttention, quantization, LoRA, DPO/RLHF         ✨v0.8
 ├── quiz/            # active-recall quiz engine (the testing effect)       ✨v0.9
 ├── review/          # spaced-repetition scheduler (SM-2)                   ✨v0.9
-└── cli/             # the `optimumai` command
+├── kernels/         # GPU kernels from scratch — simulator + real backends ✨v0.10
+├── exercises/       # compute-the-answer exercises                         ✨v0.10
+├── cli/             # the `optimumai` command
+└── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
 
 ## Roadmap
@@ -367,8 +409,13 @@ active-recall** engine (the testing effect — ~2× retention), **spaced-repetit
 review** (SM-2), guided `start` onboarding, and course `search`. 20 quizzes / 57
 questions.
 
-**v1.0** (next) — the stable release: polish, docs site, notebooks, and API
-guarantees.
+**v0.10** ✅ — hands-on: **GPU kernels from scratch** on a pure-Python simulator
+(write & grade your own; optional Numba/CuPy/Triton backends), an **editable
+equation↔graph** in the browser, **animated GIF export**, compute-the-answer
+exercises, and runnable Jupyter notebooks. The course now spans **39 lessons
+across 12 tracks**.
+
+**v1.0** (next) — the stable release: polish, docs site, and API guarantees.
 
 ## Development
 

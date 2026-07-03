@@ -38,6 +38,10 @@ quantization (int8/int4), LoRA (parameter-efficient fine-tuning), and DPO
 v0.9 makes it a learning product, grounded in cognitive science: a quiz /
 active-recall engine (the testing effect), spaced-repetition review (SM-2),
 guided onboarding, and course search.
+
+v0.10 is hands-on: GPU kernels from scratch on a pure-Python simulator (write &
+grade your own), an editable equation↔graph in the browser, animated GIF export,
+and compute-the-answer exercises. Get your hands dirty.
 """
 
 from optimumai.algebra.matrix import Matrix
@@ -50,6 +54,7 @@ from optimumai.core.trace import Step, Trace
 from optimumai.curriculum import COURSE, Course, Lesson
 from optimumai.diffusion.schedule import forward_diffusion
 from optimumai.embeddings.lookup import embedding_lookup, nearest_neighbors
+from optimumai.exercises.engine import Workbook
 from optimumai.foundations.kv_cache import kv_cache_size
 from optimumai.foundations.math_foundations import integrate
 from optimumai.foundations.vram import vram_estimate
@@ -59,6 +64,8 @@ from optimumai.frontier.quantization import quantize
 from optimumai.frontier.rlhf import dpo
 from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition
+from optimumai.kernels.exercises import KernelWorkbench
+from optimumai.kernels.sim import GpuSim
 from optimumai.neural_networks.mlp import MLP
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
@@ -73,9 +80,10 @@ from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.visualization.interactive import editable_plot
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 __all__ = [
     "COURSE",
@@ -85,7 +93,9 @@ __all__ = [
     "Attention",
     "Course",
     "ExplainLevel",
+    "GpuSim",
     "JEPA",
+    "KernelWorkbench",
     "Lesson",
     "Matrix",
     "MultiHeadAttention",
@@ -94,6 +104,7 @@ __all__ = [
     "RAGPipeline",
     "ReviewScheduler",
     "Step",
+    "Workbook",
     "TextPipeline",
     "dpo",
     "flash_attention",
@@ -107,6 +118,7 @@ __all__ = [
     "compare",
     "derivative",
     "differentiate",
+    "editable_plot",
     "embedding_lookup",
     "forward_diffusion",
     "gradient",

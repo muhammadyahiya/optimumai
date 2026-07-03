@@ -29,12 +29,15 @@ from optimumai.circuit.graph import build_from_expression
 from optimumai.circuit.render import to_dot, to_html, to_terminal
 from optimumai.core.explain import ExplainLevel
 from optimumai.curriculum import COURSE
+from optimumai.exercises.engine import Workbook, available_exercises
 from optimumai.foundations.kv_cache import kv_cache_trace
 from optimumai.foundations.vram import vram_trace
 from optimumai.frontier.quantization import quantize_trace
 from optimumai.interactive.prompts import prompt_matrix, prompt_vector
 from optimumai.interactive.repl import run_repl
 from optimumai.interpretability.superposition import superposition_trace
+from optimumai.kernels.backends import backend_report
+from optimumai.kernels.kernels import list_kernels, run_kernel
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.progress import ProgressTracker
@@ -44,6 +47,12 @@ from optimumai.symbolic.differentiate import differentiate_trace
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.visualization.animate import (
+    animate_diffusion,
+    animate_gradient_descent,
+    animate_softmax_temperature,
+)
+from optimumai.visualization.interactive import editable_plot
 from optimumai.visualization.landscape import plot_loss_landscape
 from optimumai.visualization.plots import (
     plot_activation,
@@ -520,6 +529,78 @@ def circuit_cmd(expression: str, vars_: str | None, fmt: str, out: str | None) -
             click.echo(dot)
     else:  # html
         click.echo(f"saved → {to_html(graph, out or 'circuit.html')}")
+
+
+# ------------------------------------------------------------------ gpu kernels
+@cli.command("kernel")
+@click.argument("name", required=False)
+@click.option("--backends", "show_backends", is_flag=True, help="Show available GPU backends.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def kernel_cmd(name: str | None, show_backends: bool, level: str) -> None:
+    """Run a GPU kernel on the simulator (scalar_add → flash attention)."""
+    if show_backends:
+        click.echo(backend_report())
+        return
+    if name is None:
+        click.echo("Kernels: " + ", ".join(list_kernels()))
+        click.echo("Run one:  optimumai kernel matmul   ·   backends:  optimumai kernel --backends")
+        return
+    try:
+        run_kernel(name, explain=True, level=level)
+    except ValueError as exc:
+        raise click.BadParameter(str(exc)) from exc
+
+
+@cli.command("animate")
+@click.argument("what", type=click.Choice(["descent", "diffusion", "softmax"]))
+@click.option("--out", default="optimumai.gif", help="Output GIF path.")
+def animate_cmd(what: str, out: str) -> None:
+    """Export an animated GIF (needs [viz]): descent | diffusion | softmax."""
+    makers = {
+        "descent": lambda: animate_gradient_descent(out=out),
+        "diffusion": lambda: animate_diffusion(out=out),
+        "softmax": lambda: animate_softmax_temperature(out=out),
+    }
+    try:
+        path = makers[what]()
+    except ImportError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(f"saved → {path}")
+
+
+@cli.command("editor")
+@click.argument("expression", default="a*x^2 + b*x + c")
+@click.option("--out", default="editable_plot.html", help="Output HTML path.")
+def editor_cmd(expression: str, out: str) -> None:
+    """Generate an editable equation↔graph HTML (open it in a browser)."""
+    path = editable_plot(expression, out=out)
+    click.echo(f"saved → {path}  (open it in a browser — edit the equation & drag the sliders)")
+
+
+@cli.command("exercise")
+@click.argument("lesson", required=False)
+def exercise_cmd(lesson: str | None) -> None:
+    """Compute-the-answer exercises (active recall). Omit LESSON to list them."""
+    if lesson is None:
+        click.echo("Exercises for: " + ", ".join(available_exercises()))
+        return
+    try:
+        workbook = Workbook(lesson.lower())
+    except KeyError as exc:
+        raise click.BadParameter(
+            f"no exercises for {lesson!r}. Try: {', '.join(available_exercises())}"
+        ) from exc
+    correct = 0
+    for ex in workbook.exercises:
+        click.echo(f"\n{ex.prompt}")
+        result = workbook.grade(ex.id, click.prompt("Your answer", type=float))
+        if result.correct:
+            click.echo(click.style("  ✓ correct", fg="green"))
+            correct += 1
+        else:
+            click.echo(click.style(f"  ✗ expected {result.expected}", fg="red"))
+        click.echo(click.style(f"    {ex.explanation}", dim=True))
+    click.echo(f"\nScore: {correct}/{len(workbook.exercises)}")
 
 
 if __name__ == "__main__":  # pragma: no cover

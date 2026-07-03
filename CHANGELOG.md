@@ -4,6 +4,32 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.10.0] — 2026-07-03
+
+The hands-on release — build, edit, animate, and grade, not just watch. Adds a
+"GPU Kernels" course track (now **39 lessons across 12 tracks**).
+
+### Added
+
+- **kernels** — GPU kernels from scratch: a pure-Python CUDA-style simulator
+  (`GpuSim`) that models the thread grid + memory hierarchy and instruments every
+  access; a progression of real kernels (scalar/vector add → tiled matmul →
+  softmax → **exact** flash attention), each checked vs NumPy; optional real
+  backends (Numba/CuPy/Triton, auto-detected, graceful fallback); and a
+  `KernelWorkbench` where you write a kernel and it's graded.
+- **visualization.interactive** — `editable_plot`: a self-contained HTML editor
+  where editing the equation replots the curve and dragging parameter sliders
+  updates both the curve and the equation (bidirectional).
+- **visualization.animate** — downloadable GIFs: gradient descent, diffusion
+  noising, and softmax-vs-temperature (matplotlib + Pillow, headless).
+- **exercises** — compute-the-answer exercises with tolerance grading (`Workbook`).
+- **notebooks/** — three runnable Jupyter notebooks (quickstart, GPU kernels,
+  hands-on).
+- **tutor** — now auto-detects the Anthropic SDK + `ANTHROPIC_API_KEY` (and
+  `OPENAI_API_KEY`), so `ask` actually answers once `optimumai[llm]` is installed.
+- CLI: `kernel`, `animate`, `editor`, `exercise`. New extras: `[gpu]`.
+- 19 new tests (218 total).
+
 ## [0.9.0] — 2026-07-03
 
 Turns OptimumAI into a real learning product, grounded in cognitive science:
@@ -204,6 +230,7 @@ arc from a dot product to transformer attention, each runnable with
   GitHub Actions CI matrix (Python 3.10–3.13), and a PyPI trusted-publishing
   workflow.
 
+[0.10.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.10.0
 [0.9.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.9.0
 [0.8.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.8.0
 [0.7.0]: https://github.com/muhammadyahiya/optimumai/releases/tag/v0.7.0

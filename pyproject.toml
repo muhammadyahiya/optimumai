@@ -44,22 +44,33 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-llm = ["litellm>=1.0"]
-viz = ["plotext>=5.2", "matplotlib>=3.8"]
+llm = ["litellm>=1.0", "anthropic>=0.39"]
+viz = ["plotext>=5.2", "matplotlib>=3.8", "pillow>=10.0"]
 dashboard = ["streamlit>=1.30"]
 repl = ["prompt_toolkit>=3.0"]
 symbolic = ["sympy>=1.12"]
 tokenize = ["tiktoken>=0.7"]
+gpu = ["numba>=0.59"]
 all = [
     "litellm>=1.0",
+    "anthropic>=0.39",
     "plotext>=5.2",
     "matplotlib>=3.8",
+    "pillow>=10.0",
     "streamlit>=1.30",
     "prompt_toolkit>=3.0",
     "sympy>=1.12",
     "tiktoken>=0.7",
 ]
-dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5", "sympy>=1.12", "matplotlib>=3.8"]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.5",
+    "sympy>=1.12",
+    "matplotlib>=3.8",
+    "pillow>=10.0",
+    "nbformat>=5.9",
+]
 
 [project.scripts]
 optimumai = "optimumai.cli.main:cli"
@@ -87,3 +98,10 @@ target-version = "py310"
 select = ["E", "F", "I", "N", "UP", "B"]
 # Uppercase names (Q, K, V, A, B, W, ...) are standard mathematical notation here.
 ignore = ["N803", "N806"]
+
+[tool.ruff.lint.per-file-ignores]
+# Embedded HTML/JS templates: line length is cosmetic inside the template string.
+"src/optimumai/visualization/interactive.py" = ["E501"]
+# Kernel modules carry long teaching strings and reference-solution source.
+"src/optimumai/kernels/kernels.py" = ["E501"]
+"src/optimumai/kernels/exercises.py" = ["E501"]

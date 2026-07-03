@@ -29,3 +29,8 @@ coverage.xml
 .DS_Store
 .idea/
 .vscode/
+
+# generated artifacts
+*.gif
+*.html
+!notebooks/*

@@ -37,6 +37,12 @@ from optimumai.frontier.lora import demo as lora_demo
 from optimumai.frontier.quantization import demo as quantization_demo
 from optimumai.frontier.rlhf import demo as dpo_demo
 from optimumai.interpretability.superposition import superposition_trace
+from optimumai.kernels.kernels import (
+    flash_attention_kernel_trace,
+    matmul_trace,
+    softmax_rows_trace,
+    vector_add_trace,
+)
 from optimumai.neural_networks.backprop import train_demo
 from optimumai.optimization.optimizers import descent_demo
 from optimumai.probability.softmax import softmax_trace
@@ -199,6 +205,19 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("dpo", "DPO / RLHF", "11 · Frontier",
            "Align to human preferences without a reward model or RL.",
            dpo_demo, ("softmax",)),
+    # --- GPU Kernels from scratch -------------------------------------------
+    Lesson("kernel_vector_add", "Kernel: vector add", "12 · GPU Kernels",
+           "One thread per element — the GPU 'hello world', run on a simulator.",
+           vector_add_trace),
+    Lesson("kernel_matmul", "Kernel: tiled matmul", "12 · GPU Kernels",
+           "A thread per output cell + the shared-memory tiling win.",
+           matmul_trace, ("matmul",)),
+    Lesson("kernel_softmax", "Kernel: softmax", "12 · GPU Kernels",
+           "One thread per row, with the numerically-stable max trick.",
+           softmax_rows_trace, ("softmax",)),
+    Lesson("kernel_flash", "Kernel: flash attention", "12 · GPU Kernels",
+           "Fused online-softmax attention — exact, no N×N matrix in VRAM.",
+           flash_attention_kernel_trace, ("flash_attention",)),
 )
 
 
