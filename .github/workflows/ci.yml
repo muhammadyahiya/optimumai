@@ -21,9 +21,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Create virtual environment
-        run: uv venv --python ${{ matrix.python-version }}
-
+      # setup-uv already creates and activates a .venv (VIRTUAL_ENV is set),
+      # so install straight into it — no explicit `uv venv` needed.
       - name: Install project
         run: uv pip install -e ".[dev]"
 
