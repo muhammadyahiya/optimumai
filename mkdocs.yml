@@ -46,6 +46,7 @@ plugins:
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
+  - Features: features.md
   - Learning path: course.md
   - GPU kernels: gpu-kernels.md
   - Visualization & circuits: visualization.md
@@ -53,5 +54,6 @@ nav:
   - Interactive & explained: interactive.md
   - Token generation: generation.md
   - Deploy the dashboard: deploy.md
+  - CLI reference: cli.md
   - API reference: api.md
   - API stability: stability.md

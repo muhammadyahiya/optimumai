@@ -469,7 +469,8 @@ optimumai/
 ├── evaluation/      # BLEU/ROUGE, perplexity, calibration, faithfulness     ✨v1.1
 ├── prompting/       # zero/few-shot, CoT, ReAct, self-consistency, JSON      ✨v1.2
 ├── augmented_rnns/  # attention-as-memory, Neural Turing Machine, ACT        ✨v1.2
-├── visualization/   # + playgrounds (interactive HTML) + gallery (plots/GIF) ✨v1.2
+├── visualization/   # playgrounds + gallery + Plot Studio (chart + live code)  ✨v1.3
+├── flows/           # distill-style interactive concept-flow diagrams (HTML)   ✨v1.3
 ├── cli/             # the `optimumai` command
 └── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
@@ -544,6 +545,14 @@ self-contained **interactive HTML playgrounds** (a Transformer-Explainer-style
 attention widget + k-means + A\*), and a per-concept plot/GIF gallery wired into
 `visualize`. GitHub Pages docs fixed & live. The course now spans **76 lessons
 across 20 tracks**; the test suite, **522 tests**.
+
+**v1.3** ✅ — **see it flow**: a **Plot Studio** (feed numbers → bar/histogram/
+scatter/box/line/pie/violin chart **plus the exact matplotlib + numpy code on
+screen**, live and copy-able), and a `flows` subpackage of distill.pub /
+Transformer-Explainer-style **interactive circuit-flow diagrams** (a transformer
+forward pass with a live attention heatmap, scaled dot-product attention, TF-IDF,
+word2vec) as self-contained offline HTML. Plus a full **Features** guide and
+**CLI reference** in the docs. **562 tests**.
 
 ## Development
 

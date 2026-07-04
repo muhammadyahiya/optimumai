@@ -44,6 +44,9 @@ from optimumai.evaluation.perplexity import perplexity_trace
 from optimumai.evaluation.text_metrics import bleu_trace, rouge_n_trace
 from optimumai.evaluation.text_metrics import demo as eval_text_demo
 from optimumai.exercises.engine import Workbook, available_exercises
+
+# --- v1.3: Plot Studio + concept-flow diagrams ---
+from optimumai.flows import flow as build_flow
 from optimumai.foundations.kv_cache import kv_cache_trace
 from optimumai.foundations.vram import vram_trace
 from optimumai.frontier.quantization import quantize_trace
@@ -114,6 +117,10 @@ from optimumai.visualization.plots import (
     plot_softmax_temperature,
     plot_training_curve,
 )
+from optimumai.visualization.plotstudio import describe as ps_describe
+from optimumai.visualization.plotstudio import plot_code as ps_plot_code
+from optimumai.visualization.plotstudio import plot_data as ps_plot_data
+from optimumai.visualization.plotstudio import plot_studio_playground
 from optimumai.world_models.jepa import JEPA
 
 _LEVEL_CHOICE = click.Choice([lvl.value for lvl in ExplainLevel], case_sensitive=False)
@@ -731,17 +738,20 @@ def visualize_cmd(concept: str | None, fmt: str, out: str | None) -> None:
 @click.argument("concept", default="softmax")
 @click.option("--out", default=None, help="Output HTML path.")
 def playground_cmd(concept: str, out: str | None) -> None:
-    """Interactive HTML playground: softmax | backprop | attention | kmeans | astar."""
+    """Interactive HTML playground: softmax, backprop, attention, kmeans, astar, plots."""
     key = concept.lower()
     target = out or f"interactive_{key}.html"
-    try:
-        path = interactive_circuit(key, out=target)
-    except ValueError:
-        # Fall through to the v1.2 vanilla-JS playgrounds (attention/kmeans/astar).
+    if key in ("plots", "plot", "plot-studio", "dataviz"):
+        path = plot_studio_playground(out=target)
+    else:
         try:
-            path = viz_playground(key, out=target)
-        except ValueError as exc:
-            raise click.BadParameter(str(exc)) from exc
+            path = interactive_circuit(key, out=target)
+        except ValueError:
+            # Fall through to the vanilla-JS playgrounds (attention/kmeans/astar).
+            try:
+                path = viz_playground(key, out=target)
+            except ValueError as exc:
+                raise click.BadParameter(str(exc)) from exc
     click.echo(f"saved → {path}  (open it in a browser)")
 
 
@@ -1057,20 +1067,72 @@ _AUGRNN_DEMOS = {
 }
 
 
+def _list_choices(group: str, keys: list[str]) -> None:
+    """Print ready-to-copy commands (one per line) — never a shell-piping `a|b|c`."""
+    click.echo("Pick one — run any of these:\n")
+    for k in keys:
+        click.echo(f"  optimumai {group} {k}")
+
+
 @cli.command("prompt")
-@click.argument("pattern", type=click.Choice(list(_PROMPT_DEMOS)), default="chain-of-thought")
+@click.argument("pattern", required=False, type=click.Choice(list(_PROMPT_DEMOS)))
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
-def prompt_cmd(pattern: str, level: str) -> None:
-    """Prompt-engineering patterns — how the prompt is assembled and why it works."""
+def prompt_cmd(pattern: str | None, level: str) -> None:
+    """Prompt-engineering patterns. Run 'optimumai prompt' to list them."""
+    if pattern is None:
+        _list_choices("prompt", list(_PROMPT_DEMOS))
+        return
     _PROMPT_DEMOS[pattern]().render(level)
 
 
 @cli.command("augrnn")
-@click.argument("concept", type=click.Choice(list(_AUGRNN_DEMOS)), default="attention")
+@click.argument("concept", required=False, type=click.Choice(list(_AUGRNN_DEMOS)))
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
-def augrnn_cmd(concept: str, level: str) -> None:
-    """Augmented RNNs (distill.pub): attention-as-memory | ntm | act."""
+def augrnn_cmd(concept: str | None, level: str) -> None:
+    """Augmented RNNs (distill.pub). Run 'optimumai augrnn' to list them."""
+    if concept is None:
+        _list_choices("augrnn", list(_AUGRNN_DEMOS))
+        return
     _AUGRNN_DEMOS[concept]().render(level)
+
+
+_FLOW_CONCEPTS = ["transformer", "attention", "tfidf", "word2vec"]
+_PLOT_KINDS = ["bar", "hist", "scatter", "box", "line", "pie", "violin"]
+
+
+@cli.command("flow")
+@click.argument("concept", required=False, type=click.Choice(_FLOW_CONCEPTS))
+@click.option("--out", default=None, help="Output HTML path.")
+def flow_cmd(concept: str | None, out: str | None) -> None:
+    """Interactive concept-flow diagram (distill-style). Run 'optimumai flow' to list."""
+    if concept is None:
+        click.echo("Interactive flow diagrams — run one of:\n")
+        for c in _FLOW_CONCEPTS:
+            click.echo(f"  optimumai flow {c}")
+        return
+    path = build_flow(concept, out=out)
+    click.echo(f"saved → {path}  (open it in a browser)")
+
+
+@cli.command("plot-studio")
+@click.argument("numbers", required=False)
+@click.option("--kind", type=click.Choice(_PLOT_KINDS), default="bar", help="Chart type.")
+@click.option("--out", default="plot.png", help="Chart image path.")
+def plot_studio_cmd(numbers: str | None, kind: str, out: str) -> None:
+    """Chart your numbers AND print the matplotlib+numpy code, e.g.
+    plot-studio "[3,1,4,1,5,9,2,6]" --kind hist.
+    """
+    data = _parse_literal(numbers, "numbers") if numbers else [3, 1, 4, 1, 5, 9, 2, 6]
+    stats = ps_describe(data)
+    click.echo(click.style("numpy summary:", bold=True))
+    click.echo("  " + "  ".join(f"{k}={v:.4g}" for k, v in stats.items()))
+    click.echo(click.style("\nmatplotlib + numpy code:", bold=True))
+    click.echo(ps_plot_code(data, kind=kind))
+    try:
+        path = ps_plot_data(data, kind=kind, out=out)
+        click.echo(f"\nsaved chart → {path}")
+    except ImportError:
+        click.echo('\n(install rendering deps to save the chart: pip install "optimumai[viz]")')
 
 
 if __name__ == "__main__":  # pragma: no cover
