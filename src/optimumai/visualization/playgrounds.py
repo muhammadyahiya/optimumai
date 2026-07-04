@@ -673,6 +673,47 @@ h(n) = |dx| + |dy| (Manhattan distance to the goal).</p>
 
 
 # ==========================================================================
+# ==========================================================================
+# 4. Neural-net playground (powered by the OptiX TypeScript kit)
+# ==========================================================================
+
+_NN_CSS = """
+ .cap{color:#475569;max-width:640px;line-height:1.5}
+ .optix-nn-playground{margin-top:14px}
+ .optix-nn-playground canvas{border:1px solid #e2e8f0;border-radius:8px;background:#fff}
+ .optix-nn-playground .optix-nn-readout{font-family:monospace;margin-top:8px}
+ .optix-nn-playground button{margin-right:6px;padding:5px 12px;border-radius:6px;
+      border:1px solid #c7d2fe;background:#eef2ff;cursor:pointer}
+ .optix-nn-playground label{font-family:monospace;margin-right:14px}
+ .optix-nn-playground input[type=range]{vertical-align:middle}
+"""
+
+
+def nn_playground(out: str | None = None) -> str:
+    """A TensorFlow-Playground-style neural-net playground, powered by OptiX.
+
+    Pick a 2-D dataset (XOR / circle / spiral), set the learning rate and hidden
+    width, and train a tiny MLP while its decision boundary forms live. The math
+    — seeded MLP init, forward pass, and backprop — is **OptiX**, a typed,
+    unit-tested TypeScript kit compiled into OptimumAI. Self-contained, offline.
+    """
+    from optimumai.visualization.assets import optix_js
+
+    body = (
+        '<h1>Neural-net playground</h1>'
+        '<p class="cap">Pick a dataset, set the learning rate and hidden units, then '
+        '<b>Train</b> — watch the decision boundary bend until it separates the two '
+        'classes. The network (seeded init, forward pass, and backprop) runs in '
+        '<b>OptiX</b>, a typed, unit-tested TypeScript kit compiled into OptimumAI.</p>'
+        '<div id="optix-nn"></div>'
+    )
+    boot = 'OptiX.mount.nnPlayground("#optix-nn", {dataset:"xor", hidden:8, lr:0.5, seed:42});'
+    html = _page("OptimumAI · Neural-net playground", "Neural network playground",
+                 body, optix_js() + "\n" + boot, css_extra=_NN_CSS)
+    return _write(html, out, "nn_playground.html")
+
+
+# ==========================================================================
 # dispatcher + shared file-writing helper
 # ==========================================================================
 
@@ -680,11 +721,12 @@ _PLAYGROUNDS = {
     "attention": transformer_attention_playground,
     "kmeans": kmeans_playground,
     "astar": astar_playground,
+    "nn": nn_playground,
 }
 
 
 def playground(name: str, out: str | None = None) -> str:
-    """Build the named playground ("attention", "kmeans", or "astar")."""
+    """Build the named playground ("attention", "kmeans", "astar", or "nn")."""
     try:
         builder = _PLAYGROUNDS[name]
     except KeyError as exc:

@@ -88,7 +88,7 @@ path = "src/optimumai/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/optimumai"]
-artifacts = ["src/optimumai/_notebooks/*.ipynb"]
+artifacts = ["src/optimumai/_notebooks/*.ipynb", "src/optimumai/visualization/_static/*.js"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

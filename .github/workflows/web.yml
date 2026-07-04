@@ -1,0 +1,35 @@
+name: Web (OptiX)
+
+# Type-check, lint, unit-test, and build the TypeScript widget kit in web/.
+# The Python package ships the pre-built bundle (src/optimumai/visualization/
+# _static/optix.js), so pip installs never need node — this job only guards the
+# TS source and confirms the committed bundle is reproducible.
+
+on:
+  push:
+    paths:
+      - "web/**"
+      - ".github/workflows/web.yml"
+  pull_request:
+    paths:
+      - "web/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      - name: Fail if the committed bundle is stale
+        working-directory: .
+        run: git diff --exit-code -- src/optimumai/visualization/_static/optix.js
