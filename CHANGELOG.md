@@ -4,6 +4,38 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] — 2026-07-04
+
+The **see-it-flow** release — visualize your own data, watch concepts flow, and
+read the whole feature set. Suite grows to **562 tests**. No new dependencies.
+
+### Added
+
+- **visualization.plotstudio** — a Plot Studio: feed numbers and get a chart
+  (`bar`, `hist`, `scatter`, `box`, `line`, `pie`, `violin`) **plus the exact
+  matplotlib + numpy code on screen**. Python: `describe`, `plot_code`,
+  `plot_data`, `plot_studio_trace`; a self-contained interactive HTML playground
+  (`plot_studio_playground`) with live chart + numpy stats + copy-able code. CLI:
+  `optimumai plot-studio "[3,1,4,1,5,9]" --kind hist` and `optimumai playground
+  plots`.
+- **flows** — a subpackage of [distill.pub](https://distill.pub/2016/augmented-rnns/)
+  / [Transformer-Explainer](https://poloclub.github.io/transformer-explainer/)-style
+  **interactive circuit-flow diagrams** as self-contained, offline HTML (inline
+  SVG + vanilla JS, zero CDN): `transformer_flow` (10-stage forward pass with a
+  live attention heatmap), `attention_flow` (scaled dot-product attention),
+  `tfidf_flow`, and `word2vec_flow`, plus a `flow(name)` dispatcher. CLI:
+  `optimumai flow transformer` (or `attention` / `tfidf` / `word2vec`).
+- **docs** — a comprehensive, Feynman-style **Features** guide covering every
+  capability, and a complete **CLI reference** (every command + a copy-safe
+  example), both on the live site.
+
+### Changed
+
+- **CLI** — `optimumai prompt` and `optimumai augrnn` with no argument now print
+  the valid subcommands one per line (copy-safe), instead of assuming a default.
+  (Running `optimumai augrnn attention|ntm|act` in a shell pipes into programs
+  named `ntm`/`act`; use one word at a time, e.g. `optimumai augrnn ntm`.)
+
 ## [1.2.0] — 2026-07-04
 
 The **interactive & explained** release — turning traces into things you can *play

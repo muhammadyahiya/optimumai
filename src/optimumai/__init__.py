@@ -62,6 +62,12 @@ Machines, Adaptive Computation Time), self-contained interactive HTML playground
 (a Transformer-Explainer-style attention widget, plus k-means and A*), and a
 per-concept plot/GIF gallery wired into the ``visualize`` registry.
 
+v1.3 makes it *flow*: a **Plot Studio** (feed numbers, get any chart — bar,
+histogram, scatter, box, line, pie, violin — plus the exact matplotlib + numpy
+code on screen), and a ``flows`` subpackage of distill.pub-style interactive
+circuit-flow diagrams (a transformer forward pass, scaled dot-product attention,
+TF-IDF, and word2vec) rendered as self-contained, offline HTML.
+
 Public-API stability
 ---------------------
 Everything exported from the top-level ``optimumai`` namespace (the names in
@@ -106,6 +112,9 @@ from optimumai.evaluation import (
     token_f1,
 )
 from optimumai.exercises.engine import Workbook
+
+# --- v1.3: see it flow (Plot Studio + interactive concept-flow diagrams) ---
+from optimumai.flows import attention_flow, tfidf_flow, transformer_flow, word2vec_flow
 from optimumai.foundations.kv_cache import kv_cache_size
 from optimumai.foundations.math_foundations import integrate
 from optimumai.foundations.vram import vram_estimate
@@ -184,9 +193,15 @@ from optimumai.vision import (
 from optimumai.visualization.concepts import render_concept
 from optimumai.visualization.interactive import editable_plot
 from optimumai.visualization.playgrounds import playground
+from optimumai.visualization.plotstudio import (
+    describe,
+    plot_code,
+    plot_data,
+    plot_studio_playground,
+)
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 
 __all__ = [
     "COURSE",
@@ -298,5 +313,14 @@ __all__ = [
     "adaptive_computation_time",
     # v1.2 — interactive playground dispatcher
     "playground",
+    # v1.3 — Plot Studio + concept-flow diagrams
+    "plot_data",
+    "plot_code",
+    "describe",
+    "plot_studio_playground",
+    "transformer_flow",
+    "attention_flow",
+    "tfidf_flow",
+    "word2vec_flow",
     "__version__",
 ]
