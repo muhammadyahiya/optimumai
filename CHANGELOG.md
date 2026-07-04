@@ -4,6 +4,31 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] — 2026-07-04
+
+The **OptiX** release — a TypeScript/JavaScript foundation that hardens the
+interactive layer. The widgets' JS was previously hand-written inline inside
+Python strings (untyped, untested); OptiX replaces that with a typed,
+unit-tested kit compiled to one self-contained asset. Suite grows to **589 tests**
+(Python) + **32 TypeScript tests**. Base `pip install` stays node-free.
+
+### Added
+
+- **OptiX** (`web/`) — a small TypeScript widget kit (math, a seeded MLP with
+  real backprop, a stage stepper, canvas helpers, and DOM mounts), **type-checked
+  (`tsc`), linted (ESLint), and unit-tested (Vitest + happy-dom, 32 tests)**,
+  bundled by **esbuild** into a single self-contained IIFE
+  (`visualization/_static/optix.js`, ~7 KB, zero runtime deps / zero CDN),
+  committed and shipped in the wheel. Python inlines it via
+  `visualization.assets.optix_js()` — so the browser code is finally typed +
+  tested, and node is only needed at dev/build time.
+- **Neural-net playground** — `optimumai playground nn` (and `nn_playground()`):
+  a TensorFlow-Playground-style widget built on OptiX — pick a 2-D dataset
+  (XOR / circle / spiral), set the learning rate and hidden width, and **train a
+  tiny MLP live while its decision boundary forms**. Self-contained, offline HTML.
+- **CI** — a `web.yml` workflow type-checks, lints, tests, and rebuilds the TS,
+  and fails if the committed bundle is stale (`git diff --exit-code`).
+
 ## [1.4.0] — 2026-07-04
 
 The **learn-the-tools** release — runnable, explained tutorials for the tools you

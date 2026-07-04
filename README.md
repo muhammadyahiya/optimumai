@@ -472,6 +472,8 @@ optimumai/
 ├── visualization/   # playgrounds + gallery + Plot Studio (chart + live code)  ✨v1.3
 ├── flows/           # distill-style interactive concept-flow diagrams (HTML)   ✨v1.3
 ├── tutorials/       # runnable NumPy / matplotlib / PyTorch / fine-tuning tuts  ✨v1.4
+├── visualization/_static/optix.js  # compiled OptiX TS widget kit (from web/)  ✨v1.5
+web/                 # OptiX TypeScript source — tsc + eslint + vitest + esbuild  ✨v1.5
 ├── cli/             # the `optimumai` command
 └── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
@@ -561,6 +563,14 @@ with the real torch code shown), and **LLM fine-tuning** (a numpy SFT → LoRA �
 QLoRA → DPO toy pipeline + the production HF/PEFT/TRL code). Walk them with
 `optimumai tutorial numpy` (or `--notebook`), and read the matching in-depth guides
 on the docs site. **585 tests**.
+
+**v1.5** ✅ — **OptiX**: a typed, unit-tested **TypeScript** widget kit (`web/`,
+math + a seeded MLP with real backprop + canvas helpers) compiled by esbuild to
+one self-contained IIFE (`_static/optix.js`, ~7 KB, zero CDN) shipped in the wheel
+— so the interactive JS is finally typed + tested (32 Vitest tests), while
+`pip install` stays node-free. Its debut: a TensorFlow-Playground-style
+**neural-net playground** — `optimumai playground nn` — train a tiny MLP on XOR /
+circle / spiral and watch the decision boundary form. **589 tests** (Python).
 
 ## Development
 

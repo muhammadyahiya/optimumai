@@ -75,6 +75,12 @@ toy pipeline plus the production HF/PEFT/TRL code). Walk any of them in the
 terminal (``optimumai tutorial numpy``) or export to a notebook — and read the
 matching in-depth guides on the docs site.
 
+v1.5 hardens the interactive layer with **OptiX**, a typed, unit-tested TypeScript
+widget kit (authored in ``web/``, compiled by esbuild to a single self-contained
+IIFE shipped in the wheel) — replacing hand-written inline JS. Its debut is a
+TensorFlow-Playground-style **neural-net playground** (``optimumai playground nn``):
+pick a 2-D dataset, train a tiny MLP, and watch the decision boundary form.
+
 Public-API stability
 ---------------------
 Everything exported from the top-level ``optimumai`` namespace (the names in
@@ -198,9 +204,10 @@ from optimumai.vision import (
     max_pool2d,
     sobel_edges,
 )
+from optimumai.visualization.assets import optix_js
 from optimumai.visualization.concepts import render_concept
 from optimumai.visualization.interactive import editable_plot
-from optimumai.visualization.playgrounds import playground
+from optimumai.visualization.playgrounds import nn_playground, playground
 from optimumai.visualization.plotstudio import (
     describe,
     plot_code,
@@ -209,7 +216,7 @@ from optimumai.visualization.plotstudio import (
 )
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 __all__ = [
     "COURSE",
@@ -333,5 +340,8 @@ __all__ = [
     # v1.4 — runnable tutorials
     "get_tutorial",
     "list_tutorials",
+    # v1.5 — OptiX TypeScript widget kit
+    "nn_playground",
+    "optix_js",
     "__version__",
 ]

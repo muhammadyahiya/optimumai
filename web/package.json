@@ -1,0 +1,21 @@
+{
+  "name": "optix",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "OptiX — typed, tested TypeScript widget kit for OptimumAI's offline HTML playgrounds",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "esbuild": "^0.24",
+    "vitest": "^2",
+    "happy-dom": "^15",
+    "eslint": "^9",
+    "typescript-eslint": "^8"
+  }
+}

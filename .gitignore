@@ -30,6 +30,9 @@ coverage.xml
 .idea/
 .vscode/
 
+# Node / web toolchain (the compiled bundle in src/.../_static/ IS committed)
+node_modules/
+
 # generated artifacts
 *.gif
 *.html
