@@ -96,6 +96,7 @@ from optimumai.symbolic.differentiate import differentiate_trace
 from optimumai.transformers.attention import Attention
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.tutorials import get_tutorial, list_tutorials
 from optimumai.vision.cnn import demo as vision_cnn_demo
 from optimumai.vision.convolution import conv2d_trace
 from optimumai.vision.convolution import demo as vision_conv_demo
@@ -1133,6 +1134,23 @@ def plot_studio_cmd(numbers: str | None, kind: str, out: str) -> None:
         click.echo(f"\nsaved chart → {path}")
     except ImportError:
         click.echo('\n(install rendering deps to save the chart: pip install "optimumai[viz]")')
+
+
+@cli.command("tutorial")
+@click.argument("topic", required=False, type=click.Choice(list_tutorials()))
+@click.option("--notebook", default=None, help="Export to a .ipynb instead of running it.")
+def tutorial_cmd(topic: str | None, notebook: str | None) -> None:
+    """Runnable, explained tutorials. Run 'optimumai tutorial' to list them."""
+    if topic is None:
+        click.echo("Runnable tutorials — run one of:\n")
+        for name in list_tutorials():
+            click.echo(f"  optimumai tutorial {name}")
+        return
+    tut = get_tutorial(topic)
+    if notebook:
+        click.echo(f"saved notebook → {tut.to_notebook(notebook)}")
+    else:
+        tut.run()
 
 
 if __name__ == "__main__":  # pragma: no cover

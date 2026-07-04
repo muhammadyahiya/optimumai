@@ -471,6 +471,7 @@ optimumai/
 ├── augmented_rnns/  # attention-as-memory, Neural Turing Machine, ACT        ✨v1.2
 ├── visualization/   # playgrounds + gallery + Plot Studio (chart + live code)  ✨v1.3
 ├── flows/           # distill-style interactive concept-flow diagrams (HTML)   ✨v1.3
+├── tutorials/       # runnable NumPy / matplotlib / PyTorch / fine-tuning tuts  ✨v1.4
 ├── cli/             # the `optimumai` command
 └── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
@@ -553,6 +554,13 @@ Transformer-Explainer-style **interactive circuit-flow diagrams** (a transformer
 forward pass with a live attention heatmap, scaled dot-product attention, TF-IDF,
 word2vec) as self-contained offline HTML. Plus a full **Features** guide and
 **CLI reference** in the docs. **562 tests**.
+
+**v1.4** ✅ — **learn the tools**: runnable, explained `tutorials` for **NumPy**,
+**matplotlib**, **PyTorch** (built on OptimumAI's own engine so it runs torch-free,
+with the real torch code shown), and **LLM fine-tuning** (a numpy SFT → LoRA →
+QLoRA → DPO toy pipeline + the production HF/PEFT/TRL code). Walk them with
+`optimumai tutorial numpy` (or `--notebook`), and read the matching in-depth guides
+on the docs site. **585 tests**.
 
 ## Development
 
