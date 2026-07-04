@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (67 across 18 tracks)
+optimumai learn                       # list every topic (76 across 20 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -156,6 +156,43 @@ New course tracks: **13 Classical ML · 14 Classical AI Search · 15 Reinforceme
 Learning · 16 NLP · 17 Computer Vision · 18 LLM Evaluation** — the path now spans
 **67 lessons across 18 tracks**. There's a runnable tour in `04_classical_ai.ipynb`
 (get it with `optimumai notebooks`).
+
+## Play with it — interactive & explained (v1.2)
+
+v1.2 turns traces into things you can *touch*: prompt-engineering patterns, the
+augmented-RNN lineage from [distill.pub](https://distill.pub/2016/augmented-rnns/),
+and **self-contained interactive HTML playgrounds** (inline vanilla JS — no server,
+no build, works offline) inspired by
+[Transformer Explainer](https://poloclub.github.io/transformer-explainer/) and
+[TensorFlow Playground](https://playground.tensorflow.org).
+
+```bash
+# Interactive playgrounds → a standalone .html you open in any browser
+optimumai playground attention          # hover a query token; drag temperature, watch softmax
+optimumai playground kmeans             # click to add points, watch Lloyd's iterate
+optimumai playground astar              # draw walls, watch A* expand the frontier
+
+# Prompt engineering — how the prompt is assembled and why it works
+optimumai prompt chain-of-thought
+optimumai prompt react
+
+# Augmented RNNs (distill.pub): attention-as-memory, NTM, adaptive compute
+optimumai augrnn ntm
+optimumai augrnn act
+
+# Per-concept plots + animated GIFs (needs [viz])
+optimumai visualize kmeans --fmt gif
+optimumai visualize ppo_clip --fmt png
+```
+
+```python
+from optimumai.prompting import chain_of_thought, react, self_consistency
+from optimumai.augmented_rnns import attention_read, ntm_read, adaptive_computation_time
+from optimumai.visualization.playgrounds import playground   # -> writes an .html
+```
+
+New tracks: **19 Prompt Engineering · 20 Augmented RNNs** — the path now spans
+**76 lessons across 20 tracks**. Docs: <https://muhammadyahiya.github.io/optimumai/>.
 
 ## Learn it as a course (v0.3)
 
@@ -430,6 +467,9 @@ optimumai/
 ├── nlp/             # BPE, TF-IDF, n-grams, edit distance, word2vec         ✨v1.1
 ├── vision/          # convolution, pooling, Sobel edges, a tiny CNN         ✨v1.1
 ├── evaluation/      # BLEU/ROUGE, perplexity, calibration, faithfulness     ✨v1.1
+├── prompting/       # zero/few-shot, CoT, ReAct, self-consistency, JSON      ✨v1.2
+├── augmented_rnns/  # attention-as-memory, Neural Turing Machine, ACT        ✨v1.2
+├── visualization/   # + playgrounds (interactive HTML) + gallery (plots/GIF) ✨v1.2
 ├── cli/             # the `optimumai` command
 └── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
@@ -495,6 +535,15 @@ word2vec), **computer vision** (convolution, pooling, Sobel, a tiny CNN), and
 **LLM evaluation** (BLEU/ROUGE, perplexity, calibration, a candid hallucination
 heuristic). The course now spans **67 lessons across 18 tracks**; the test suite,
 **455 tests**.
+
+**v1.2** ✅ — **interactive & explained**: prompt-engineering patterns
+(zero/few-shot, chain-of-thought, ReAct, self-consistency, structured output), the
+augmented-RNN lineage from [distill.pub](https://distill.pub/2016/augmented-rnns/)
+(attention-as-memory, Neural Turing Machines, Adaptive Computation Time),
+self-contained **interactive HTML playgrounds** (a Transformer-Explainer-style
+attention widget + k-means + A\*), and a per-concept plot/GIF gallery wired into
+`visualize`. GitHub Pages docs fixed & live. The course now spans **76 lessons
+across 20 tracks**; the test suite, **522 tests**.
 
 ## Development
 

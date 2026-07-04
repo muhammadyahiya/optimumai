@@ -20,6 +20,11 @@ from dataclasses import dataclass, field
 from optimumai.algebra import Matrix, Vector
 from optimumai.analysis.compare import demo as compare_demo
 from optimumai.analysis.compare import sweep_trace
+
+# --- v1.2 demos: prompt engineering + augmented RNNs ---
+from optimumai.augmented_rnns.act import demo as act_demo
+from optimumai.augmented_rnns.attention import demo as augmented_attention_demo
+from optimumai.augmented_rnns.ntm import demo as ntm_demo
 from optimumai.autograd import Value
 from optimumai.calculus.derivative import chain_rule_trace, derivative_trace, gradient_trace
 from optimumai.core.trace import Trace
@@ -65,6 +70,12 @@ from optimumai.nlp.tfidf import demo as tfidf_demo
 from optimumai.nlp.word2vec import demo as word2vec_demo
 from optimumai.optimization.optimizers import descent_demo
 from optimumai.probability.softmax import softmax_trace
+from optimumai.prompting.chain_of_thought import demo as cot_demo
+from optimumai.prompting.few_shot import demo as few_shot_demo
+from optimumai.prompting.react import demo as react_demo
+from optimumai.prompting.self_consistency import demo as self_consistency_demo
+from optimumai.prompting.structured_output import demo as structured_output_demo
+from optimumai.prompting.zero_shot import demo as zero_shot_demo
 from optimumai.rag.pipeline import RAGPipeline
 from optimumai.rl.mdp import demo as value_iteration_demo
 from optimumai.rl.policy_gradient import demo as reinforce_demo
@@ -338,6 +349,35 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("hallucination", "Hallucination / faithfulness heuristic", "18 · LLM Evaluation",
            "A claim-overlap grounding proxy — plus why real detection is unsolved.",
            hallucination_demo, ("rag",)),
+    # --- Prompt Engineering --------------------------------------------------
+    Lesson("zero_shot", "Zero-shot prompting", "19 · Prompt Engineering",
+           "Role + instruction + task, with no worked examples.",
+           zero_shot_demo),
+    Lesson("few_shot", "Few-shot prompting", "19 · Prompt Engineering",
+           "In-context learning from K labeled exemplars.",
+           few_shot_demo, ("zero_shot",)),
+    Lesson("chain_of_thought", "Chain-of-thought prompting", "19 · Prompt Engineering",
+           "Elicit intermediate reasoning before the final answer.",
+           cot_demo, ("few_shot",)),
+    Lesson("react", "ReAct prompting", "19 · Prompt Engineering",
+           "Interleave Thought / Action / Observation with a tool.",
+           react_demo, ("chain_of_thought",)),
+    Lesson("self_consistency", "Self-consistency", "19 · Prompt Engineering",
+           "Sample N chain-of-thought paths and majority-vote the answer.",
+           self_consistency_demo, ("chain_of_thought",)),
+    Lesson("structured_output", "Structured output", "19 · Prompt Engineering",
+           "Constrain generation to a validated JSON schema.",
+           structured_output_demo, ("zero_shot",)),
+    # --- Augmented RNNs (distill.pub) ---------------------------------------
+    Lesson("augmented_attention", "Attention as differentiable memory", "20 · Augmented RNNs",
+           "Content-based soft attention as a memory read: score → softmax → blend.",
+           augmented_attention_demo, ("softmax",)),
+    Lesson("ntm", "Neural Turing Machines", "20 · Augmented RNNs",
+           "External read/write memory addressed by cosine similarity — erase then add.",
+           ntm_demo, ("augmented_attention",)),
+    Lesson("act", "Adaptive Computation Time", "20 · Augmented RNNs",
+           "Learned, variable compute per input via a halting probability + ponder cost.",
+           act_demo, ("softmax",)),
 )
 
 

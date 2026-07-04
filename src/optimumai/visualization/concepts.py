@@ -114,13 +114,13 @@ def _png_dotcos(out):
 
 
 def _lazy_plots():
-    from optimumai.visualization import animate, landscape, plots
+    from optimumai.visualization import animate, gallery, landscape, plots
 
-    return plots, landscape, animate
+    return plots, landscape, animate, gallery
 
 
 def _registry():
-    plots, landscape, animate = _lazy_plots()
+    plots, landscape, animate, gallery = _lazy_plots()
     return {
         "activation": {"png": lambda o: plots.plot_activation(out=o), "gif": None},
         "softmax": {"png": lambda o: plots.plot_softmax_temperature(out=o),
@@ -139,6 +139,17 @@ def _registry():
         "vram": {"png": _png_vram, "gif": None},
         "backprop": {"png": _png_backprop, "gif": None},
         "dot": {"png": _png_dotcos, "gif": None},
+        # v1.2 — classical-AI / ML gallery
+        "kmeans": {"png": lambda o: gallery.plot_kmeans(out=o),
+                   "gif": lambda o: gallery.animate_kmeans(out=o)},
+        "decision_boundary": {"png": lambda o: gallery.plot_decision_boundary(out=o), "gif": None},
+        "astar": {"png": lambda o: gallery.plot_astar_grid(out=o),
+                  "gif": lambda o: gallery.animate_astar(out=o)},
+        "value_iteration": {"png": lambda o: gallery.plot_value_function(out=o),
+                            "gif": lambda o: gallery.animate_value_iteration(out=o)},
+        "conv2d": {"png": lambda o: gallery.plot_conv_feature_map(out=o), "gif": None},
+        "calibration": {"png": lambda o: gallery.plot_calibration(out=o), "gif": None},
+        "ppo_clip": {"png": lambda o: gallery.plot_ppo_clip(out=o), "gif": None},
     }
 
 

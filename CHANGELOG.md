@@ -4,6 +4,48 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-07-04
+
+The **interactive & explained** release — turning traces into things you can *play
+with*, and filling the last conceptual gaps. Course grows to **76 lessons / 20
+tracks**; suite to **522 tests**. No new dependencies (the playgrounds are
+self-contained HTML; the gallery uses the existing `[viz]` extra).
+
+### Added
+
+- **prompting** — prompt-engineering patterns as explainable prompt-assembly
+  traces: `zero_shot`, `few_shot`, `chain_of_thought`, `react`,
+  `self_consistency`, `structured_output`. Each shows how the prompt is built and
+  why it works / how it fails. CLI: `optimumai prompt <pattern>`.
+- **augmented_rnns** — the pre-transformer lineage from
+  [distill.pub](https://distill.pub/2016/augmented-rnns/): content-based
+  `attention_read` (attention as differentiable memory), a Neural Turing Machine
+  head (`ntm_read` / `ntm_write`, cosine addressing + erase/add), and
+  `adaptive_computation_time` (halting probability + ponder cost). CLI:
+  `optimumai augrnn attention|ntm|act`.
+- **visualization.playgrounds** — self-contained interactive HTML (inline vanilla
+  JS, **no server, no build, works offline**), inspired by
+  [Transformer Explainer](https://poloclub.github.io/transformer-explainer/) and
+  [TensorFlow Playground](https://playground.tensorflow.org): a Transformer-style
+  **attention** widget (hover a query token, drag a temperature slider to
+  re-softmax live), a **k-means** playground (click points, watch Lloyd's iterate),
+  and an **A\*** playground (draw walls, watch the frontier expand). CLI:
+  `optimumai playground attention|kmeans|astar` (softmax/backprop unchanged).
+- **visualization.gallery** — per-concept matplotlib plots and animated GIFs for
+  the v1.1 modules (k-means, decision boundary, A\* grid, gridworld value
+  function, conv feature map, calibration reliability, PPO clip), registered in the
+  `visualize` concept registry: `optimumai visualize kmeans|astar|value_iteration|
+  conv2d|calibration|ppo_clip|decision_boundary --fmt png|gif`.
+- **docs** — the site now covers the v1.1 + v1.2 packages (Classical AI / ML / RL
+  and Interactive & Explained pages), plus a dashboard deploy guide. The
+  GitHub Pages site is live at <https://muhammadyahiya.github.io/optimumai/>.
+
+### Fixed
+
+- **GitHub Pages** — the docs workflow was deploying to the `gh-pages` branch, but
+  Pages had never been enabled in repo settings (a one-time step); the site
+  returned 404. Pages is now enabled and serving.
+
 ## [1.1.0] — 2026-07-04
 
 The **breadth release** — OptimumAI grows from the deep-learning/LLM stack out to

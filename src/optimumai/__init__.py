@@ -55,6 +55,13 @@ TF-IDF, n-grams, edit distance, word2vec), computer vision (convolution, pooling
 Sobel edges, a tiny CNN), and LLM evaluation (BLEU/ROUGE, perplexity, calibration,
 and a candid hallucination/faithfulness heuristic) — each an explainable trace.
 
+v1.2 makes it interactive & explained: prompt-engineering patterns (zero/few-shot,
+chain-of-thought, ReAct, self-consistency, structured output), the augmented-RNN
+lineage from distill.pub (attention as differentiable memory, Neural Turing
+Machines, Adaptive Computation Time), self-contained interactive HTML playgrounds
+(a Transformer-Explainer-style attention widget, plus k-means and A*), and a
+per-concept plot/GIF gallery wired into the ``visualize`` registry.
+
 Public-API stability
 ---------------------
 Everything exported from the top-level ``optimumai`` namespace (the names in
@@ -66,6 +73,15 @@ name prefixed with ``_`` may change between minor releases.
 from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
 from optimumai.analysis.compare import compare, sweep
+
+# --- v1.2: interactive & explained (prompting · augmented RNNs · playgrounds) ---
+from optimumai.augmented_rnns import (
+    NTMMemory,
+    adaptive_computation_time,
+    attention_read,
+    ntm_read,
+    ntm_write,
+)
 from optimumai.autograd.value import Value
 from optimumai.calculus.derivative import derivative, gradient
 from optimumai.core.explain import ExplainLevel
@@ -122,6 +138,14 @@ from optimumai.nlp import (
 from optimumai.optimization.optimizers import SGD, Adam, minimize
 from optimumai.probability.softmax import softmax, softmax_trace
 from optimumai.progress import ProgressTracker
+from optimumai.prompting import (
+    chain_of_thought,
+    few_shot,
+    react,
+    self_consistency,
+    structured_output,
+    zero_shot,
+)
 from optimumai.quiz.engine import Quiz
 from optimumai.rag.pipeline import RAGPipeline
 from optimumai.review.scheduler import ReviewScheduler
@@ -159,9 +183,10 @@ from optimumai.vision import (
 )
 from optimumai.visualization.concepts import render_concept
 from optimumai.visualization.interactive import editable_plot
+from optimumai.visualization.playgrounds import playground
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 __all__ = [
     "COURSE",
@@ -258,5 +283,20 @@ __all__ = [
     "perplexity",
     "ece",
     "faithfulness_score",
+    # v1.2 — prompt engineering
+    "zero_shot",
+    "few_shot",
+    "chain_of_thought",
+    "react",
+    "self_consistency",
+    "structured_output",
+    # v1.2 — augmented RNNs
+    "attention_read",
+    "ntm_read",
+    "ntm_write",
+    "NTMMemory",
+    "adaptive_computation_time",
+    # v1.2 — interactive playground dispatcher
+    "playground",
     "__version__",
 ]

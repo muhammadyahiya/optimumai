@@ -49,6 +49,9 @@ nav:
   - Learning path: course.md
   - GPU kernels: gpu-kernels.md
   - Visualization & circuits: visualization.md
+  - Classical AI, ML & RL: classical-ai.md
+  - Interactive & explained: interactive.md
   - Token generation: generation.md
+  - Deploy the dashboard: deploy.md
   - API reference: api.md
   - API stability: stability.md

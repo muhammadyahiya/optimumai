@@ -25,6 +25,11 @@ from optimumai import __version__
 from optimumai.algebra.matrix import Matrix
 from optimumai.algebra.vector import Vector
 from optimumai.analysis.compare import compare_trace, sweep_trace
+
+# --- v1.2: prompting · augmented RNNs · interactive playgrounds ---
+from optimumai.augmented_rnns.act import demo as augrnn_act_demo
+from optimumai.augmented_rnns.attention import demo as augrnn_attn_demo
+from optimumai.augmented_rnns.ntm import demo as augrnn_ntm_demo
 from optimumai.circuit.graph import build_from_expression
 from optimumai.circuit.interactive import interactive as interactive_circuit
 from optimumai.circuit.render import to_dot, to_html, to_terminal
@@ -69,6 +74,12 @@ from optimumai.nlp.tfidf import tfidf_trace
 from optimumai.nlp.word2vec import demo as nlp_word2vec_demo
 from optimumai.probability.softmax import softmax_trace
 from optimumai.progress import ProgressTracker
+from optimumai.prompting.chain_of_thought import demo as prompt_cot_demo
+from optimumai.prompting.few_shot import demo as prompt_fewshot_demo
+from optimumai.prompting.react import demo as prompt_react_demo
+from optimumai.prompting.self_consistency import demo as prompt_selfcons_demo
+from optimumai.prompting.structured_output import demo as prompt_structured_demo
+from optimumai.prompting.zero_shot import demo as prompt_zeroshot_demo
 from optimumai.quiz.engine import Quiz, available_quizzes
 from optimumai.review.scheduler import ReviewScheduler
 from optimumai.rl.mdp import demo as rl_mdp_demo
@@ -95,6 +106,7 @@ from optimumai.visualization.animate import (
 from optimumai.visualization.concepts import concept_formats, list_concepts, render_concept
 from optimumai.visualization.interactive import editable_plot
 from optimumai.visualization.landscape import plot_loss_landscape
+from optimumai.visualization.playgrounds import playground as viz_playground
 from optimumai.visualization.plots import (
     plot_activation,
     plot_attention,
@@ -719,13 +731,18 @@ def visualize_cmd(concept: str | None, fmt: str, out: str | None) -> None:
 @click.argument("concept", default="softmax")
 @click.option("--out", default=None, help="Output HTML path.")
 def playground_cmd(concept: str, out: str | None) -> None:
-    """Interactive circuit — drag inputs, watch the math update (softmax | backprop)."""
-    target = out or f"interactive_{concept.lower()}.html"
+    """Interactive HTML playground: softmax | backprop | attention | kmeans | astar."""
+    key = concept.lower()
+    target = out or f"interactive_{key}.html"
     try:
-        path = interactive_circuit(concept.lower(), out=target)
-    except ValueError as exc:
-        raise click.BadParameter(str(exc)) from exc
-    click.echo(f"saved → {path}  (open it in a browser and drag the sliders)")
+        path = interactive_circuit(key, out=target)
+    except ValueError:
+        # Fall through to the v1.2 vanilla-JS playgrounds (attention/kmeans/astar).
+        try:
+            path = viz_playground(key, out=target)
+        except ValueError as exc:
+            raise click.BadParameter(str(exc)) from exc
+    click.echo(f"saved → {path}  (open it in a browser)")
 
 
 # ============================ v1.1 command groups ============================
@@ -1023,6 +1040,37 @@ def eval_calibration(level: str) -> None:
 def eval_faithfulness(level: str) -> None:
     """A grounding/faithfulness heuristic (an educational hallucination proxy)."""
     eval_faith_demo().render(level)
+
+
+_PROMPT_DEMOS = {
+    "zero-shot": prompt_zeroshot_demo,
+    "few-shot": prompt_fewshot_demo,
+    "chain-of-thought": prompt_cot_demo,
+    "react": prompt_react_demo,
+    "self-consistency": prompt_selfcons_demo,
+    "structured-output": prompt_structured_demo,
+}
+_AUGRNN_DEMOS = {
+    "attention": augrnn_attn_demo,
+    "ntm": augrnn_ntm_demo,
+    "act": augrnn_act_demo,
+}
+
+
+@cli.command("prompt")
+@click.argument("pattern", type=click.Choice(list(_PROMPT_DEMOS)), default="chain-of-thought")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def prompt_cmd(pattern: str, level: str) -> None:
+    """Prompt-engineering patterns — how the prompt is assembled and why it works."""
+    _PROMPT_DEMOS[pattern]().render(level)
+
+
+@cli.command("augrnn")
+@click.argument("concept", type=click.Choice(list(_AUGRNN_DEMOS)), default="attention")
+@click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Detail level.")
+def augrnn_cmd(concept: str, level: str) -> None:
+    """Augmented RNNs (distill.pub): attention-as-memory | ntm | act."""
+    _AUGRNN_DEMOS[concept]().render(level)
 
 
 if __name__ == "__main__":  # pragma: no cover
