@@ -51,6 +51,7 @@ repl = ["prompt_toolkit>=3.0"]
 symbolic = ["sympy>=1.12"]
 tokenize = ["tiktoken>=0.7"]
 gpu = ["numba>=0.59"]
+torch = ["torch>=2.0"]  # optional: run the real-PyTorch cells in `optimumai tutorial pytorch`
 notebooks = ["jupyterlab>=4.0"]
 docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.24"]
 all = [

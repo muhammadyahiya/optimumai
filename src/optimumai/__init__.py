@@ -68,6 +68,13 @@ code on screen), and a ``flows`` subpackage of distill.pub-style interactive
 circuit-flow diagrams (a transformer forward pass, scaled dot-product attention,
 TF-IDF, and word2vec) rendered as self-contained, offline HTML.
 
+v1.4 teaches the tools: runnable, explained ``tutorials`` for **NumPy**,
+**matplotlib**, **PyTorch** (built on OptimumAI's own engine so it runs torch-free,
+with the real torch code shown), and **LLM fine-tuning** (a numpy SFT → LoRA → DPO
+toy pipeline plus the production HF/PEFT/TRL code). Walk any of them in the
+terminal (``optimumai tutorial numpy``) or export to a notebook — and read the
+matching in-depth guides on the docs site.
+
 Public-API stability
 ---------------------
 Everything exported from the top-level ``optimumai`` namespace (the names in
@@ -183,6 +190,7 @@ from optimumai.transformers.multihead import MultiHeadAttention
 from optimumai.transformers.positional import positional_encoding
 from optimumai.transformers.text_pipeline import TextPipeline
 from optimumai.tutor import Tutor
+from optimumai.tutorials import get_tutorial, list_tutorials
 from optimumai.vision import (
     avg_pool2d,
     cnn_forward,
@@ -201,7 +209,7 @@ from optimumai.visualization.plotstudio import (
 )
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 __all__ = [
     "COURSE",
@@ -322,5 +330,8 @@ __all__ = [
     "attention_flow",
     "tfidf_flow",
     "word2vec_flow",
+    # v1.4 — runnable tutorials
+    "get_tutorial",
+    "list_tutorials",
     "__version__",
 ]

@@ -4,6 +4,35 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] — 2026-07-04
+
+The **learn-the-tools** release — runnable, explained tutorials for the tools you
+actually type, plus in-depth docs for each. Suite grows to **585 tests**.
+
+### Added
+
+- **tutorials** — a tutorial engine (`Tutorial` / `Cell`, `get_tutorial`,
+  `list_tutorials`) where each lesson is prose → a short code cell → its live
+  output, executed in a shared namespace. Four tutorials:
+  - **numpy** — arrays, dtypes, indexing, boolean/fancy indexing, **broadcasting**,
+    vectorization vs loops, `axis` aggregations, linear algebra, seeded RNG, and a
+    vectorization capstone. Runs fully on the base install.
+  - **matplotlib** — the Figure/Axes model, line/bar/scatter/hist/subplots,
+    styling, and saving (headless-safe: Agg + `savefig`). Needs `[viz]`.
+  - **pytorch** — taught by **building each idea on OptimumAI's own engine so it
+    runs torch-free** (autograd via `Value.backward()`, an MLP training loop, …),
+    with the real `torch` code shown side-by-side (runs if you add `[torch]`).
+  - **finetuning** — a runnable numpy **SFT → LoRA → QLoRA → DPO** toy pipeline
+    (reusing `frontier.lora` / `quantization` / `rlhf`, and `rl.ppo`), plus the
+    production **HuggingFace + PEFT + TRL** code as labeled reference.
+  - CLI: `optimumai tutorial numpy` (or `matplotlib` / `pytorch` / `finetuning`),
+    `--notebook out.ipynb` to export, and bare `optimumai tutorial` to list.
+- **docs** — four detailed, Feynman-style guides on the site (Learn NumPy /
+  matplotlib / PyTorch / LLM fine-tuning), every runnable snippet verified.
+- **`[torch]` extra** — optional (`pip install optimumai[torch]`) so the PyTorch
+  tutorial's real-torch cells can run; deliberately kept out of `all`/`dev` so the
+  base install stays clean.
+
 ## [1.3.0] — 2026-07-04
 
 The **see-it-flow** release — visualize your own data, watch concepts flow, and

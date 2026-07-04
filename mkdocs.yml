@@ -47,6 +47,11 @@ nav:
   - Home: index.md
   - Quickstart: quickstart.md
   - Features: features.md
+  - Learn the tools:
+      - NumPy: learn-numpy.md
+      - matplotlib: learn-matplotlib.md
+      - PyTorch: learn-pytorch.md
+      - LLM fine-tuning: learn-finetuning.md
   - Learning path: course.md
   - GPU kernels: gpu-kernels.md
   - Visualization & circuits: visualization.md
