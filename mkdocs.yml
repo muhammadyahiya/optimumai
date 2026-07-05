@@ -3,32 +3,61 @@ site_description: Unlock the math behind AI — run any operation with explain=T
 site_url: https://muhammadyahiya.github.io/optimumai/
 repo_url: https://github.com/muhammadyahiya/optimumai
 repo_name: muhammadyahiya/optimumai
+edit_uri: edit/main/docs/
 
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/logo.png
   palette:
     - scheme: default
       primary: indigo
       accent: deep orange
       toggle:
         icon: material/weather-night
-        name: Dark mode
+        name: Switch to dark mode
     - scheme: slate
       primary: indigo
       accent: deep orange
       toggle:
         icon: material/weather-sunny
-        name: Light mode
+        name: Switch to light mode
   features:
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
+    - navigation.expand
     - navigation.top
+    - navigation.instant
+    - navigation.indexes
     - content.code.copy
+    - content.code.annotate
     - search.suggest
+    - search.highlight
+    - toc.follow
 
 markdown_extensions:
   - admonition
-  - pymdownx.highlight
-  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
   - toc:
       permalink: true
 
@@ -43,22 +72,34 @@ plugins:
             show_source: false
             members_order: source
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/muhammadyahiya/optimumai
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/optimumai/
+  version:
+    provider: mike
+
 nav:
   - Home: index.md
-  - Quickstart: quickstart.md
-  - Features: features.md
-  - Learn the tools:
-      - NumPy: learn-numpy.md
-      - matplotlib: learn-matplotlib.md
-      - PyTorch: learn-pytorch.md
-      - LLM fine-tuning: learn-finetuning.md
-  - Learning path: course.md
-  - GPU kernels: gpu-kernels.md
-  - Visualization & circuits: visualization.md
-  - Classical AI, ML & RL: classical-ai.md
-  - Interactive & explained: interactive.md
-  - Token generation: generation.md
-  - Deploy the dashboard: deploy.md
-  - CLI reference: cli.md
-  - API reference: api.md
-  - API stability: stability.md
+  - Getting Started:
+      - Quickstart: quickstart.md
+  - Features:
+      - Overview: features.md
+      - Visualization: visualization.md
+      - "GPU Kernels": gpu-kernels.md
+      - "Classical AI, ML & RL": classical-ai.md
+      - "Interactive & Explained": interactive.md
+      - "Token Generation": generation.md
+  - Learning Path:
+      - "Course & Progress": course.md
+      - "NumPy Guide": learn-numpy.md
+      - "matplotlib Guide": learn-matplotlib.md
+      - "PyTorch Guide": learn-pytorch.md
+      - "LLM Fine-Tuning Guide": learn-finetuning.md
+  - Reference:
+      - "CLI Reference": cli.md
+      - "API Reference": api.md
+      - "API Stability": stability.md
+  - Deploy: deploy.md
