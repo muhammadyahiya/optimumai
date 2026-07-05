@@ -28,12 +28,14 @@ from optimumai.flows.attention_flow import attention_flow
 from optimumai.flows.tfidf_flow import tfidf_flow
 from optimumai.flows.transformer_flow import transformer_flow
 from optimumai.flows.word2vec_flow import word2vec_flow
+from optimumai.rag.flow import rag_flow
 
 _FLOWS = {
     "transformer": transformer_flow,
     "attention": attention_flow,
     "tfidf": tfidf_flow,
     "word2vec": word2vec_flow,
+    "rag": rag_flow,
 }
 
 
@@ -50,6 +52,7 @@ def flow(name: str, out: str | None = None) -> str:
 __all__ = [
     "attention_flow",
     "flow",
+    "rag_flow",
     "tfidf_flow",
     "transformer_flow",
     "word2vec_flow",

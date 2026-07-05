@@ -1097,21 +1097,36 @@ def augrnn_cmd(concept: str | None, level: str) -> None:
     _AUGRNN_DEMOS[concept]().render(level)
 
 
-_FLOW_CONCEPTS = ["transformer", "attention", "tfidf", "word2vec"]
+_FLOW_CONCEPTS = ["transformer", "attention", "tfidf", "word2vec", "rag"]
 _PLOT_KINDS = ["bar", "hist", "scatter", "box", "line", "pie", "violin"]
 
 
 @cli.command("flow")
 @click.argument("concept", required=False, type=click.Choice(_FLOW_CONCEPTS))
 @click.option("--out", default=None, help="Output HTML path.")
-def flow_cmd(concept: str | None, out: str | None) -> None:
-    """Interactive concept-flow diagram (distill-style). Run 'optimumai flow' to list."""
+@click.option("--query", default=None, help="Query string for the rag flow.")
+def flow_cmd(concept: str | None, out: str | None, query: str | None) -> None:
+    """Interactive concept-flow diagram (distill-style). Run 'optimumai flow' to list.
+
+    The 'rag' flow accepts an optional --query to use real cosine scores.
+    """
     if concept is None:
         click.echo("Interactive flow diagrams — run one of:\n")
         for c in _FLOW_CONCEPTS:
             click.echo(f"  optimumai flow {c}")
+        click.echo("\nExample with custom RAG query:")
+        click.echo('  optimumai flow rag --query "What year was the Eiffel Tower built?"')
         return
-    path = build_flow(concept, out=out)
+    if concept == "rag":
+        from optimumai.rag.flow import rag_flow
+        kw: dict = {}
+        if query:
+            kw["query"] = query
+        if out:
+            kw["out"] = out
+        path = rag_flow(**kw)
+    else:
+        path = build_flow(concept, out=out)
     click.echo(f"saved → {path}  (open it in a browser)")
 
 
