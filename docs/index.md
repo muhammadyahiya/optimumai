@@ -37,9 +37,9 @@ Vector([1, 2, 3]).dot(Vector([4, 5, 6]), explain=True)
     ---
 
     First-principles AI from linear algebra to FlashAttention, LoRA, and DPO.
-    Every lesson is a runnable, explained trace.
+    20 tracks, every lesson a runnable, explained trace.
 
-    [:octicons-arrow-right-24: Learning path](course.md)
+    [:octicons-arrow-right-24: Courses](course.md)
 
 -   :material-code-braces: **explain=True for everything**
 

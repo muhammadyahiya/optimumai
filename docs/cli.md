@@ -1,4 +1,4 @@
-# CLI reference
+# CLI Reference
 
 The `optimumai` command wraps every capability in the library. Run
 `optimumai --help` or `optimumai <command> --help` at any time.

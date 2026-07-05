@@ -1,4 +1,4 @@
-# GPU kernels from scratch
+# GPU Kernels
 
 Write per-thread kernels, run them on a pure-Python CUDA-style **simulator**
 (no GPU needed), check them against NumPy, and get graded feedback — with

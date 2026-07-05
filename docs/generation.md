@@ -1,4 +1,4 @@
-# Token generation
+# Token Generation
 
 Type a prompt, watch tokens come out. Providers are auto-detected and degrade
 gracefully — using only the standard library for HTTP, so nothing extra is

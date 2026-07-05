@@ -1,4 +1,4 @@
-# Visualization & circuits
+# Visualization
 
 OptimumAI has three visualization layers:
 

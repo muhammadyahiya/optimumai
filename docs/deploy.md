@@ -1,4 +1,4 @@
-# Deploy the dashboard
+# Deploy
 
 `optimumai dashboard` runs the Streamlit progress dashboard locally
 (`pip install "optimumai[dashboard]"`). To share it as a public link — for

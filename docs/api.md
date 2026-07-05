@@ -1,4 +1,4 @@
-# API reference
+# API Reference
 
 Auto-generated from the docstrings of the public `optimumai` package.
 

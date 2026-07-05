@@ -1,4 +1,4 @@
-# API stability
+# API Stability
 
 From **v1.0.0**, OptimumAI follows [semantic versioning](https://semver.org/).
 

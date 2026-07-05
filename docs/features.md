@@ -1,4 +1,4 @@
-# Features — the complete tour
+# Features
 
 Every capability in OptimumAI follows one pattern: **the same code computes
 the real answer and can explain itself.** Call anything with `explain=True`
