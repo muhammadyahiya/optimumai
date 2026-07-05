@@ -1,6 +1,6 @@
 # Interactive & Explained
 
-Four interactive layers built on top of the core library:
+Five interactive layers built on top of the core library:
 
 1. **RAG flow diagram** — a D3 + KaTeX pipeline explainer that proves the
    `FlowTrace` schema generalises across concepts
@@ -9,6 +9,8 @@ Four interactive layers built on top of the core library:
 3. **Augmented RNNs** — the distill.pub lineage from soft attention to NTMs
    to adaptive computation
 4. **Interactive playgrounds** — self-contained, offline HTML widgets
+5. **Concept Explorer** — 30 AI/ML concepts as steppable DAGs with a formula
+   and runnable code panel for every step
 
 ---
 
@@ -242,6 +244,51 @@ optimumai playground astar
 ```
 
 ::: optimumai.visualization.playgrounds
+
+---
+
+## Concept Explorer — `optimumai.visualization.explain`
+
+**30 foundational AI/ML concepts**, each rendered as an interactive DAG you
+step through — every node lights up in order, and the side panel shows a
+**KaTeX-rendered formula** *and* a **runnable `optimumai` code snippet** for
+that exact step. Self-contained, offline HTML (D3 + dagre for layout, KaTeX
+for math — no server, no build step).
+
+```bash
+optimumai explain                  # list all 30 concepts
+optimumai explain attention        # Q,K,V -> QKᵀ -> scale -> softmax -> weighted sum
+optimumai explain backpropagation  # forward pass, then the chain rule in reverse
+optimumai explain adam_optimizer   # 1st/2nd moments, bias correction, the update
+optimumai explore                  # a searchable landing page linking all 30
+```
+
+```python
+from optimumai import explain, explore_concepts, list_explain_concepts
+
+list_explain_concepts()          # -> 30 concept keys, sorted
+explain("kmeans_clustering")     # -> writes explain_kmeans_clustering.html, opens it
+explore_concepts()               # -> writes explore.html, opens it
+```
+
+**All 30 concepts**, grouped by area:
+
+| Area | Concepts |
+|---|---|
+| Core math | `sum_and_dot_product`, `gradient`, `variance` |
+| Neural net building blocks | `weights_bias_neuron`, `activation_functions`, `softmax`, `layer_normalization`, `dropout` |
+| Training | `backpropagation`, `gradient_descent`, `adam_optimizer`, `adamw_optimizer`, `cross_entropy_loss` |
+| Classical ML | `linear_regression`, `logistic_regression`, `bias_variance_tradeoff`, `pca`, `kmeans_clustering`, `supervised_ml`, `unsupervised_ml`, `model_drift` |
+| NLP & transformers | `tokenizer`, `embedding_lookup`, `attention`, `transformer_block`, `kv_cache`, `tfidf` |
+| RL & agents | `q_learning`, `reinforcement_learning_overview`, `multi_agentic_workflow` |
+
+Each concept in the `CONCEPTS` registry is a small computation graph (nodes +
+edges) walked one step at a time; every step carries a narration, a KaTeX
+formula, and a code snippet. `explore_concepts()` builds a landing page with a
+live search box over all of them — click a card to launch that concept's
+explainer.
+
+::: optimumai.visualization.explain
 
 ---
 

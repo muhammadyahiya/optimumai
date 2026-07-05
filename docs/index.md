@@ -86,6 +86,15 @@ Vector([1, 2, 3]).dot(Vector([4, 5, 6]), explain=True)
 
     [:octicons-arrow-right-24: Classical AI, ML & RL](classical-ai.md)
 
+-   :material-graph-outline: **Concept Explorer — 30 concepts**
+
+    ---
+
+    Attention, backprop, Adam/AdamW, PCA, k-means, transformer blocks, and more
+    — each a DAG you step through, formula and runnable code side by side.
+
+    [:octicons-arrow-right-24: Interactive & Explained](interactive.md)
+
 </div>
 
 ---
@@ -185,6 +194,8 @@ optimumai train --steps 150 --lr 0.05
 optimumai kernel matmul                # GPU kernel on the simulator
 optimumai visualize attention --fmt gif --out attn.gif
 optimumai playground softmax           # drag-the-inputs circuit
+optimumai explain attention            # DAG explainer: formula + code per step
+optimumai explore                      # searchable landing page, all 30 concepts
 optimumai generate "The key insight behind attention is"
 optimumai dashboard                    # Streamlit progress dashboard
 ```
@@ -231,3 +242,4 @@ on the same code path — the trace can never lie about what ran.
 | v1.3 | Plot Studio, distill.pub-style circuit-flow HTML diagrams (transformer, attention, TF-IDF, word2vec) |
 | v1.4 | Runnable tutorials: NumPy, matplotlib, PyTorch, LLM fine-tuning |
 | v1.5 | OptiX typed TypeScript widget kit; hardened interactive layer |
+| v1.6 | Concept Explorer: 30 AI/ML concepts as steppable DAGs with formula + code panels |

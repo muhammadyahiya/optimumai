@@ -185,6 +185,12 @@ optimumai playground kmeans                      # click to add points, Lloyd's 
 optimumai playground astar                       # draw walls, A* expands the frontier
 optimumai playground softmax                     # drag logits, distribution recomputes
 optimumai playground backprop                    # drag a/b/c/f, gradients update live
+
+# Concept Explorer — 30 concepts as steppable DAGs (formula + code per step)
+optimumai explain                                # list all 30 concepts
+optimumai explain attention                      # Q,K,V -> QKᵀ -> scale -> softmax -> weighted sum
+optimumai explain adam_optimizer                 # moments, bias correction, the update
+optimumai explore                                # searchable landing page, links all 30
 ```
 
 ---

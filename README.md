@@ -194,6 +194,38 @@ from optimumai.visualization.playgrounds import playground   # -> writes an .htm
 New tracks: **19 Prompt Engineering · 20 Augmented RNNs** — the path now spans
 **76 lessons across 20 tracks**. Docs: <https://muhammadyahiya.github.io/optimumai/>.
 
+## Explore every concept — formula + code, side by side (v1.6)
+
+Pick any of **30 foundational AI/ML concepts** and get a **DAG you step
+through**: each node lights up in order, and the side panel shows a
+**KaTeX-rendered formula** and a **runnable `optimumai` code snippet** for that
+exact step — self-contained, offline HTML (no server, no build).
+
+```bash
+optimumai explain                 # list all 30 concepts
+optimumai explain attention       # Q,K,V → QKᵀ → scale → softmax → weighted sum
+optimumai explain backpropagation # forward pass, then the chain rule in reverse
+optimumai explain adam_optimizer  # 1st/2nd moments, bias correction, the update
+optimumai explore                 # a searchable landing page linking all 30
+```
+
+```python
+from optimumai import explain, explore_concepts, list_explain_concepts
+
+list_explain_concepts()          # -> 30 concept keys, sorted
+explain("kmeans_clustering")     # -> writes explain_kmeans_clustering.html, opens it
+explore_concepts()               # -> writes explore.html, opens it
+```
+
+**All 30 concepts:** attention · backpropagation · gradient · gradient_descent ·
+activation_functions · adam_optimizer · adamw_optimizer · softmax ·
+cross_entropy_loss · layer_normalization · multi_agentic_workflow ·
+weights_bias_neuron · linear_regression · logistic_regression ·
+bias_variance_tradeoff · embedding_lookup · kmeans_clustering · kv_cache ·
+model_drift · pca · q_learning · reinforcement_learning_overview ·
+sum_and_dot_product · supervised_ml · unsupervised_ml · tokenizer ·
+transformer_block · variance · dropout · tfidf.
+
 ## Learn it as a course (v0.3)
 
 OptimumAI isn't just a library — it's a **first-principles AI learning path** you
@@ -474,6 +506,7 @@ optimumai/
 ├── tutorials/       # runnable NumPy / matplotlib / PyTorch / fine-tuning tuts  ✨v1.4
 ├── visualization/_static/optix.js  # compiled OptiX TS widget kit (from web/)  ✨v1.5
 web/                 # OptiX TypeScript source — tsc + eslint + vitest + esbuild  ✨v1.5
+├── visualization/explain.py  # 30 concept DAG explainers — formula + code per step ✨v1.6
 ├── cli/             # the `optimumai` command
 └── ../notebooks/    # runnable Jupyter notebooks                           ✨v0.10
 ```
@@ -571,6 +604,17 @@ one self-contained IIFE (`_static/optix.js`, ~7 KB, zero CDN) shipped in the whe
 `pip install` stays node-free. Its debut: a TensorFlow-Playground-style
 **neural-net playground** — `optimumai playground nn` — train a tiny MLP on XOR /
 circle / spiral and watch the decision boundary form. **589 tests** (Python).
+
+**v1.6** ✅ — the **Concept Explorer**: **30 foundational AI/ML concepts**
+(attention, backprop, gradients & gradient descent, activation functions,
+Adam/AdamW, softmax, cross-entropy, layer norm, multi-agentic workflows,
+weights/bias, linear/logistic regression, bias–variance tradeoff, embeddings,
+k-means, KV cache, model drift, PCA, Q-learning, RL, dot products, supervised /
+unsupervised ML, tokenization (BPE), transformer blocks, variance, dropout, and
+TF-IDF) each rendered as a **DAG you step through**, with a **KaTeX formula and
+a runnable `optimumai` code snippet side by side for every step**. Run
+`optimumai explain <concept>` for any one of them, or `optimumai explore` for a
+searchable landing page linking all 30.
 
 ## Development
 
