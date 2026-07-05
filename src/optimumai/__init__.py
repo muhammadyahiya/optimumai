@@ -81,6 +81,13 @@ IIFE shipped in the wheel) — replacing hand-written inline JS. Its debut is a
 TensorFlow-Playground-style **neural-net playground** (``optimumai playground nn``):
 pick a 2-D dataset, train a tiny MLP, and watch the decision boundary form.
 
+v1.6 adds the **Concept Explorer**: 30 foundational AI/ML concepts (attention,
+backprop, gradients, Adam/AdamW, activations, layer norm, PCA, k-means, RL,
+tokenization, transformer blocks, and more) each rendered as a DAG you step
+through, with a KaTeX formula *and* a runnable ``optimumai`` code snippet for
+every step (``optimumai explain <concept>``), plus a searchable landing page
+listing all of them (``optimumai explore``).
+
 Public-API stability
 ---------------------
 Everything exported from the top-level ``optimumai`` namespace (the names in
@@ -206,6 +213,7 @@ from optimumai.vision import (
 )
 from optimumai.visualization.assets import optix_js
 from optimumai.visualization.concepts import render_concept
+from optimumai.visualization.explain import explain, explore_concepts, list_explain_concepts
 from optimumai.visualization.interactive import editable_plot
 from optimumai.visualization.playgrounds import nn_playground, playground
 from optimumai.visualization.plotstudio import (
@@ -216,7 +224,7 @@ from optimumai.visualization.plotstudio import (
 )
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.5.1"
+__version__ = "1.6.0"
 
 __all__ = [
     "COURSE",
@@ -343,5 +351,9 @@ __all__ = [
     # v1.5 — OptiX TypeScript widget kit
     "nn_playground",
     "optix_js",
+    # v1.6 — Concept Explorer
+    "explain",
+    "explore_concepts",
+    "list_explain_concepts",
     "__version__",
 ]

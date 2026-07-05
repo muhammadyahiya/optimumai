@@ -113,3 +113,5 @@ ignore = ["N803", "N806"]
 "src/optimumai/visualization/concepts.py" = ["E501"]
 # Interactive circuits embed HTML/JS templates.
 "src/optimumai/circuit/interactive.py" = ["E501"]
+# Concept explainer embeds an HTML/CSS/JS template plus dense per-step formula/code strings.
+"src/optimumai/visualization/explain.py" = ["E501"]

@@ -108,6 +108,8 @@ from optimumai.visualization.animate import (
     animate_softmax_temperature,
 )
 from optimumai.visualization.concepts import concept_formats, list_concepts, render_concept
+from optimumai.visualization.explain import explain as explain_concept
+from optimumai.visualization.explain import explore_concepts, list_explain_concepts
 from optimumai.visualization.interactive import editable_plot
 from optimumai.visualization.landscape import plot_loss_landscape
 from optimumai.visualization.playgrounds import playground as viz_playground
@@ -753,6 +755,34 @@ def playground_cmd(concept: str, out: str | None) -> None:
                 path = viz_playground(key, out=target)
             except ValueError as exc:
                 raise click.BadParameter(str(exc)) from exc
+    click.echo(f"saved → {path}  (open it in a browser)")
+
+
+@cli.command("explain")
+@click.argument("concept", required=False)
+@click.option("--out", default=None, help="Output HTML path.")
+@click.option("--no-browser", is_flag=True, help="Don't open the browser automatically.")
+def explain_cmd(concept: str | None, out: str | None, no_browser: bool) -> None:
+    """Interactive DAG explainer (formula + code per step). Omit CONCEPT to list all 30."""
+    if concept is None:
+        click.echo("Available concepts:\n")
+        for name in list_explain_concepts():
+            click.echo(f"  {name}")
+        click.echo("\nRun:  optimumai explain attention")
+        return
+    try:
+        path = explain_concept(concept.lower(), out=out, open_browser=not no_browser)
+    except ValueError as exc:
+        raise click.BadParameter(str(exc)) from exc
+    click.echo(f"saved → {path}  (open it in a browser)")
+
+
+@cli.command("explore")
+@click.option("--out", default="explore.html", help="Output HTML path.")
+@click.option("--no-browser", is_flag=True, help="Don't open the browser automatically.")
+def explore_cmd(out: str, no_browser: bool) -> None:
+    """Searchable concept browser — all 30 explainers as clickable cards in one page."""
+    path = explore_concepts(out=out, open_browser=not no_browser)
     click.echo(f"saved → {path}  (open it in a browser)")
 
 

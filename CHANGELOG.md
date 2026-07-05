@@ -4,6 +4,34 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] — 2026-07-05
+
+The **Concept Explorer** release — 30 interactive AI/ML concept explainers with
+formula + Python code panels, a searchable concept browser, and CLI commands.
+
+### Added
+
+- **30 concept explainers** (`optimumai explain <concept>`) — DAG-style
+  interactive HTML, each rendered step-by-step with a KaTeX formula *and* a
+  runnable `optimumai` code snippet: `attention`, `backpropagation`,
+  `gradient`, `gradient_descent`, `activation_functions`, `adam_optimizer`,
+  `adamw_optimizer`, `softmax`, `cross_entropy_loss`, `layer_normalization`,
+  `multi_agentic_workflow`, `weights_bias_neuron`, `linear_regression`,
+  `logistic_regression`, `bias_variance_tradeoff`, `embedding_lookup`,
+  `kmeans_clustering`, `kv_cache`, `model_drift`, `pca`, `q_learning`,
+  `reinforcement_learning_overview`, `sum_and_dot_product`, `supervised_ml`,
+  `unsupervised_ml`, `tokenizer`, `transformer_block`, `variance`, `dropout`,
+  `tfidf`.
+- **Code panel** — the DAG explainer's side pane now shows a
+  `Python · optimumai` code block right next to the formula, in sync with the
+  current step.
+- **Concept Explorer** (`optimumai explore`) — a searchable, dark-themed
+  landing page listing all 30 concepts as cards with direct launch links.
+- **CLI**: `optimumai explain <concept>` (omit to list all) and
+  `optimumai explore`.
+- New `optimumai.visualization.explain` module exporting `explain`,
+  `explore_concepts`, and `list_explain_concepts` from the top-level package.
+
 ## [1.5.0] — 2026-07-04
 
 The **OptiX** release — a TypeScript/JavaScript foundation that hardens the
