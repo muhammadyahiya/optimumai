@@ -172,16 +172,73 @@ html = to_html(graph, out="circuit.html")
 
 ## distill.pub-style circuit flow diagrams (v1.3+)
 
+Concept-agnostic D3 + KaTeX pipeline diagrams. Each concept module emits a
+`FlowTrace` (nodes, edges, steps); the renderer reads only that — it never
+knows what concept it's drawing.
+
 ```python
 from optimumai.flows import transformer_flow, attention_flow, tfidf_flow, word2vec_flow
+from optimumai.rag.flow import rag_flow
 
-transformer_flow(out="transformer.html")   # transformer forward pass, animated
-attention_flow(out="attention.html")       # scaled dot-product attention circuit
-tfidf_flow(out="tfidf.html")               # TF-IDF circuit
+transformer_flow(out="transformer.html")   # transformer forward pass
+attention_flow(out="attention.html")       # scaled dot-product attention
+tfidf_flow(out="tfidf.html")               # TF-IDF pipeline
 word2vec_flow(out="word2vec.html")         # word2vec skip-gram
+rag_flow(out="rag_explainer.html")         # RAG: chunk → embed → retrieve → rerank → generate
 ```
 
-Self-contained, offline HTML. Open in any browser.
+```bash
+optimumai flow transformer
+optimumai flow attention
+optimumai flow tfidf
+optimumai flow word2vec
+optimumai flow rag
+optimumai flow rag --query "What year was the Eiffel Tower built?"
+optimumai flow rag --out my_rag.html
+```
+
+### RAG flow diagram — `optimumai.rag.flow`
+
+The RAG diagram is built on the `FlowTrace` schema
+(`optimumai.core.flow_trace`):
+
+- **15 nodes** — source document, 3 chunks, 3 chunk embeddings, query,
+  query embedding, vector index, retrieved set, reranked set, context, LLM,
+  answer
+- **16 edges** — each with `active_from_step` so they appear progressively
+- **8 steps** — chunking → embed chunks → index → embed query → retrieve →
+  rerank → assemble → generate
+- **Real cosine scores** — computed by the actual `RAGPipeline._embed()`,
+  not hardcoded toy values
+- **KaTeX formulas** — `sim(q, vᵢ) = (q·vᵢ)/(‖q‖‖vᵢ‖)` rendered in the
+  side panel at the retrieval step
+
+```python
+from optimumai.rag.trace import build_rag_trace
+from optimumai.rag.explainer import render_flow_trace_html, RAG_LAYOUT
+
+# Build the trace (validates on construction)
+trace = build_rag_trace(query="How tall is the Eiffel Tower?", k=2)
+print(f"{len(trace.nodes)} nodes, {len(trace.edges)} edges, {len(trace.steps)} steps")
+# 15 nodes, 16 edges, 8 steps
+
+# Cosine scores are real — computed by RAGPipeline._embed()
+print(trace.steps[4].metrics)
+# {'chunk_0_score': 0.6734, 'chunk_1_score': 0.3087, 'chunk_2_score': 0.6847}
+
+# Render to HTML (requires D3 v7 + KaTeX CDN)
+path = render_flow_trace_html(trace, RAG_LAYOUT, out="rag.html")
+```
+
+**The renderer is concept-agnostic.** The JS in the HTML file never reads
+the word "RAG" — it only reads `nodes`, `edges`, `steps`, `formula`, and
+`metrics`. Swap the trace JSON for any other `FlowTrace` (e.g. a
+`value_iteration_trace`) and this same HTML renders it unmodified.
+
+!!! note "Internet required"
+    The RAG flow diagram loads D3 v7 and KaTeX from CDN. For fully offline
+    use, download the JS/CSS locally and replace the two CDN `<script>`/
+    `<link>` tags in the generated HTML.
 
 ---
 

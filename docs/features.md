@@ -375,8 +375,27 @@ from optimumai import RAGPipeline
 RAGPipeline().forward("how do neural networks learn?", k=2, explain=True)
 ```
 
+**FlowTrace explainer** — a D3 + KaTeX pipeline diagram that reveals each
+stage progressively, with real cosine scores baked in:
+
 ```bash
-optimumai learn rag
+optimumm learn rag
+# Interactive diagram (requires internet for D3/KaTeX CDN):
+optimumm flow rag
+optimumm flow rag --query "What year was the Eiffel Tower built?"
+```
+
+```python
+from optimumai.rag.flow import rag_flow
+from optimumai.rag.trace import build_rag_trace
+
+# Generate the interactive explainer HTML
+rag_flow(out="rag_explainer.html")
+
+# Or work with the trace directly
+trace = build_rag_trace(query="How tall is the Eiffel Tower?")
+print(trace.steps[4].metrics)   # real cosine scores from RAGPipeline
+# {'chunk_0_score': 0.6734, 'chunk_1_score': 0.3087, 'chunk_2_score': 0.6847}
 ```
 
 ### Diffusion — `optimumai.diffusion`

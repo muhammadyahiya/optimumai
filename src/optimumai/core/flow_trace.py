@@ -31,7 +31,7 @@ from __future__ import annotations
 import json
 import time
 from dataclasses import asdict, dataclass, field
-from typing import Any, Literal, Optional
+from typing import Any, Literal
 
 SCHEMA_VERSION = "1.0"
 
@@ -49,8 +49,8 @@ class DataRef:
     label: str
     kind: DataKind
     preview: Any  # e.g. 0.83, [0.1, -2.3, …], "chunk text…"
-    shape: Optional[list[int]] = None
-    full_value_ref: Optional[str] = None  # optional pointer for later fetch
+    shape: list[int] | None = None
+    full_value_ref: str | None = None  # optional pointer for later fetch
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -66,7 +66,7 @@ class FlowNode:
     id: str
     label: str
     kind: str  # "document" | "chunk" | "vector" | "model" | "store" | "text"
-    group: Optional[str] = None  # colour-coding group, e.g. "retrieval"
+    group: str | None = None  # colour-coding group, e.g. "retrieval"
     meta: dict = field(default_factory=dict)
 
     def to_dict(self) -> dict:
@@ -85,8 +85,8 @@ class FlowEdge:
     source: str  # FlowNode.id
     target: str  # FlowNode.id
     active_from_step: str  # FlowStep.id at which this edge becomes visible
-    label: Optional[str] = None
-    weight: Optional[float] = None  # e.g. similarity score, attention weight
+    label: str | None = None
+    weight: float | None = None  # e.g. similarity score, attention weight
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -103,7 +103,7 @@ class FlowStep:
     op: str  # operation type → lets renderer pick a visual template
     # e.g. "split" | "embed" | "cosine_sim" | "topk" | "rerank" | "concat" | "generate"
     narration: str  # one plain-English sentence (the "why" line)
-    formula: Optional[str] = None  # LaTeX string rendered via KaTeX
+    formula: str | None = None  # LaTeX string rendered via KaTeX
     inputs: list[DataRef] = field(default_factory=list)
     outputs: list[DataRef] = field(default_factory=list)
     highlight_nodes: list[str] = field(default_factory=list)  # FlowNode ids
@@ -150,7 +150,7 @@ class FlowTrace:
             "meta": {**self.meta, "generated_at": time.time()},
         }
 
-    def to_json(self, path: Optional[str] = None, indent: int = 2) -> str:
+    def to_json(self, path: str | None = None, indent: int = 2) -> str:
         payload = json.dumps(self.to_dict(), indent=indent)
         if path:
             with open(path, "w") as fh:
