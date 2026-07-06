@@ -2,6 +2,7 @@ from click.testing import CliRunner
 
 from optimumai import __version__
 from optimumai.cli.main import cli
+from optimumai.visualization.explain import list_explain_concepts
 
 
 def _run(*args):
@@ -57,3 +58,19 @@ def test_learn_unknown_topic_errors():
 def test_bad_vector_input_errors():
     result = _run("algebra", "dot", "not-a-vector", "[1,2,3]")
     assert result.exit_code != 0
+
+
+def test_explore_materializes_all_explainers(tmp_path):
+    out = tmp_path / "nested" / "explore.html"
+    result = _run("explore", "--out", str(out), "--no-browser")
+    assert result.exit_code == 0
+    assert out.exists()
+    for key in list_explain_concepts():
+        assert (out.parent / f"explain_{key}.html").exists()
+
+
+def test_explain_creates_parent_directory(tmp_path):
+    out = tmp_path / "nested" / "explain_attention.html"
+    result = _run("explain", "attention", "--out", str(out), "--no-browser")
+    assert result.exit_code == 0
+    assert out.exists()

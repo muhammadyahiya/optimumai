@@ -224,7 +224,7 @@ from optimumai.visualization.plotstudio import (
 )
 from optimumai.world_models.jepa import JEPA
 
-__version__ = "1.6.0"
+__version__ = "1.6.1"
 
 __all__ = [
     "COURSE",

@@ -2021,6 +2021,13 @@ def _build_html(concept: str) -> str:
     )
 
 
+def _write_html(path: Path, html: str) -> str:
+    """Write HTML to disk, creating parent directories if needed."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(html, encoding="utf-8")
+    return str(path)
+
+
 def list_explain_concepts() -> list[str]:
     """Return every concept key :func:`explain` accepts, sorted alphabetically."""
     return sorted(CONCEPTS)
@@ -2042,11 +2049,11 @@ def explain(concept: str, out: str | None = None, open_browser: bool = True) -> 
         valid = ", ".join(list_explain_concepts())
         raise ValueError(f"unknown concept {concept!r}; choose from: {valid}")
     html = _build_html(key)
-    target = out if out is not None else f"explain_{key}.html"
-    Path(target).write_text(html, encoding="utf-8")
+    target = Path(out) if out is not None else Path(f"explain_{key}.html")
+    _write_html(target, html)
     if open_browser:
-        webbrowser.open(f"file://{Path(target).resolve()}")
-    return target
+        webbrowser.open(f"file://{target.resolve()}")
+    return str(target)
 
 
 def explore_concepts(out: str | None = None, open_browser: bool = True) -> str:
@@ -2054,17 +2061,21 @@ def explore_concepts(out: str | None = None, open_browser: bool = True) -> str:
 
     Each card links to ``explain_{key}.html`` alongside the generated page; run
     :func:`explain` for a concept (or ``optimumai explain <concept>``) to
-    materialize that file before clicking through.
+    inspect one directly.
     """
+    target = Path(out) if out is not None else Path("explore.html")
+    concept_dir = target.parent
     cards = [
         {"key": key, "title": data["title"], "description": data["description"]}
         for key, data in sorted(CONCEPTS.items())
     ]
+    for card in cards:
+        explain_path = concept_dir / f"explain_{card['key']}.html"
+        _write_html(explain_path, _build_html(card["key"]))
     html = EXPLORE_TEMPLATE.replace("__CONCEPTS_JSON__", json.dumps(cards)).replace(
         "__COUNT__", str(len(cards))
     )
-    target = out if out is not None else "explore.html"
-    Path(target).write_text(html, encoding="utf-8")
+    _write_html(target, html)
     if open_browser:
-        webbrowser.open(f"file://{Path(target).resolve()}")
-    return target
+        webbrowser.open(f"file://{target.resolve()}")
+    return str(target)

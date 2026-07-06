@@ -4,6 +4,17 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.1] — 2026-07-06
+
+The **Concept Explorer fix** release — `optimumai explore` now materializes every
+`explain_<concept>.html` file alongside the landing page, so all 30 cards resolve
+cleanly. `optimumai explain <concept>` now also creates parent directories on demand.
+
+### Fixed
+
+- `optimumai explore` now generates the per-concept HTML files it links to.
+- `optimumai explain` now writes into nested output directories without failing.
+
 ## [1.6.0] — 2026-07-05
 
 The **Concept Explorer** release — 30 interactive AI/ML concept explainers with
