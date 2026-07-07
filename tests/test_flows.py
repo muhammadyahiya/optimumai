@@ -38,14 +38,27 @@ def _assert_well_formed_flow_page(html: str) -> None:
 
 def test_transformer_flow_writes_substantial_self_contained_html(tmp_path):
     out = str(tmp_path / "transformer.html")
-    path = transformer_flow("the cat sat on the mat", out=out)
+    path = transformer_flow(
+        "the cat sat on the mat",
+        temperature=0.7,
+        top_k=4,
+        top_p=0.8,
+        seed=1,
+        out=out,
+    )
     assert path == out
 
     html = _read(out)
-    assert len(html) > 1500
+    assert len(html) > 3500
     assert "<svg" in html
     assert "nextBtn" in html  # Step ▶ control marker
     assert "STAGES" in html  # embedded stage/caption JSON
+    assert "analyzeBtn" in html
+    assert "token-strip" in html
+    assert "temperature" in html.lower()
+    assert "topk" in html.lower()
+    assert "topp" in html.lower()
+    assert "detail-stage" in html
     assert "attention" in html.lower()
     for tok in ("the", "cat", "sat", "on", "mat"):
         assert tok in html
@@ -124,6 +137,23 @@ def test_dispatcher_error_lists_valid_names():
     message = str(exc_info.value)
     for name in ("transformer", "attention", "tfidf", "word2vec"):
         assert name in message
+
+
+def test_transformer_flow_dispatcher_accepts_interactive_controls(tmp_path):
+    out = str(tmp_path / "interactive.html")
+    path = flow(
+        "transformer",
+        out=out,
+        text="alpha beta gamma",
+        temperature=0.6,
+        top_k=3,
+        top_p=0.75,
+        seed=7,
+    )
+    assert path == out
+    html = _read(out)
+    assert "alpha" in html and "beta" in html and "gamma" in html
+    assert "Analyze prompt" in html
 
 
 def test_default_output_paths(tmp_path, monkeypatch):

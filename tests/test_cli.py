@@ -74,3 +74,24 @@ def test_explain_creates_parent_directory(tmp_path):
     result = _run("explain", "attention", "--out", str(out), "--no-browser")
     assert result.exit_code == 0
     assert out.exists()
+
+
+def test_flow_transformer_cli_accepts_controls(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    result = _run(
+        "flow",
+        "transformer",
+        "--text",
+        "alpha beta gamma",
+        "--temperature",
+        "0.75",
+        "--top-k",
+        "3",
+        "--top-p",
+        "0.8",
+        "--seed",
+        "7",
+    )
+    assert result.exit_code == 0
+    assert "saved → transformer_flow.html" in result.output
+    assert (tmp_path / "transformer_flow.html").exists()

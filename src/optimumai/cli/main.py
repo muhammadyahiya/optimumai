@@ -1135,7 +1135,23 @@ _PLOT_KINDS = ["bar", "hist", "scatter", "box", "line", "pie", "violin"]
 @click.argument("concept", required=False, type=click.Choice(_FLOW_CONCEPTS))
 @click.option("--out", default=None, help="Output HTML path.")
 @click.option("--query", default=None, help="Query string for the rag flow.")
-def flow_cmd(concept: str | None, out: str | None, query: str | None) -> None:
+@click.option("--text", default="the cat sat on the mat", help="Prompt text for transformer flow.")
+@click.option("--temperature", type=float, default=1.0, help="Initial temperature for transformer flow.")
+@click.option("--top-k", type=int, default=5, help="Initial top-k filter for transformer flow.")
+@click.option("--top-p", type=float, default=0.9, help="Initial top-p filter for transformer flow.")
+@click.option("--seed", type=int, default=0, help="Seed for transformer flow.")
+@click.option("--d-model", type=int, default=8, help="Model dimension for transformer flow.")
+def flow_cmd(
+    concept: str | None,
+    out: str | None,
+    query: str | None,
+    text: str,
+    temperature: float,
+    top_k: int,
+    top_p: float,
+    seed: int,
+    d_model: int,
+) -> None:
     """Interactive concept-flow diagram (distill-style). Run 'optimumai flow' to list.
 
     The 'rag' flow accepts an optional --query to use real cosine scores.
@@ -1155,6 +1171,17 @@ def flow_cmd(concept: str | None, out: str | None, query: str | None) -> None:
         if out:
             kw["out"] = out
         path = rag_flow(**kw)
+    elif concept == "transformer":
+        path = build_flow(
+            concept,
+            out=out,
+            text=text,
+            temperature=temperature,
+            top_k=top_k,
+            top_p=top_p,
+            seed=seed,
+            d_model=d_model,
+        )
     else:
         path = build_flow(concept, out=out)
     click.echo(f"saved → {path}  (open it in a browser)")

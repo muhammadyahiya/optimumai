@@ -4,6 +4,17 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.2] — 2026-07-07
+
+The **Interactive Transformer Flow** release — `optimumai flow transformer` now
+renders an editable prompt-driven explainer with token inspection, attention
+heatmaps, temperature, top-k, and top-p controls, plus next-token sampling.
+
+### Added
+
+- `optimumai flow transformer --text ...` for an interactive transformer walkthrough.
+- Live prompt analysis with clickable token inspection and step-by-step stage updates.
+
 ## [1.6.1] — 2026-07-06
 
 The **Concept Explorer fix** release — `optimumai explore` now materializes every

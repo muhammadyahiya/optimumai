@@ -112,11 +112,14 @@ function setStage(i){
   });
   document.getElementById('stage-title').textContent =
     `Stage ${stageIdx + 1} / ${STAGES.length}: ${STAGES[stageIdx].title}`;
-  document.getElementById('stage-caption').innerHTML = STAGES[stageIdx].caption;
+  document.getElementById('stage-caption-text').innerHTML = STAGES[stageIdx].caption;
   document.getElementById('prevBtn').disabled = stageIdx === 0;
   document.getElementById('nextBtn').disabled = stageIdx === STAGES.length - 1;
   document.getElementById('progress').textContent =
     `${stageIdx + 1} / ${STAGES.length}`;
+  if (window.__FLOW_STAGE_HOOK__) {
+    window.__FLOW_STAGE_HOOK__(stageIdx, STAGES[stageIdx]);
+  }
 }
 
 document.getElementById('prevBtn').addEventListener('click', () => setStage(stageIdx - 1));

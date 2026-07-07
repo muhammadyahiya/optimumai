@@ -39,14 +39,14 @@ _FLOWS = {
 }
 
 
-def flow(name: str, out: str | None = None) -> str:
+def flow(name: str, out: str | None = None, **kwargs) -> str:
     """Build the named flow ("transformer", "attention", "tfidf", or "word2vec")."""
     try:
         builder = _FLOWS[name]
     except KeyError as exc:
         valid = ", ".join(sorted(_FLOWS))
         raise ValueError(f"unknown flow {name!r}; choose from: {valid}") from exc
-    return builder(out=out)
+    return builder(out=out, **kwargs)
 
 
 __all__ = [
