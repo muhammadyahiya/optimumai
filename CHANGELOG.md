@@ -4,6 +4,15 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.6.3] — 2026-07-07
+
+The **Release Hygiene** patch — trims the transformer flow template to satisfy
+CI linting and keeps the new interactive transformer release ready for publish.
+
+### Fixed
+
+- Wrapped the transformer flow and CLI options so the CI `ruff` gate passes cleanly.
+
 ## [1.6.2] — 2026-07-07
 
 The **Interactive Transformer Flow** release — `optimumai flow transformer` now

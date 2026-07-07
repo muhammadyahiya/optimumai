@@ -1136,7 +1136,12 @@ _PLOT_KINDS = ["bar", "hist", "scatter", "box", "line", "pie", "violin"]
 @click.option("--out", default=None, help="Output HTML path.")
 @click.option("--query", default=None, help="Query string for the rag flow.")
 @click.option("--text", default="the cat sat on the mat", help="Prompt text for transformer flow.")
-@click.option("--temperature", type=float, default=1.0, help="Initial temperature for transformer flow.")
+@click.option(
+    "--temperature",
+    type=float,
+    default=1.0,
+    help="Initial temperature for transformer flow.",
+)
 @click.option("--top-k", type=int, default=5, help="Initial top-k filter for transformer flow.")
 @click.option("--top-p", type=float, default=0.9, help="Initial top-p filter for transformer flow.")
 @click.option("--seed", type=int, default=0, help="Seed for transformer flow.")

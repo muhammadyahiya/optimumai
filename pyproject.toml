@@ -115,3 +115,5 @@ ignore = ["N803", "N806"]
 "src/optimumai/circuit/interactive.py" = ["E501"]
 # Concept explainer embeds an HTML/CSS/JS template plus dense per-step formula/code strings.
 "src/optimumai/visualization/explain.py" = ["E501"]
+# Transformer flow embeds a large HTML/CSS/JS template with interactive controls.
+"src/optimumai/flows/transformer_flow.py" = ["E501"]
