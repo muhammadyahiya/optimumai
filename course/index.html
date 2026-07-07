@@ -1,0 +1,2778 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Unlock the math behind AI — run any operation with explain=True.">
+      
+      
+      
+        <link rel="canonical" href="https://muhammadyahiya.github.io/optimumai/course/">
+      
+      
+        <link rel="prev" href="../quickstart/">
+      
+      
+        <link rel="next" href="../features/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Courses - OptimumAI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#courses" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OptimumAI" class="md-header__button md-logo" aria-label="OptimumAI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OptimumAI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Courses
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/muhammadyahiya/optimumai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    muhammadyahiya/optimumai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Courses
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../features/" class="md-tabs__link">
+          
+  
+  
+  Features
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../learn-numpy/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../cli/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../deploy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Deploy
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OptimumAI" class="md-nav__button md-logo" aria-label="OptimumAI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OptimumAI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/muhammadyahiya/optimumai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    muhammadyahiya/optimumai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Courses
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-lessons-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How lessons work
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-1-linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 1 · Linear Algebra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-2-calculus-autograd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 2 · Calculus &amp; Autograd
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-3-optimization-neural-nets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 3 · Optimization &amp; Neural Nets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-4-probability-transformers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 4 · Probability &amp; Transformers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-5-applied-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 5 · Applied AI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-6-world-models-interpretability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 6 · World Models &amp; Interpretability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-7-math-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 7 · Math Foundations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-8-framework-internals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 8 · Framework Internals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-9-systems-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 9 · Systems &amp; Hardware
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-10-interactive-playground" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 10 · Interactive Playground
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-11-frontier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 11 · Frontier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-12-gpu-kernels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 12 · GPU Kernels
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-13-classical-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 13 · Classical ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-14-classical-ai-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 14 · Classical AI Search
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-15-reinforcement-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 15 · Reinforcement Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-16-nlp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 16 · NLP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-17-computer-vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 17 · Computer Vision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-18-llm-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 18 · LLM Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-19-prompt-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 19 · Prompt Engineering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#track-20-augmented-rnns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Track 20 · Augmented RNNs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#progress-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Progress tracking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#active-recall-quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Active recall — quiz
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spaced-repetition-review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spaced repetition — review
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compute-the-answer-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute-the-answer exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streamlit-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Streamlit dashboard
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llm-tutor-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LLM tutor (optional)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gpu-kernels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPU Kernels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classical-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classical AI, ML & RL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interactive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive & Explained
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Token Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learn-numpy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learn NumPy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learn-matplotlib/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learn matplotlib
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learn-pytorch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learn PyTorch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learn-finetuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learn LLM Fine-Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Stability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deploy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="courses">Courses<a class="headerlink" href="#courses" title="Permanent link">&para;</a></h1>
+<p>76 lessons across 20 tracks — every one a runnable, explained trace.<br />
+Run any lesson with <code>optimumai learn &lt;id&gt;</code>, track progress, quiz yourself, and
+review on a spaced-repetition schedule.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>optimumai
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>optimumai<span class="w"> </span>start<span class="w">      </span><span class="c1"># 30-second guided tour — start here</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>optimumai<span class="w"> </span>course<span class="w">     </span><span class="c1"># full syllabus with ✓/○ completion marks</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>optimumai<span class="w"> </span>progress<span class="w">   </span><span class="c1"># progress bar + percentage + what&#39;s next</span>
+</span></code></pre></div>
+<hr />
+<h2 id="how-lessons-work">How lessons work<a class="headerlink" href="#how-lessons-work" title="Permanent link">&para;</a></h2>
+<p>Every lesson runs real code, prints a step-by-step <code>Trace</code>, and marks itself
+complete:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>attention<span class="w">           </span><span class="c1"># run the lesson (auto-marks complete)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>attention<span class="w"> </span>--level<span class="w"> </span>researcher<span class="w">   </span><span class="c1"># with full depth</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>attention<span class="w"> </span>--no-track<span class="w">           </span><span class="c1"># run without marking complete</span>
+</span></code></pre></div>
+<p>Four detail levels — same math, progressively more revealed:</p>
+<table>
+<thead>
+<tr>
+<th><code>--level</code></th>
+<th>What you see</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beginner</code></td>
+<td>steps + plain-English "why AI uses this"</td>
+</tr>
+<tr>
+<td><code>intermediate</code></td>
+<td>per-step detail notes <strong>(default)</strong></td>
+</tr>
+<tr>
+<td><code>engineer</code></td>
+<td>intermediate values + algorithmic complexity</td>
+</tr>
+<tr>
+<td><code>researcher</code></td>
+<td>everything: formulas, proofs, references</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="track-1-linear-algebra">Track 1 · Linear Algebra<a class="headerlink" href="#track-1-linear-algebra" title="Permanent link">&para;</a></h2>
+<p>The atoms of all of deep learning. Every matrix multiply in a neural net is a
+grid of dot products; every similarity search is a cosine distance.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1</td>
+<td><code>dot</code></td>
+<td><strong>Dot product</strong></td>
+<td>Similarity and the atom of every matrix multiply.</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td><code>cosine</code></td>
+<td><strong>Cosine similarity</strong></td>
+<td>Angle between vectors — the RAG / semantic-search score.</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td><code>matmul</code></td>
+<td><strong>Matrix multiplication</strong></td>
+<td>Every dense layer, computed cell by cell.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>dot
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>cosine
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>matmul
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">Matrix</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Expected output ↓</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">Vector</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Vector</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]),</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># ╭──────────────── OptimumAI ─────────────────╮</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># │ DOT  a · b = Σᵢ aᵢ·bᵢ                      │</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># ╰─────────────────────────────────────────────╯</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># 1  1 × 4 = 4</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># 2  2 × 5 = 10</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># 3  3 × 6 = 18</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># 4  Sum: 4 + 10 + 18 = 32</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># Result: 32</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">Vector</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">Vector</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]),</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1"># Result: 1.0  (parallel vectors → perfect similarity)</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">Matrix</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]]),</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="c1"># Result: [[19, 22], [43, 50]]</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-2-calculus-autograd">Track 2 · Calculus &amp; Autograd<a class="headerlink" href="#track-2-calculus-autograd" title="Permanent link">&para;</a></h2>
+<p>The single idea behind all of deep learning: the chain rule. This track
+builds from "what is a derivative" to a full reverse-mode autodiff engine.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1</td>
+<td><code>derivative</code></td>
+<td><strong>Derivatives</strong></td>
+<td>The slope that tells a network which way to move.</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td><code>gradient</code></td>
+<td><strong>Gradients</strong></td>
+<td>The vector of partial derivatives — one per parameter.</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><code>chain_rule</code></td>
+<td><strong>The chain rule</strong></td>
+<td>The single idea behind all of backpropagation.</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td><code>backprop</code></td>
+<td><strong>Backpropagation</strong></td>
+<td>Reverse-mode autodiff on a scalar graph (micrograd).</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>derivative
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>gradient
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>chain_rule
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>backprop
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">derivative</span><span class="p">,</span> <span class="n">gradient</span><span class="p">,</span> <span class="n">Value</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">derivative</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Result: ≈ 6.0  (d/dx x² at x=3 = 2x = 6)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">gradient</span><span class="p">(</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># Result: [6.0, 8.0]</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># Backprop through a scalar graph</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">a</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">b</span> <span class="o">=</span> <span class="n">Value</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">tanh</span><span class="p">()</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">L</span><span class="o">.</span><span class="n">backprop</span><span class="p">(</span><span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1"># a.grad = -0.0099  b.grad = 0.0066</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-3-optimization-neural-nets">Track 3 · Optimization &amp; Neural Nets<a class="headerlink" href="#track-3-optimization-neural-nets" title="Permanent link">&para;</a></h2>
+<p>Gradient descent + the full training loop. An MLP is just the autograd engine
+composed a few thousand times.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td><code>descent</code></td>
+<td><strong>Gradient descent</strong></td>
+<td>Adam walking a loss bowl to its minimum.</td>
+</tr>
+<tr>
+<td>3.2</td>
+<td><code>train</code></td>
+<td><strong>Training an MLP</strong></td>
+<td>The full loop: predict → loss → backprop → step.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>descent
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>train
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>optimumai<span class="w"> </span>train<span class="w"> </span>--steps<span class="w"> </span><span class="m">150</span><span class="w"> </span>--lr<span class="w"> </span><span class="m">0</span>.05
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">MLP</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.neural_networks</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_demo</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">mlp</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">mlp</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">])</span>   <span class="c1"># forward pass → scalar output</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">train_demo</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;intermediate&quot;</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># Step   0  loss=3.471</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Step  10  loss=1.823</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># Step  50  loss=0.412</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1"># Step 100  loss=0.089</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1"># Step 150  loss=0.021  ✓</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-4-probability-transformers">Track 4 · Probability &amp; Transformers<a class="headerlink" href="#track-4-probability-transformers" title="Permanent link">&para;</a></h2>
+<p>From softmax to the full transformer block — the core of every modern LLM.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.1</td>
+<td><code>softmax</code></td>
+<td><strong>Softmax</strong></td>
+<td>Logits into a probability distribution.</td>
+</tr>
+<tr>
+<td>4.2</td>
+<td><code>attention</code></td>
+<td><strong>Scaled dot-product attention</strong></td>
+<td>softmax(QKᵀ/√dₖ)·V — the transformer core.</td>
+</tr>
+<tr>
+<td>4.3</td>
+<td><code>multihead</code></td>
+<td><strong>Multi-head attention</strong></td>
+<td>Parallel heads + a causal mask (nanoGPT-style).</td>
+</tr>
+<tr>
+<td>4.4</td>
+<td><code>positional</code></td>
+<td><strong>Positional encoding</strong></td>
+<td>Injecting word order into permutation-invariant attention.</td>
+</tr>
+<tr>
+<td>4.5</td>
+<td><code>transformer</code></td>
+<td><strong>The transformer block</strong></td>
+<td>LayerNorm → attention → FFN, with residuals.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>softmax
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>attention
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>multihead
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>positional
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>transformer
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">softmax</span><span class="p">,</span> <span class="n">Attention</span><span class="p">,</span> <span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="n">TransformerBlock</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">softmax</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Result: [0.844, 0.114, 0.042]  (sharp, T=0.5)</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">softmax</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Result: [0.460, 0.335, 0.205]  (flatter, T=2.0)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">Attention</span><span class="o">.</span><span class="n">demo</span><span class="p">()</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;engineer&quot;</span><span class="p">)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1"># Q shape: (4, 4)  K shape: (4, 4)  V shape: (4, 4)</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1"># Scores = QKᵀ/√4 ...  softmax → weights → weighted sum of V</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1"># Result shape: (4, 4)</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="n">MultiHeadAttention</span><span class="o">.</span><span class="n">demo</span><span class="p">()</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;engineer&quot;</span><span class="p">)</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="n">TransformerBlock</span><span class="o">.</span><span class="n">demo</span><span class="p">()</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;researcher&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-5-applied-ai">Track 5 · Applied AI<a class="headerlink" href="#track-5-applied-ai" title="Permanent link">&para;</a></h2>
+<p>Embeddings, RAG, and diffusion — the three pillars of modern deployed AI.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.1</td>
+<td><code>embeddings</code></td>
+<td><strong>Embeddings</strong></td>
+<td>Turning discrete tokens into learnable dense vectors.</td>
+</tr>
+<tr>
+<td>5.2</td>
+<td><code>rag</code></td>
+<td><strong>Retrieval-augmented generation</strong></td>
+<td>Query → embed → cosine search → top-k → prompt.</td>
+</tr>
+<tr>
+<td>5.3</td>
+<td><code>diffusion</code></td>
+<td><strong>Diffusion</strong></td>
+<td>Forward noising schedule and the reverse denoising idea.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>embeddings
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>rag
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>diffusion
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">embedding_lookup</span><span class="p">,</span> <span class="n">nearest_neighbors</span><span class="p">,</span> <span class="n">RAGPipeline</span><span class="p">,</span> <span class="n">forward_diffusion</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">embedding_lookup</span><span class="p">([</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;car&quot;</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># cat → [0.12, -0.34, 0.89, 0.45]  (randomly initialised, shape (3, 4))</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">nearest_neighbors</span><span class="p">(</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;dog&quot;</span><span class="p">,</span> <span class="s2">&quot;car&quot;</span><span class="p">,</span> <span class="s2">&quot;kitten&quot;</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># 1st: kitten  cos=0.91  2nd: dog  cos=0.73</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="n">RAGPipeline</span><span class="p">()</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="s2">&quot;how do neural networks learn?&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1"># Query embedded → cosine search over 3 docs → top-2 stuffed into prompt</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="n">forward_diffusion</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">]),</span> <span class="n">timesteps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="c1"># t=0  x=[1, 2, 3, 4, 5, 6]</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="c1"># t=5  x=[0.62, 1.24, ...]  (noise growing)</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="c1"># t=10 x≈ε  (mostly noise)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-6-world-models-interpretability">Track 6 · World Models &amp; Interpretability<a class="headerlink" href="#track-6-world-models-interpretability" title="Permanent link">&para;</a></h2>
+<p>What happens inside the model? JEPA predicts in latent space; superposition
+explains why neurons are polysemantic.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6.1</td>
+<td><code>jepa</code></td>
+<td><strong>JEPA world models</strong></td>
+<td>LeCun: predict in latent space, not pixels (energy-based).</td>
+</tr>
+<tr>
+<td>6.2</td>
+<td><code>superposition</code></td>
+<td><strong>Superposition</strong></td>
+<td>Anthropic: why single neurons are polysemantic.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>jepa
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>superposition
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>optimumai<span class="w"> </span>jepa<span class="w"> </span>--demo<span class="w"> </span>--level<span class="w"> </span>engineer
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>optimumai<span class="w"> </span>superposition<span class="w"> </span>--features<span class="w"> </span><span class="m">5</span><span class="w"> </span>--neurons<span class="w"> </span><span class="m">2</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">JEPA</span><span class="p">,</span> <span class="n">superposition</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">JEPA</span><span class="o">.</span><span class="n">demo</span><span class="p">()</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;engineer&quot;</span><span class="p">)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># E(x, y) = ‖g(f(x)) − f(y)‖²</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># Predicted embedding: [0.12, -0.45, 0.67]</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1"># Target embedding:    [0.11, -0.44, 0.66]</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># Energy: 0.0003  ← low = good prediction</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">superposition</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_neurons</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1"># WᵀW off-diagonal = interference between features sharing a neuron</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Max interference: 0.34  (feature 2 ↔ feature 4)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-7-math-foundations">Track 7 · Math Foundations<a class="headerlink" href="#track-7-math-foundations" title="Permanent link">&para;</a></h2>
+<p>The mathematical building blocks: tensors and numerical integration.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7.1</td>
+<td><code>tensors</code></td>
+<td><strong>Tensors</strong></td>
+<td>Scalars → vectors → matrices → n-D arrays, shapes, broadcasting.</td>
+</tr>
+<tr>
+<td>7.2</td>
+<td><code>integration</code></td>
+<td><strong>Numerical integration</strong></td>
+<td>Trapezoid &amp; Monte Carlo — every expectation is an integral.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>tensors
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>integration
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">integrate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;trapezoid&quot;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1"># Sliced into 1000 trapezoids, Δx=0.001</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># Result: 0.3333335  (exact: 1/3)</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="n">integrate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;monte_carlo&quot;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="c1"># Sampled 10,000 points uniformly on [0, 1]</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="c1"># Result: 0.3331  (stochastic, seeded for reproducibility)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-8-framework-internals">Track 8 · Framework Internals<a class="headerlink" href="#track-8-framework-internals" title="Permanent link">&para;</a></h2>
+<p>What torch.autograd and JAX's <code>grad</code>/<code>jit</code>/<code>vmap</code> are actually doing.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8.1</td>
+<td><code>pytorch</code></td>
+<td><strong>PyTorch autograd</strong></td>
+<td>What torch.autograd does under the hood — it's the Value engine.</td>
+</tr>
+<tr>
+<td>8.2</td>
+<td><code>jax</code></td>
+<td><strong>JAX transforms</strong></td>
+<td>grad / jit / vmap / pytrees — transforming pure functions.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>pytorch
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>jax
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>optimumai<span class="w"> </span>tutorial<span class="w"> </span>pytorch<span class="w">   </span><span class="c1"># full interactive tutorial</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>optimumai<span class="w"> </span>tutorial<span class="w"> </span>numpy<span class="w">     </span><span class="c1"># NumPy → PyTorch bridge</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-9-systems-hardware">Track 9 · Systems &amp; Hardware<a class="headerlink" href="#track-9-systems-hardware" title="Permanent link">&para;</a></h2>
+<p>Why LLMs need hundreds of GBs of VRAM and how the GPU actually works.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9.1</td>
+<td><code>gpu_threads</code></td>
+<td><strong>GPU thread hierarchy</strong></td>
+<td>Grid → block → warp → thread; the SIMT execution model.</td>
+</tr>
+<tr>
+<td>9.2</td>
+<td><code>memory_hierarchy</code></td>
+<td><strong>GPU memory hierarchy</strong></td>
+<td>Registers → shared → global; why kernels are memory-bound.</td>
+</tr>
+<tr>
+<td>9.3</td>
+<td><code>cuda_matmul</code></td>
+<td><strong>Tiled matmul kernel</strong></td>
+<td>Naive vs tiled + coalescing — the canonical GPU optimization.</td>
+</tr>
+<tr>
+<td>9.4</td>
+<td><code>kv_cache</code></td>
+<td><strong>The KV cache</strong></td>
+<td>Why context length eats VRAM; MHA vs GQA vs MQA.</td>
+</tr>
+<tr>
+<td>9.5</td>
+<td><code>vram</code></td>
+<td><strong>VRAM budget</strong></td>
+<td>Weights + gradients + optimizer states + activations + KV cache.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>gpu_threads
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>memory_hierarchy
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>cuda_matmul
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>kv_cache
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>vram
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="c1"># Calculators</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>optimumai<span class="w"> </span>kvcache<span class="w"> </span>--seq-len<span class="w"> </span><span class="m">8192</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>optimumai<span class="w"> </span>kvcache<span class="w"> </span>--heads<span class="w"> </span><span class="m">32</span><span class="w"> </span>--kv-heads<span class="w"> </span><span class="m">4</span><span class="w">    </span><span class="c1"># GQA: llama-3 style</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>optimumai<span class="w"> </span>vram<span class="w"> </span>--params<span class="w"> </span><span class="m">70</span><span class="w">                   </span><span class="c1"># 70B model training</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>optimumai<span class="w"> </span>vram<span class="w"> </span>--params<span class="w"> </span><span class="m">7</span><span class="w"> </span>--inference<span class="w">        </span><span class="c1"># 7B inference</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">kv_cache_size</span><span class="p">,</span> <span class="n">vram_estimate</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">kv_cache_size</span><span class="p">(</span><span class="n">n_layers</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">n_heads</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">head_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># KV cache: 2 × 32 × 32 × 128 × 4096 × 2 bytes = 2.1 GB</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="n">vram_estimate</span><span class="p">(</span><span class="n">params_billions</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># Weights:           14 GB  (fp16)</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># Gradients:         14 GB</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="c1"># Adam states:       28 GB</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="c1"># Activations:       ~8 GB  (estimated)</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="c1"># Total:            ~64 GB</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-10-interactive-playground">Track 10 · Interactive Playground<a class="headerlink" href="#track-10-interactive-playground" title="Permanent link">&para;</a></h2>
+<p>Feed your own input and watch it flow through the model.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.1</td>
+<td><code>trace_text</code></td>
+<td><strong>Text → transformer</strong></td>
+<td>Watch your own words flow to a next-token distribution.</td>
+</tr>
+<tr>
+<td>10.2</td>
+<td><code>compare</code></td>
+<td><strong>Compare activations</strong></td>
+<td>ReLU vs GELU side by side — how activation shapes gradients.</td>
+</tr>
+<tr>
+<td>10.3</td>
+<td><code>sweep</code></td>
+<td><strong>Temperature sweep</strong></td>
+<td>How softmax sharpens (T→0) or flattens (T→∞).</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>trace_text
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>compare
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>sweep
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>optimumai<span class="w"> </span>trace-text<span class="w"> </span><span class="s2">&quot;attention is all you need&quot;</span><span class="w"> </span>--layers<span class="w"> </span><span class="m">2</span><span class="w"> </span>--level<span class="w"> </span>engineer
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>optimumai<span class="w"> </span>compare<span class="w"> </span>relu<span class="w"> </span>gelu<span class="w"> </span>--input<span class="w"> </span><span class="s2">&quot;[-2,-1,0,1,2]&quot;</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>optimumai<span class="w"> </span>sweep<span class="w"> </span>softmax<span class="w"> </span>--values<span class="w"> </span><span class="s2">&quot;[0.1,0.5,1.0,2.0,5.0]&quot;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-11-frontier">Track 11 · Frontier<a class="headerlink" href="#track-11-frontier" title="Permanent link">&para;</a></h2>
+<p>How today's large models are actually built and run cheaply.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11.1</td>
+<td><code>flash_attention</code></td>
+<td><strong>FlashAttention</strong></td>
+<td>IO-aware tiling + online softmax — exact attention, linear memory.</td>
+</tr>
+<tr>
+<td>11.2</td>
+<td><code>quantization</code></td>
+<td><strong>Quantization</strong></td>
+<td>int8/int4 with scale + zero-point — how models shrink to fit.</td>
+</tr>
+<tr>
+<td>11.3</td>
+<td><code>lora</code></td>
+<td><strong>LoRA</strong></td>
+<td>Low-rank adapters (W₀ + BA) — fine-tune ~10,000× fewer parameters.</td>
+</tr>
+<tr>
+<td>11.4</td>
+<td><code>dpo</code></td>
+<td><strong>DPO / RLHF</strong></td>
+<td>Align to human preferences without a reward model or RL.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>flash_attention
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>quantization
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>lora
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>dpo
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>optimumai<span class="w"> </span>quantize<span class="w"> </span><span class="s2">&quot;[0.1,-2.3,4.5,3.14]&quot;</span><span class="w"> </span>--bits<span class="w"> </span><span class="m">4</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>optimumai<span class="w"> </span>kernel<span class="w"> </span>flash_attention
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.frontier</span><span class="w"> </span><span class="kn">import</span> <span class="n">flash_attention</span><span class="p">,</span> <span class="n">quantize</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="n">result</span> <span class="o">=</span> <span class="n">flash_attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="c1"># Tiling Q into 4 blocks of size 2 ...</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Online softmax rescaled across 4 K/V tiles</span>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="c1"># Max error vs naive attention: 1.8e-16  ✓ exact</span>
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a><span class="n">quantize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.3</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">]),</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a><span class="c1"># scale=0.0275, zero_point=0</span>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a><span class="c1"># [4, -84, 164, 114]  → dequantize → [0.110, -2.310, 4.510, 3.135]</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-12-gpu-kernels">Track 12 · GPU Kernels<a class="headerlink" href="#track-12-gpu-kernels" title="Permanent link">&para;</a></h2>
+<p>Write per-thread kernels, run on the simulator, grade yourself.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12.1</td>
+<td><code>kernel_vector_add</code></td>
+<td><strong>Kernel: vector add</strong></td>
+<td>One thread per element — the GPU "hello world", run on a simulator.</td>
+</tr>
+<tr>
+<td>12.2</td>
+<td><code>kernel_matmul</code></td>
+<td><strong>Kernel: tiled matmul</strong></td>
+<td>A thread per output cell + the shared-memory tiling win.</td>
+</tr>
+<tr>
+<td>12.3</td>
+<td><code>kernel_softmax</code></td>
+<td><strong>Kernel: softmax</strong></td>
+<td>One thread per row, with the numerically-stable max trick.</td>
+</tr>
+<tr>
+<td>12.4</td>
+<td><code>kernel_flash</code></td>
+<td><strong>Kernel: flash attention</strong></td>
+<td>Fused online-softmax attention — exact, no N×N matrix in VRAM.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>kernel_vector_add
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>kernel_matmul
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>kernel_softmax
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>kernel_flash
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>optimumai<span class="w"> </span>kernel<span class="w"> </span>vector_add<span class="w">     </span><span class="c1"># step through the simulator</span>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>optimumai<span class="w"> </span>kernel<span class="w"> </span>matmul
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>optimumai<span class="w"> </span>kernel<span class="w"> </span>flash_attention
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.kernels</span><span class="w"> </span><span class="kn">import</span> <span class="n">KernelWorkbench</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">wb</span> <span class="o">=</span> <span class="n">KernelWorkbench</span><span class="p">()</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">wb</span><span class="o">.</span><span class="n">get_challenge</span><span class="p">(</span><span class="s2">&quot;vector_add&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">prompt</span><span class="p">)</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># Write a CUDA-style kernel that adds two vectors element-wise.</span>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="c1"># Each thread handles one output element.</span>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">my_kernel</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    <span class="n">i</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">idx</span><span class="o">.</span><span class="n">global_id</span>
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">out</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>        <span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">gload</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">ctx</span><span class="o">.</span><span class="n">gload</span><span class="p">(</span><span class="n">inp</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="n">result</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s2">&quot;vector_add&quot;</span><span class="p">,</span> <span class="n">my_kernel</span><span class="p">)</span>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">feedback</span><span class="p">)</span>
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="c1"># ✓ Correct — output matches reference for 10/10 random seeds.</span>
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="c1"># IO efficiency: 2.0 global loads + 1.0 global stores per element (optimal).</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-13-classical-ml">Track 13 · Classical ML<a class="headerlink" href="#track-13-classical-ml" title="Permanent link">&para;</a></h2>
+<p>The models every ML practitioner needs to understand — they're still baselines,
+building blocks, and diagnostics in 2025.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>13.1</td>
+<td><code>linear_regression</code></td>
+<td><strong>Linear regression</strong></td>
+<td>OLS via the normal equation θ=(XᵀX)⁻¹Xᵀy — the calculus behind the fit.</td>
+</tr>
+<tr>
+<td>13.2</td>
+<td><code>logistic_regression</code></td>
+<td><strong>Logistic regression</strong></td>
+<td>Sigmoid + cross-entropy + gradient descent — the atomic classifier.</td>
+</tr>
+<tr>
+<td>13.3</td>
+<td><code>kmeans</code></td>
+<td><strong>k-means clustering</strong></td>
+<td>Lloyd's algorithm: assign to the nearest centroid, re-center, repeat.</td>
+</tr>
+<tr>
+<td>13.4</td>
+<td><code>knn</code></td>
+<td><strong>k-nearest neighbors</strong></td>
+<td>Classify by majority vote of the closest points — no training phase.</td>
+</tr>
+<tr>
+<td>13.5</td>
+<td><code>decision_tree</code></td>
+<td><strong>Decision trees</strong></td>
+<td>Best split by Gini/entropy information gain — the atom of random forests.</td>
+</tr>
+<tr>
+<td>13.6</td>
+<td><code>naive_bayes</code></td>
+<td><strong>Gaussian Naive Bayes</strong></td>
+<td>Bayes' rule + a conditional-independence assumption.</td>
+</tr>
+<tr>
+<td>13.7</td>
+<td><code>pca</code></td>
+<td><strong>Principal component analysis</strong></td>
+<td>Covariance eigendecomposition — compress data to its top-variance axes.</td>
+</tr>
+<tr>
+<td>13.8</td>
+<td><code>ml_metrics</code></td>
+<td><strong>ML metrics</strong></td>
+<td>Accuracy, precision/recall/F1, confusion matrix, MSE, R², ROC-AUC.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>linear_regression
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>logistic_regression
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>kmeans
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>knn
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>decision_tree
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>naive_bayes
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>pca
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>ml_metrics
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>optimumai<span class="w"> </span>ml<span class="w"> </span>linreg<span class="w"> </span><span class="s2">&quot;[[1],[2],[3],[4]]&quot;</span><span class="w"> </span><span class="s2">&quot;[2,4,6,8]&quot;</span>
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>optimumai<span class="w"> </span>ml<span class="w"> </span>kmeans<span class="w"> </span><span class="s2">&quot;[[0,0],[0,1],[9,9],[9,8]]&quot;</span><span class="w"> </span>--k<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>optimumai<span class="w"> </span>ml<span class="w"> </span>metrics
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.ml</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">PCA</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">([[</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">]],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="c1"># Normal equation: θ = (XᵀX)⁻¹Xᵀy</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="c1"># θ₀ (intercept) = 0.0   θ₁ (slope) = 2.0</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([[</span><span class="mi">5</span><span class="p">]])</span>   <span class="c1"># [10.0]</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="n">km</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="n">km</span><span class="o">.</span><span class="n">fit</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">],[</span><span class="mi">9</span><span class="p">,</span><span class="mi">8</span><span class="p">]],</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="c1"># Iteration 1: centroids → [0.0, 0.5] and [9.0, 8.5]</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="c1"># Converged in 2 iterations</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-14-classical-ai-search">Track 14 · Classical AI Search<a class="headerlink" href="#track-14-classical-ai-search" title="Permanent link">&para;</a></h2>
+<p>The common ancestor of pathfinding, puzzle solvers, and game-playing AI.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14.1</td>
+<td><code>uninformed_search</code></td>
+<td><strong>BFS, DFS &amp; uniform-cost search</strong></td>
+<td>Frontier order is everything: FIFO (BFS), LIFO (DFS), cheapest-g (UCS).</td>
+</tr>
+<tr>
+<td>14.2</td>
+<td><code>informed_search</code></td>
+<td><strong>Greedy best-first &amp; A*</strong></td>
+<td>Add a heuristic h(n): A* orders by f=g+h and is optimal when h is admissible.</td>
+</tr>
+<tr>
+<td>14.3</td>
+<td><code>adversarial_search</code></td>
+<td><strong>Minimax &amp; alpha-beta pruning</strong></td>
+<td>Optimal play on a game tree; α-β prunes provably-irrelevant branches.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>uninformed_search
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>informed_search
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>adversarial_search
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>optimumai<span class="w"> </span>algo<span class="w"> </span>bfs
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>optimumai<span class="w"> </span>algo<span class="w"> </span>astar
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>optimumai<span class="w"> </span>algo<span class="w"> </span>minimax
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.search</span><span class="w"> </span><span class="kn">import</span> <span class="n">bfs</span><span class="p">,</span> <span class="n">ucs</span><span class="p">,</span> <span class="n">astar</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.search.problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="n">g</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span> <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span><span class="s2">&quot;D&quot;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="n">bfs</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="c1"># Frontier: [A] → [B] → [C, D] → found D</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="c1"># Path: A → B → D  (fewest edges: 2)</span>
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="n">ucs</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="c1"># Expanded: A(0) → B(1) → C(2) → D(3)</span>
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="c1"># Path: A → B → C → D  (cheapest cost: 3)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-15-reinforcement-learning">Track 15 · Reinforcement Learning<a class="headerlink" href="#track-15-reinforcement-learning" title="Permanent link">&para;</a></h2>
+<p>From the Bellman equation to PPO — the same algorithm used in RLHF.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15.1</td>
+<td><code>value_iteration</code></td>
+<td><strong>Value iteration (Bellman)</strong></td>
+<td>Solve a known MDP exactly via Bellman backups until the values converge.</td>
+</tr>
+<tr>
+<td>15.2</td>
+<td><code>q_learning</code></td>
+<td><strong>Q-learning &amp; SARSA</strong></td>
+<td>Learn to act from experience alone — off-policy vs on-policy TD updates.</td>
+</tr>
+<tr>
+<td>15.3</td>
+<td><code>reinforce</code></td>
+<td><strong>Policy gradients (REINFORCE)</strong></td>
+<td>Differentiate through sampled actions with the score-function trick.</td>
+</tr>
+<tr>
+<td>15.4</td>
+<td><code>ppo</code></td>
+<td><strong>PPO — clipped surrogate objective</strong></td>
+<td>The stabilized policy gradient behind RLHF's RL stage.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>value_iteration
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>q_learning
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>reinforce
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>ppo
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>optimumai<span class="w"> </span>rl<span class="w"> </span>mdp
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>optimumai<span class="w"> </span>rl<span class="w"> </span>q-learning
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>optimumai<span class="w"> </span>rl<span class="w"> </span>reinforce
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>optimumai<span class="w"> </span>rl<span class="w"> </span>ppo
+</span></code></pre></div>
+<hr />
+<h2 id="track-16-nlp">Track 16 · NLP<a class="headerlink" href="#track-16-nlp" title="Permanent link">&para;</a></h2>
+<p>The fundamental algorithms that turn text into numbers.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16.1</td>
+<td><code>bpe</code></td>
+<td><strong>Byte-pair encoding</strong></td>
+<td>Learn merges from a corpus, then tokenize a word the way an LLM does.</td>
+</tr>
+<tr>
+<td>16.2</td>
+<td><code>tfidf</code></td>
+<td><strong>TF-IDF</strong></td>
+<td>Weight words by how much they distinguish one document from the rest.</td>
+</tr>
+<tr>
+<td>16.3</td>
+<td><code>ngram</code></td>
+<td><strong>N-gram language models</strong></td>
+<td>Count your way to "what comes next," with add-k smoothing + perplexity.</td>
+</tr>
+<tr>
+<td>16.4</td>
+<td><code>edit_distance</code></td>
+<td><strong>Edit distance</strong></td>
+<td>Levenshtein DP — the yardstick behind spell-check and fuzzy match.</td>
+</tr>
+<tr>
+<td>16.5</td>
+<td><code>word2vec</code></td>
+<td><strong>Skip-gram word2vec</strong></td>
+<td>Predict-the-context SGD — the seed idea behind every learned embedding.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>bpe
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>tfidf
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>ngram
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>edit_distance
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>word2vec
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>optimumai<span class="w"> </span>nlp<span class="w"> </span>bpe<span class="w"> </span>lowest
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>optimumai<span class="w"> </span>nlp<span class="w"> </span>tfidf<span class="w"> </span><span class="s2">&quot;the cat sat&quot;</span><span class="w"> </span><span class="s2">&quot;the dog sat&quot;</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>optimumai<span class="w"> </span>nlp<span class="w"> </span>edit-distance<span class="w"> </span>kitten<span class="w"> </span>sitting
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.nlp</span><span class="w"> </span><span class="kn">import</span> <span class="n">BPETokenizer</span><span class="p">,</span> <span class="n">edit_distance</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="n">tok</span> <span class="o">=</span> <span class="n">BPETokenizer</span><span class="p">(</span><span class="n">num_merges</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="n">tok</span><span class="o">.</span><span class="n">train</span><span class="p">([</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="s2">&quot;lowest&quot;</span><span class="p">,</span> <span class="s2">&quot;newer&quot;</span><span class="p">,</span> <span class="s2">&quot;newest&quot;</span><span class="p">])</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="n">tok</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;lowest&quot;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="c1"># Merges applied: lo+w→low, est+&lt;/w&gt;→est&lt;/w&gt;, w+est&lt;/w&gt;→west&lt;/w&gt;</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="c1"># Result: [&#39;lo&#39;, &#39;west&lt;/w&gt;&#39;]</span>
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="n">edit_distance</span><span class="p">(</span><span class="s2">&quot;kitten&quot;</span><span class="p">,</span> <span class="s2">&quot;sitting&quot;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="c1"># DP matrix filled (7×8) ...</span>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="c1"># Operations: substitute k→s, substitute e→i, insert g</span>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="c1"># Distance: 3</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-17-computer-vision">Track 17 · Computer Vision<a class="headerlink" href="#track-17-computer-vision" title="Permanent link">&para;</a></h2>
+<p>How a CNN sees — convolutions, pooling, and the tiny-CNN forward pass.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17.1</td>
+<td><code>conv2d</code></td>
+<td><strong>2D convolution</strong></td>
+<td>Slide a kernel over an image to detect local patterns.</td>
+</tr>
+<tr>
+<td>17.2</td>
+<td><code>pooling</code></td>
+<td><strong>Max &amp; average pooling</strong></td>
+<td>Downsample a feature map for translation tolerance.</td>
+</tr>
+<tr>
+<td>17.3</td>
+<td><code>sobel_edges</code></td>
+<td><strong>Sobel edge detection</strong></td>
+<td>Two fixed convolutions that find image boundaries.</td>
+</tr>
+<tr>
+<td>17.4</td>
+<td><code>tiny_cnn</code></td>
+<td><strong>A tiny CNN forward pass</strong></td>
+<td>Watch the tensor shapes flow: conv → relu → pool → dense → softmax.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>conv2d
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>pooling
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>sobel_edges
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>tiny_cnn
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>optimumai<span class="w"> </span>vision<span class="w"> </span>conv
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>optimumai<span class="w"> </span>vision<span class="w"> </span>pool
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>optimumai<span class="w"> </span>vision<span class="w"> </span>sobel
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>optimumai<span class="w"> </span>vision<span class="w"> </span>cnn<span class="w"> </span>--level<span class="w"> </span>engineer
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.vision.convolution</span><span class="w"> </span><span class="kn">import</span> <span class="n">conv2d_trace</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="n">image</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="n">conv2d_trace</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s2">&quot;beginner&quot;</span><span class="p">)</span>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="c1"># Input  shape: (6, 6)   Kernel shape: (2, 2)   Stride: 1</span>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="c1"># Output shape: (5, 5)   (no padding)</span>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="c1"># Output[0,0] = 1×0 + 0×1 + 0×6 + (-1)×7 = -7</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-18-llm-evaluation">Track 18 · LLM Evaluation<a class="headerlink" href="#track-18-llm-evaluation" title="Permanent link">&para;</a></h2>
+<p>How do you know if your LLM is any good?</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>18.1</td>
+<td><code>bleu_rouge</code></td>
+<td><strong>Text overlap metrics (BLEU / ROUGE / F1)</strong></td>
+<td>Score generated text against a reference — and see why paraphrase breaks them.</td>
+</tr>
+<tr>
+<td>18.2</td>
+<td><code>perplexity</code></td>
+<td><strong>Perplexity</strong></td>
+<td>Cross-entropy of a token sequence, exponentiated into a branching factor.</td>
+</tr>
+<tr>
+<td>18.3</td>
+<td><code>calibration</code></td>
+<td><strong>Calibration (ECE)</strong></td>
+<td>Bin predictions by confidence and check it matches empirical accuracy.</td>
+</tr>
+<tr>
+<td>18.4</td>
+<td><code>hallucination</code></td>
+<td><strong>Hallucination / faithfulness heuristic</strong></td>
+<td>A claim-overlap grounding proxy — plus why real detection is unsolved.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>bleu_rouge
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>perplexity
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>calibration
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>hallucination
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>optimumai<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>bleu<span class="w"> </span><span class="s2">&quot;the quick brown fox jumps&quot;</span><span class="w"> </span><span class="s2">&quot;the quick brown fox leaps&quot;</span><span class="w"> </span>--max-n<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>optimumai<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>perplexity<span class="w"> </span><span class="s2">&quot;[0.5,0.25,0.8]&quot;</span>
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>optimumai<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>calibration
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>optimumai<span class="w"> </span><span class="nb">eval</span><span class="w"> </span>faithfulness
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.evaluation</span><span class="w"> </span><span class="kn">import</span> <span class="n">bleu</span><span class="p">,</span> <span class="n">perplexity</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="n">bleu</span><span class="p">(</span><span class="s2">&quot;the quick brown fox jumps&quot;</span><span class="p">,</span> <span class="s2">&quot;the quick brown fox leaps&quot;</span><span class="p">,</span> <span class="n">max_n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="c1"># 1-gram precision: 4/5 = 0.80  BP=1.0</span>
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="c1"># BLEU-1: 0.80</span>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="n">perplexity</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="c1"># token probs: [0.5, 0.25, 0.8]</span>
+</span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a><span class="c1"># log-probs:   [-0.693, -1.386, -0.223]</span>
+</span><span id="__span-34-10"><a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a><span class="c1"># mean neg log-prob: 0.767</span>
+</span><span id="__span-34-11"><a id="__codelineno-34-11" name="__codelineno-34-11" href="#__codelineno-34-11"></a><span class="c1"># Perplexity = exp(0.767) = 2.15</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-19-prompt-engineering">Track 19 · Prompt Engineering<a class="headerlink" href="#track-19-prompt-engineering" title="Permanent link">&para;</a></h2>
+<p>Standard patterns for getting more out of a frozen LLM by changing what you
+send it — not the model itself.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19.1</td>
+<td><code>zero_shot</code></td>
+<td><strong>Zero-shot prompting</strong></td>
+<td>Role + instruction + task, with no worked examples.</td>
+</tr>
+<tr>
+<td>19.2</td>
+<td><code>few_shot</code></td>
+<td><strong>Few-shot prompting</strong></td>
+<td>In-context learning from K labeled exemplars.</td>
+</tr>
+<tr>
+<td>19.3</td>
+<td><code>chain_of_thought</code></td>
+<td><strong>Chain-of-thought prompting</strong></td>
+<td>Elicit intermediate reasoning before the final answer.</td>
+</tr>
+<tr>
+<td>19.4</td>
+<td><code>react</code></td>
+<td><strong>ReAct prompting</strong></td>
+<td>Interleave Thought / Action / Observation with a tool.</td>
+</tr>
+<tr>
+<td>19.5</td>
+<td><code>self_consistency</code></td>
+<td><strong>Self-consistency</strong></td>
+<td>Sample N chain-of-thought paths and majority-vote the answer.</td>
+</tr>
+<tr>
+<td>19.6</td>
+<td><code>structured_output</code></td>
+<td><strong>Structured output</strong></td>
+<td>Constrain generation to a validated JSON schema.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>zero_shot
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>few_shot
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>chain_of_thought
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>react
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>self_consistency
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>structured_output
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>optimumai<span class="w"> </span>prompt<span class="w"> </span>chain-of-thought
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>optimumai<span class="w"> </span>prompt<span class="w"> </span>react
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.prompting</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain_of_thought</span><span class="p">,</span> <span class="n">self_consistency</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="n">chain_of_thought</span><span class="p">(</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>    <span class="s2">&quot;If a train travels 60 miles in 2 hours, what is its speed?&quot;</span><span class="p">,</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>    <span class="n">explain</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="p">)</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="c1"># Assembled prompt:</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="c1"># [System] You are a careful reasoning assistant.</span>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="c1"># [User]   Think step by step, then give your final answer.</span>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="c1">#          Q: If a train travels 60 miles in 2 hours, what is its speed?</span>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="c1"># Chain-of-thought elicits: &quot;60 miles / 2 hours = 30 mph&quot;</span>
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>
+</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="n">self_consistency</span><span class="p">(</span><span class="s2">&quot;What is 2+2?&quot;</span><span class="p">,</span> <span class="n">sampled_answers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="s2">&quot;5&quot;</span><span class="p">],</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="c1"># Votes: {&quot;4&quot;: 2, &quot;5&quot;: 1}</span>
+</span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="c1"># Majority answer: &quot;4&quot;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="track-20-augmented-rnns">Track 20 · Augmented RNNs<a class="headerlink" href="#track-20-augmented-rnns" title="Permanent link">&para;</a></h2>
+<p>The distill.pub lineage from 2016: the pre-transformer ideas that made
+attention mainstream. NTM's read head is the direct ancestor of transformer
+attention.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>ID</th>
+<th>Lesson</th>
+<th>What you learn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20.1</td>
+<td><code>augmented_attention</code></td>
+<td><strong>Attention as differentiable memory</strong></td>
+<td>Content-based soft attention as a memory read: score → softmax → blend.</td>
+</tr>
+<tr>
+<td>20.2</td>
+<td><code>ntm</code></td>
+<td><strong>Neural Turing Machines</strong></td>
+<td>External read/write memory addressed by cosine similarity — erase then add.</td>
+</tr>
+<tr>
+<td>20.3</td>
+<td><code>act</code></td>
+<td><strong>Adaptive Computation Time</strong></td>
+<td>Learned, variable compute per input via a halting probability + ponder cost.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>augmented_attention
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>ntm
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>optimumai<span class="w"> </span>learn<span class="w"> </span>act
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>optimumai<span class="w"> </span>augrnn<span class="w"> </span>attention
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>optimumai<span class="w"> </span>augrnn<span class="w"> </span>ntm
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>optimumai<span class="w"> </span>augrnn<span class="w"> </span>act
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai.augmented_rnns</span><span class="w"> </span><span class="kn">import</span> <span class="n">attention_read</span><span class="p">,</span> <span class="n">ntm_read</span><span class="p">,</span> <span class="n">adaptive_computation_time</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="n">memory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="o">-</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">,</span><span class="mf">0.</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">1.</span><span class="p">],[</span><span class="mf">.5</span><span class="p">,</span><span class="mf">.5</span><span class="p">,</span><span class="mf">.5</span><span class="p">]])</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="n">query</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">])</span>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="n">attention_read</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">memory</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="c1"># cos similarities: [1.00, 0.00, -1.00, 0.00]</span>
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="c1"># softmax weights:  [0.576, 0.212, 0.000, 0.212]</span>
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="c1"># Read vector:      [0.682, 0.106, -0.576]</span>
+</span><span id="__span-38-11"><a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a>
+</span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="n">adaptive_computation_time</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span> <span class="n">eps</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="c1"># Step 1: halting_prob=0.62  cumulative=0.62</span>
+</span><span id="__span-38-14"><a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a><span class="c1"># Step 2: halting_prob=0.77  cumulative=1.00  → halt</span>
+</span><span id="__span-38-15"><a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a><span class="c1"># Ponder cost: 1.38</span>
+</span></code></pre></div>
+<hr />
+<h2 id="progress-tracking">Progress tracking<a class="headerlink" href="#progress-tracking" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>optimumai<span class="w"> </span>progress<span class="w">            </span><span class="c1"># bar chart + percentage done + what&#39;s next</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>optimumai<span class="w"> </span>progress<span class="w"> </span>--reset<span class="w">    </span><span class="c1"># clear all progress</span>
+</span></code></pre></div>
+<p>Progress is stored at <code>~/.optimumai/progress.json</code>.
+Override with <code>OPTIMUMAI_PROGRESS_PATH</code>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">COURSE</span><span class="p">,</span> <span class="n">ProgressTracker</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="n">tracker</span> <span class="o">=</span> <span class="n">ProgressTracker</span><span class="p">()</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="n">tracker</span><span class="o">.</span><span class="n">mark_complete</span><span class="p">(</span><span class="s2">&quot;attention&quot;</span><span class="p">)</span>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">tracker</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a><span class="c1"># {&#39;completed&#39;: 1, &#39;total&#39;: 76, &#39;pct&#39;: 1.3}</span>
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="c1"># Iterate every lesson</span>
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a><span class="k">for</span> <span class="n">lesson</span> <span class="ow">in</span> <span class="n">COURSE</span><span class="p">:</span>
+</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">lesson</span><span class="o">.</span><span class="n">track</span><span class="si">:</span><span class="s2">40s</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">lesson</span><span class="o">.</span><span class="n">id</span><span class="si">:</span><span class="s2">25s</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">lesson</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="active-recall-quiz">Active recall — quiz<a class="headerlink" href="#active-recall-quiz" title="Permanent link">&para;</a></h2>
+<p>Studying → passive. Testing yourself → active recall, ~2× better retention.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>optimumai<span class="w"> </span>quiz<span class="w">                   </span><span class="c1"># list all 20 quiz topics (57 questions total)</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>optimumai<span class="w"> </span>quiz<span class="w"> </span>softmax<span class="w">           </span><span class="c1"># answer, get graded + explained</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>optimumai<span class="w"> </span>quiz<span class="w"> </span>attention
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>optimumai<span class="w"> </span>quiz<span class="w"> </span>backprop
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>optimumai<span class="w"> </span>quiz<span class="w"> </span>transformer
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">optimumai</span><span class="w"> </span><span class="kn">import</span> <span class="n">Quiz</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="n">q</span> <span class="o">=</span> <span class="n">Quiz</span><span class="p">(</span><span class="s2">&quot;softmax&quot;</span><span class="p">)</span>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="n">q</span><span class="o">.</span><span class="n">ask</span><span class="p">()</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="c1"># Q: What does the temperature parameter T control in softmax?</span>
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="c1"># Your answer: › sharpness</span>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="c1"># ✓ Correct. T &lt; 1 sharpens toward a one-hot; T &gt; 1 flattens toward uniform.</span>
+</span></code></pre></div>
+<hr />
+<h2 id="spaced-repetition-review">Spaced repetition — review<a class="headerlink" href="#spaced-repetition-review" title="Permanent link">&para;</a></h2>
+<p>Quiz scores automatically feed an SM-2 scheduler.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>optimumai<span class="w"> </span>review<span class="w">    </span><span class="c1"># whatever&#39;s due today (SM-2 schedule)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="compute-the-answer-exercises">Compute-the-answer exercises<a class="headerlink" href="#compute-the-answer-exercises" title="Permanent link">&para;</a></h2>
+<p>Numerical fill-in-the-blank, tolerance-graded.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>optimumai<span class="w"> </span>exercise<span class="w">              </span><span class="c1"># list exercise topics</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>optimumai<span class="w"> </span>exercise<span class="w"> </span>backprop<span class="w">     </span><span class="c1"># compute the gradient, enter a number</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>optimumai<span class="w"> </span>exercise<span class="w"> </span>attention
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>optimumai<span class="w"> </span>exercise<span class="w"> </span>softmax
+</span></code></pre></div>
+<hr />
+<h2 id="streamlit-dashboard">Streamlit dashboard<a class="headerlink" href="#streamlit-dashboard" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;optimumai[dashboard]&quot;</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>optimumai<span class="w"> </span>dashboard<span class="w">             </span><span class="c1"># localhost:8501</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>optimumai<span class="w"> </span>dashboard<span class="w"> </span>--port<span class="w"> </span><span class="m">8888</span>
+</span></code></pre></div>
+<p>Shows per-track completion, overall percentage, quiz history, and SM-2 review
+schedule. Deploy publicly via <a href="../deploy/">Streamlit Community Cloud or HF Spaces</a>.</p>
+<hr />
+<h2 id="llm-tutor-optional">LLM tutor (optional)<a class="headerlink" href="#llm-tutor-optional" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;optimumai[llm]&quot;</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;...&quot;</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>optimumai<span class="w"> </span>ask<span class="w"> </span><span class="s2">&quot;why LayerNorm before attention, not after?&quot;</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>optimumai<span class="w"> </span>ask<span class="w"> </span><span class="s2">&quot;explain the difference between RoPE and sinusoidal positional encoding&quot;</span>
+</span></code></pre></div>
+<p>Degrades gracefully without the key — prints a friendly message and reminds
+you that the entire 76-lesson course works fully offline.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/muhammadyahiya/optimumai" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/optimumai/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.instant", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight", "toc.follow", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
