@@ -41,7 +41,7 @@ optimumai --version                    # print installed version
 ## The course, progress & retention
 
 ```bash
-optimumai course                       # full path — 76 lessons, 20 tracks, ✓/○ marks
+optimumai course                       # full path — 82 lessons, 21 tracks, ✓/○ marks
 optimumai learn                        # list every topic
 optimumai learn dot                    # run a lesson (auto-marks it complete)
 optimumai learn transformer --level researcher
@@ -133,6 +133,7 @@ optimumai learn jax
 optimumai repl                               # interactive session (needs [repl] for arrow keys)
 optimumai trace-text "why is the sky blue"   # words → tokens → transformer → next token
 optimumai trace-text "hello world" --layers 3 --level researcher
+optimumai trace-loop --subject AAPL --iterations 3 --p-approve 0.55  # simulate an agent loop
 optimumai diff "x**3 + 2*x" --at 3          # symbolic derivative (needs [symbolic])
 optimumai compare relu gelu --input "[-2,-1,0,1,2]"
 optimumai sweep softmax --values "[0.25,0.5,1,2]"

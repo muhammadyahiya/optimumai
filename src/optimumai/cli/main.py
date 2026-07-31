@@ -339,6 +339,29 @@ def trace_text_cmd(text: str, layers: int, level: str) -> None:
     TextPipeline(text, layers=layers).trace().render(level)
 
 
+@cli.command("trace-loop")
+@click.option("--subject", default="AAPL", help="Subject the loop runs against.")
+@click.option("--iterations", type=int, default=3, help="Max attempts (retries).")
+@click.option("--p-approve", type=float, default=0.5, help="Per-attempt approval probability.")
+@click.option("--maker-model", default="claude-sonnet-4-6", help="Implementer model.")
+@click.option("--checker-model", default="claude-haiku-4-5", help="Independent verifier model.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def trace_loop_cmd(
+    subject: str, iterations: int, p_approve: float,
+    maker_model: str, checker_model: str, level: str,
+) -> None:
+    """Trace one simulated agent-loop run: evidence → maker → checker → gate."""
+    from optimumai.loops.simulate import simulate_loop_trace
+
+    try:
+        simulate_loop_trace(
+            subject=subject, iterations=iterations, p_approve=p_approve,
+            maker_model=maker_model, checker_model=checker_model,
+        ).render(level)
+    except ValueError as exc:
+        raise click.BadParameter(str(exc)) from exc
+
+
 # --------------------------------------------------------------------- algebra
 @cli.group()
 def algebra() -> None:

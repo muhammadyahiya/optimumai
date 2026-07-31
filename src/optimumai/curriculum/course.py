@@ -54,6 +54,14 @@ from optimumai.kernels.kernels import (
     softmax_rows_trace,
     vector_add_trace,
 )
+
+# --- Agent Loops (Loop Engineering) ---
+from optimumai.loops.loop_budget import demo as loop_budget_demo
+from optimumai.loops.loop_convergence import demo as loop_convergence_demo
+from optimumai.loops.loop_escalation import demo as loop_escalation_demo
+from optimumai.loops.loop_memory import demo as loop_memory_demo
+from optimumai.loops.loop_state import demo as loop_state_demo
+from optimumai.loops.loop_verification import demo as loop_verification_demo
 from optimumai.ml.decision_tree import demo as decision_tree_demo
 from optimumai.ml.kmeans import demo as kmeans_demo
 from optimumai.ml.knn import demo as knn_demo
@@ -378,6 +386,25 @@ _LESSONS: tuple[Lesson, ...] = (
     Lesson("act", "Adaptive Computation Time", "20 · Augmented RNNs",
            "Learned, variable compute per input via a halting probability + ponder cost.",
            act_demo, ("softmax",)),
+    # --- Agent Loops (Loop Engineering) -------------------------------------
+    Lesson("loop-budget", "Loop budget", "21 · Agent Loops",
+           "Token accounting + the soft brake that bounds a retrying loop's cost.",
+           loop_budget_demo),
+    Lesson("loop-convergence", "Loop convergence", "21 · Agent Loops",
+           "Geometric convergence: attempts-to-approval and the exhaustion rate.",
+           loop_convergence_demo, ("loop-budget",)),
+    Lesson("loop-verification", "Independent verification", "21 · Agent Loops",
+           "Why the checker must be a different model — slip-through vs blind-spot overlap.",
+           loop_verification_demo, ("loop-convergence",)),
+    Lesson("loop-memory", "Loop memory", "21 · Agent Loops",
+           "The compaction ratio behind rolling cross-iteration memory.",
+           loop_memory_demo, ("loop-budget",)),
+    Lesson("loop-escalation", "Loop escalation", "21 · Agent Loops",
+           "Retry-vs-escalate as expected value; the break-even approval probability.",
+           loop_escalation_demo, ("loop-convergence",)),
+    Lesson("loop-state", "Loop state", "21 · Agent Loops",
+           "Run-log statistics: why the loop's ledger must live outside the model.",
+           loop_state_demo, ("loop-escalation",)),
 )
 
 

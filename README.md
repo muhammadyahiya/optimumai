@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (76 across 20 tracks)
+optimumai learn                       # list every topic (82 across 21 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -192,7 +192,7 @@ from optimumai.visualization.playgrounds import playground   # -> writes an .htm
 ```
 
 New tracks: **19 Prompt Engineering · 20 Augmented RNNs** — the path now spans
-**76 lessons across 20 tracks**. Docs: <https://muhammadyahiya.github.io/optimumai/>.
+**82 lessons across 21 tracks**. Docs: <https://muhammadyahiya.github.io/optimumai/>.
 
 ## Explore every concept — formula + code, side by side (v1.6)
 

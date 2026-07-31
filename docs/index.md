@@ -10,7 +10,7 @@ path runs fast in production *and* teaches you exactly what it's doing.
 ```bash
 pip install optimumai
 optimumai start          # 30-second guided tour — start here
-optimumai course         # the full learning path (76 lessons across 20 tracks)
+optimumai course         # the full learning path (82 lessons across 21 tracks)
 ```
 
 ```python
@@ -32,12 +32,12 @@ Vector([1, 2, 3]).dot(Vector([4, 5, 6]), explain=True)
 
 <div class="grid cards" markdown>
 
--   :material-book-open-variant: **76-lesson Course**
+-   :material-book-open-variant: **82-lesson Course**
 
     ---
 
     First-principles AI from linear algebra to FlashAttention, LoRA, and DPO.
-    20 tracks, every lesson a runnable, explained trace.
+    21 tracks, every lesson a runnable, explained trace.
 
     [:octicons-arrow-right-24: Courses](course.md)
 
@@ -180,7 +180,7 @@ print(generate("Attention is", max_tokens=32))
 
 ```bash
 optimumai start                        # guided tour
-optimumai course                       # full 76-lesson path with progress
+optimumai course                       # full 82-lesson path with progress
 optimumai learn attention              # run any lesson
 optimumai quiz softmax                 # active recall
 optimumai review                       # spaced repetition (SM-2)

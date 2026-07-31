@@ -795,7 +795,7 @@ ProgressTracker().mark_complete("rag")
 ```
 
 ```bash
-optimumai course              # full path — 76 lessons across 20 tracks
+optimumai course              # full path — 82 lessons across 21 tracks
 optimumai learn attention     # run a lesson (auto-marks complete)
 optimumai progress            # progress bar + what's next
 optimumai search embedding    # find lessons by keyword
