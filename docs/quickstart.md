@@ -109,7 +109,7 @@ softmax([2.0, 1.0, 0.1], level="researcher", explain=True)
 ## Next steps
 
 - **Full feature tour** → [Features](features.md)
-- **76-lesson learning path** → [Course](course.md)
+- **82-lesson learning path** → [Course](course.md)
 - **All CLI commands** → [CLI reference](cli.md)
 - **GPU kernels from scratch** → [GPU kernels](gpu-kernels.md)
 - **Visualization & circuits** → [Visualization](visualization.md)

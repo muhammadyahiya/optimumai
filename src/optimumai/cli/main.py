@@ -316,6 +316,34 @@ def dashboard_cmd(port: int) -> None:
     )
 
 
+@cli.command("scratchpad")
+@click.argument("concept", required=False)
+@click.option("--port", type=int, default=5057, help="Local port to bind (127.0.0.1 only).")
+@click.option("--no-browser", is_flag=True, help="Don't auto-open a browser.")
+def scratchpad_cmd(concept: str | None, port: int, no_browser: bool) -> None:
+    """Drag the math and watch the trace update (needs the [scratchpad] extra)."""
+    from optimumai.scratchpad.concepts import get_concept, list_concepts
+
+    if concept is None:
+        click.echo("Interactive scratchpad boards — run one of:\n")
+        for c in list_concepts():
+            click.echo(f"  optimumai scratchpad {c.concept_id:<16} {c.title}")
+        return
+    try:
+        get_concept(concept)  # fail fast on a typo, before binding a port
+    except KeyError as exc:
+        raise click.ClickException(exc.args[0]) from exc
+    try:
+        import flask  # noqa: F401
+    except ImportError as exc:
+        raise click.ClickException(
+            'Flask is not installed. Install it with:  pip install "optimumai[scratchpad]"'
+        ) from exc
+    from optimumai.scratchpad.cli import launch
+
+    launch(concept=concept, port=port, open_browser=not no_browser)
+
+
 @cli.command("ask")
 @click.argument("question")
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Explanation depth.")
@@ -337,6 +365,29 @@ def repl_cmd() -> None:
 def trace_text_cmd(text: str, layers: int, level: str) -> None:
     """Watch your own text flow through a toy transformer to a next-token distribution."""
     TextPipeline(text, layers=layers).trace().render(level)
+
+
+@cli.command("trace-loop")
+@click.option("--subject", default="AAPL", help="Subject the loop runs against.")
+@click.option("--iterations", type=int, default=3, help="Max attempts (retries).")
+@click.option("--p-approve", type=float, default=0.5, help="Per-attempt approval probability.")
+@click.option("--maker-model", default="claude-sonnet-4-6", help="Implementer model.")
+@click.option("--checker-model", default="claude-haiku-4-5", help="Independent verifier model.")
+@click.option("--level", type=_LEVEL_CHOICE, default="engineer", help="Detail level.")
+def trace_loop_cmd(
+    subject: str, iterations: int, p_approve: float,
+    maker_model: str, checker_model: str, level: str,
+) -> None:
+    """Trace one simulated agent-loop run: evidence → maker → checker → gate."""
+    from optimumai.loops.simulate import simulate_loop_trace
+
+    try:
+        simulate_loop_trace(
+            subject=subject, iterations=iterations, p_approve=p_approve,
+            maker_model=maker_model, checker_model=checker_model,
+        ).render(level)
+    except ValueError as exc:
+        raise click.BadParameter(str(exc)) from exc
 
 
 # --------------------------------------------------------------------- algebra

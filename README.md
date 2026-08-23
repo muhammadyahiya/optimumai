@@ -119,7 +119,7 @@ optimumai backprop                    # chain rule through a scalar graph
 optimumai train --steps 150           # train a tiny MLP, watch loss fall
 optimumai jepa --demo                 # LeCun's world-model energy
 optimumai superposition               # Anthropic's polysemantic neurons
-optimumai learn                       # list every topic (76 across 20 tracks)
+optimumai learn                       # list every topic (82 across 21 tracks)
 optimumai learn transformer --level researcher
 ```
 
@@ -192,7 +192,36 @@ from optimumai.visualization.playgrounds import playground   # -> writes an .htm
 ```
 
 New tracks: **19 Prompt Engineering · 20 Augmented RNNs** — the path now spans
-**76 lessons across 20 tracks**. Docs: <https://muhammadyahiya.github.io/optimumai/>.
+**82 lessons across 21 tracks**. Docs: <https://muhammadyahiya.github.io/optimumai/>.
+
+## Drag the math — the interactive scratchpad
+
+The playgrounds above are one-shot HTML files. The **scratchpad** is a small
+local-first server (`127.0.0.1` only, no telemetry, no API calls) that puts a
+draggable board next to a live trace, the "why AI uses this" bridge, and a quiz
+— so you can move a vector and watch the dot product change under your hand.
+
+```bash
+pip install "optimumai[scratchpad]"
+
+optimumai scratchpad                    # list the available boards
+optimumai scratchpad dot_product        # drag two vectors: dot product & cosine similarity
+optimumai scratchpad tangent_line       # slide along a curve: f'(x) as instantaneous slope
+optimumai scratchpad dot_product --port 5100 --no-browser
+```
+
+```python
+from optimumai.scratchpad import launch
+launch("tangent_line")
+```
+
+All recompute happens client-side ([JSXGraph](https://jsxgraph.org) +
+[KaTeX](https://katex.org)), so dragging never round-trips to the server — the
+server only serves the page and each board's metadata. Those two libraries load
+from a CDN, so the first load of a board needs network access.
+
+Adding a board is one entry in `scratchpad/concepts.py` plus one `init*Board()`
+function in `scratchpad/static/scratchpad.js`.
 
 ## Explore every concept — formula + code, side by side (v1.6)
 

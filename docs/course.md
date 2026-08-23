@@ -1,6 +1,6 @@
 # Courses
 
-76 lessons across 20 tracks — every one a runnable, explained trace.  
+82 lessons across 21 tracks — every one a runnable, explained trace.  
 Run any lesson with `optimumai learn <id>`, track progress, quiz yourself, and
 review on a spaced-repetition schedule.
 
@@ -765,6 +765,44 @@ adaptive_computation_time(np.array([0.5, 1.2, 2.0, -0.3, 3.0]), eps=0.01)
 
 ---
 
+## Track 21 · Agent Loops
+
+The math behind **Loop Engineering**: a bounded, verified, stateful cycle
+`evidence → triage → maker → adversarial checker → gate → state`. Each lesson is
+built and traced offline (no live LLM calls) — the quantitative backbone of the
+`agentx loop` runtime.
+
+| # | ID | Lesson | What you learn |
+|---|---|---|---|
+| 21.1 | `loop-budget` | **Loop budget** | Token accounting + the soft brake that bounds a retrying loop's cost. |
+| 21.2 | `loop-convergence` | **Loop convergence** | Geometric convergence: attempts-to-approval and the exhaustion rate `(1−p)^N`. |
+| 21.3 | `loop-verification` | **Independent verification** | Why the checker must be a different model — slip-through vs blind-spot overlap. |
+| 21.4 | `loop-memory` | **Loop memory** | The compaction ratio behind rolling cross-iteration memory. |
+| 21.5 | `loop-escalation` | **Loop escalation** | Retry-vs-escalate as expected value; the break-even approval probability. |
+| 21.6 | `loop-state` | **Loop state** | Run-log statistics: why the loop's ledger must live outside the model. |
+
+```bash
+optimumai learn loop-budget
+optimumai learn loop-convergence
+optimumai learn loop-verification
+
+# simulate one annotated loop run (evidence → maker → checker → gate):
+optimumai trace-loop --subject AAPL --iterations 3 --p-approve 0.55
+```
+
+```python
+from optimumai.loops import loop_verification, loop_convergence
+
+loop_verification(0.3, 0.9, 0.7, explain=True)
+# Independent checker slip:   0.03
+# Same-model checker slip:    0.219   (blind spots overlap)
+# → fabrications slip 7.3× more often with a shared model
+
+loop_convergence(0.55, max_attempts=3)   # P(approve within 3) ≈ 0.909
+```
+
+---
+
 ## Progress tracking
 
 ```bash
@@ -860,4 +898,4 @@ optimumai ask "explain the difference between RoPE and sinusoidal positional enc
 ```
 
 Degrades gracefully without the key — prints a friendly message and reminds
-you that the entire 76-lesson course works fully offline.
+you that the entire 82-lesson course works fully offline.

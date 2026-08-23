@@ -49,6 +49,7 @@ viz = ["plotext>=5.2", "matplotlib>=3.8", "pillow>=10.0"]
 dashboard = ["streamlit>=1.30"]
 repl = ["prompt_toolkit>=3.0"]
 symbolic = ["sympy>=1.12"]
+scratchpad = ["flask>=3.0"]
 tokenize = ["tiktoken>=0.7"]
 gpu = ["numba>=0.59"]
 torch = ["torch>=2.0"]  # optional: run the real-PyTorch cells in `optimumai tutorial pytorch`
@@ -64,6 +65,7 @@ all = [
     "prompt_toolkit>=3.0",
     "sympy>=1.12",
     "tiktoken>=0.7",
+    "flask>=3.0",
 ]
 dev = [
     "pytest>=8.0",
@@ -73,6 +75,7 @@ dev = [
     "matplotlib>=3.8",
     "pillow>=10.0",
     "nbformat>=5.9",
+    "flask>=3.0",
 ]
 
 [project.scripts]
@@ -88,7 +91,13 @@ path = "src/optimumai/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/optimumai"]
-artifacts = ["src/optimumai/_notebooks/*.ipynb", "src/optimumai/visualization/_static/*.js"]
+artifacts = [
+    "src/optimumai/_notebooks/*.ipynb",
+    "src/optimumai/visualization/_static/*.js",
+    # The scratchpad Jinja template is matched by the repo-wide *.html ignore,
+    # so it must be listed here to make it into the wheel.
+    "src/optimumai/scratchpad/templates/*.html",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
