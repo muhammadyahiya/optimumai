@@ -1,0 +1,63 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: #0f1115;
+  color: #e6e6e6;
+}
+
+.layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 260px;
+  background: #14161b;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid #24262c;
+}
+.sidebar h1 { font-size: 15px; font-weight: 600; margin: 0 0 1rem; color: #a99bff; }
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li { margin-bottom: 4px; }
+.sidebar a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #c7c7c7;
+  text-decoration: none;
+  font-size: 13px;
+}
+.sidebar a:hover { background: #1e2128; }
+.sidebar a.active { background: #2a2540; color: #cabaff; }
+
+.workspace { flex: 1; padding: 2rem; }
+.workspace h2 { margin: 0 0 4px; font-size: 20px; font-weight: 500; }
+.track-label { color: #8a8a8a; font-size: 13px; margin: 0 0 1.5rem; }
+
+.board-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.jxgbox { width: 480px; height: 480px; background: #ffffff; border-radius: 10px; }
+
+.trace-panel { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: 12px; }
+.card { background: #181a20; border: 1px solid #24262c; border-radius: 10px; padding: 12px 14px; }
+.card-label { font-size: 11px; color: #8a8a8a; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.03em; }
+.trace-eq { font-size: 16px; margin: 0; }
+.why-text, .quiz-q { font-size: 13px; line-height: 1.5; margin: 0; color: #d0d0d0; }
+
+.card-row { display: flex; gap: 10px; }
+.metric { flex: 1; text-align: center; }
+.metric-value { font-size: 18px; font-weight: 600; margin: 0; }
+.card.accent { background: #201a3a; border-color: #3c3489; }
+
+button#reveal-btn {
+  margin-top: 8px;
+  background: #24262c;
+  color: #e6e6e6;
+  border: 1px solid #34363c;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+button#reveal-btn:hover { background: #2c2f36; }
+.quiz-a { margin-top: 8px; font-size: 13px; color: #9be29b; }
+.hidden { display: none; }
+
+code { font-size: 12px; color: #a99bff; }

@@ -37,3 +37,5 @@ node_modules/
 *.gif
 *.html
 !notebooks/*
+# the scratchpad's Jinja template is source, not a generated artifact
+!src/optimumai/scratchpad/templates/*.html

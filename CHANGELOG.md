@@ -4,6 +4,19 @@ All notable changes to OptimumAI are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- `optimumai scratchpad` — a local-first interactive math scratchpad. Drag a
+  board and the trace, metrics, and KaTeX equation recompute live in the
+  browser; each board also carries its "why AI uses this" bridge, a quiz, and
+  the CLI hook for the same concept.
+  - `dot_product` — two draggable vectors: dot product, magnitudes, cosine similarity.
+  - `tangent_line` — a glider on a curve: `f(x)` and the instantaneous slope `f'(x)`.
+- New `[scratchpad]` extra (Flask). The server binds `127.0.0.1` only and makes
+  no external API calls; all recompute is client-side via JSXGraph + KaTeX.
+
 ## [1.6.3] — 2026-07-07
 
 The **Release Hygiene** patch — trims the transformer flow template to satisfy

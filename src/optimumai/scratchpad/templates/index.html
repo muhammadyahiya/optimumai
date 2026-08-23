@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>optimumai scratchpad — {{ active_concept.title }}</title>
+
+<!-- JSXGraph: interactive geometry / function plotting, MIT/LGPL, no dependencies -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css">
+<script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+
+<!-- KaTeX: fast equation rendering, MIT, no dependencies -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='scratchpad.css') }}">
+</head>
+<body>
+
+<div class="layout">
+  <nav class="sidebar">
+    <h1>optimumai scratchpad</h1>
+    <ul>
+      {% for c in all_concepts %}
+      <li>
+        <a href="/scratchpad/{{ c.concept_id }}" class="{{ 'active' if c.concept_id == active_concept.concept_id else '' }}">
+          {{ c.title }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <main class="workspace">
+    <h2>{{ active_concept.title }}</h2>
+    <p class="track-label">{{ active_concept.track }}</p>
+
+    <div class="board-row">
+      <div id="jxgbox" class="jxgbox"></div>
+
+      <aside class="trace-panel">
+        <div class="card">
+          <p class="card-label">live trace</p>
+          <p id="trace-eq" class="trace-eq"></p>
+        </div>
+        <div class="card-row">
+          <div class="card metric"><p class="card-label" id="metricA-label"></p><p id="metricA" class="metric-value"></p></div>
+          <div class="card metric"><p class="card-label" id="metricB-label"></p><p id="metricB" class="metric-value"></p></div>
+          <div class="card metric accent"><p class="card-label" id="metricC-label"></p><p id="metricC" class="metric-value"></p></div>
+        </div>
+        <div class="card">
+          <p class="card-label">why AI uses this</p>
+          <p class="why-text">{{ active_concept.why_ai_uses_it }}</p>
+        </div>
+        <div class="card">
+          <p class="card-label">quiz</p>
+          <p class="quiz-q">{{ active_concept.quiz_question }}</p>
+          <button id="reveal-btn">Reveal answer</button>
+          <p id="quiz-a" class="quiz-a hidden">{{ active_concept.quiz_answer }}</p>
+        </div>
+        <div class="card">
+          <p class="card-label">run it in the CLI</p>
+          <code>{{ active_concept.cli_hook }}</code>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<script>
+  window.ACTIVE_CONCEPT = "{{ active_concept.concept_id }}";
+</script>
+<script src="{{ url_for('static', filename='scratchpad.js') }}"></script>
+</body>
+</html>

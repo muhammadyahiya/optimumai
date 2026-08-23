@@ -316,6 +316,34 @@ def dashboard_cmd(port: int) -> None:
     )
 
 
+@cli.command("scratchpad")
+@click.argument("concept", required=False)
+@click.option("--port", type=int, default=5057, help="Local port to bind (127.0.0.1 only).")
+@click.option("--no-browser", is_flag=True, help="Don't auto-open a browser.")
+def scratchpad_cmd(concept: str | None, port: int, no_browser: bool) -> None:
+    """Drag the math and watch the trace update (needs the [scratchpad] extra)."""
+    from optimumai.scratchpad.concepts import get_concept, list_concepts
+
+    if concept is None:
+        click.echo("Interactive scratchpad boards — run one of:\n")
+        for c in list_concepts():
+            click.echo(f"  optimumai scratchpad {c.concept_id:<16} {c.title}")
+        return
+    try:
+        get_concept(concept)  # fail fast on a typo, before binding a port
+    except KeyError as exc:
+        raise click.ClickException(exc.args[0]) from exc
+    try:
+        import flask  # noqa: F401
+    except ImportError as exc:
+        raise click.ClickException(
+            'Flask is not installed. Install it with:  pip install "optimumai[scratchpad]"'
+        ) from exc
+    from optimumai.scratchpad.cli import launch
+
+    launch(concept=concept, port=port, open_browser=not no_browser)
+
+
 @cli.command("ask")
 @click.argument("question")
 @click.option("--level", type=_LEVEL_CHOICE, default="intermediate", help="Explanation depth.")
