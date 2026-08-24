@@ -204,11 +204,24 @@ draggable board next to a live trace, the "why AI uses this" bridge, and a quiz
 ```bash
 pip install "optimumai[scratchpad]"
 
-optimumai scratchpad                    # list the available boards
+optimumai scratchpad                    # list boards, with locked/done state
 optimumai scratchpad dot_product        # drag two vectors: dot product & cosine similarity
 optimumai scratchpad tangent_line       # slide along a curve: f'(x) as instantaneous slope
-optimumai scratchpad dot_product --port 5100 --no-browser
+optimumai scratchpad matrix_transform   # drag the basis vectors, watch the determinant
+optimumai scratchpad gradient_descent   # push the learning rate until training diverges
+optimumai scratchpad --order            # print the prerequisite graph
+optimumai scratchpad --vendor           # download assets once, then work offline
 ```
+
+A board is **declared in Python, not hand-written in JavaScript**: a concept
+names a *kind* (`vectors`, `function`, `matrix`, `descent`) and one generic
+renderer builds it, so adding a concept is a dict entry. The curve's mathematics
+is owned by Python too — SymPy differentiates the expression and emits the
+JavaScript, so the board and `optimumai diff` cannot drift apart. Prerequisites
+are real graph edges, validated for cycles at startup and enforced by the CLI,
+and completing a board records against the *course* lesson id, so
+`optimumai progress` and the scratchpad share one store. See
+[docs/scratchpad-boards.md](docs/scratchpad-boards.md).
 
 ```python
 from optimumai.scratchpad import launch
@@ -216,12 +229,9 @@ launch("tangent_line")
 ```
 
 All recompute happens client-side ([JSXGraph](https://jsxgraph.org) +
-[KaTeX](https://katex.org)), so dragging never round-trips to the server — the
-server only serves the page and each board's metadata. Those two libraries load
-from a CDN, so the first load of a board needs network access.
-
-Adding a board is one entry in `scratchpad/concepts.py` plus one `init*Board()`
-function in `scratchpad/static/scratchpad.js`.
+[KaTeX](https://katex.org)), so dragging never round-trips to the server. Each
+board loads only the libraries it declares, and `--vendor` fetches them into
+`static/vendor/` once so later runs need no network at all.
 
 ## Think before you look — guided steps
 

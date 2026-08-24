@@ -34,6 +34,51 @@ All notable changes to OptimumAI are documented here. The format follows
   given a semantic role. Exposes `to_css_vars()` and `to_ansi()`.
 - Docs: "Guided Steps" page covering the authoring contract and the
   `(index, phase)` cursor.
+- Two boards: `matrix_transform` (drag the basis vectors, watch the determinant
+  collapse to zero and flip sign) and `gradient_descent` (drag the learning rate
+  past the stability threshold and watch the iterates diverge).
+- `optimumai scratchpad --vendor` downloads front-end assets into
+  `static/vendor/` so boards render with no network; `--order` prints the
+  prerequisite graph; `--force` opens a board whose prerequisites are unmet.
+  Opening a locked board without `--force` is now refused with the blocker named.
+- Authored **snapshots** per board — parameter settings worth visiting, each with
+  a reason — and tests that replicate the iteration in Python to verify the
+  labelled behaviour actually occurs.
+- SymPy added to the `[scratchpad]` extra, since function boards need it.
+- Docs: "Scratchpad Boards" page on the declarative board architecture.
+
+### Changed
+
+- **Scratchpad boards are now declarative.** A concept declares a `BoardSpec`
+  (kind, bounding box, draggable points, parameters, snapshots) and one generic
+  renderer per *kind* interprets it. Four kinds — `vectors`, `function`,
+  `matrix`, `descent` — replace one hand-written JavaScript function per board;
+  a test asserts no concept id appears in the JavaScript at all.
+- **Python is the single source of truth for board mathematics.** A board
+  declares one expression; `scratchpad.expressions` parses it with SymPy,
+  differentiates it, and emits JavaScript for both via SymPy's `jscode` printer.
+  The browser no longer defines `f` and `f'` of its own, so the CLI and the board
+  cannot disagree. Unparseable or unbound expressions now fail at build time.
+- **Prerequisites are edges, not prose.** They point at real concept ids and are
+  validated for dangling references, self-loops and cycles at app startup;
+  `learning_order()` topologically sorts them, and the sidebar shows locked/done
+  badges. Human-readable background moved to `assumed_knowledge`.
+- **Completion writes to the course progress store.** Each board declares the
+  curriculum `lesson_id` it corresponds to (`dot`, `derivative`, `matmul`,
+  `descent`), so `optimumai learn` and the scratchpad share one record instead of
+  keeping two.
+- Only the library a board declares is loaded, rather than every library on
+  every page.
+
+### Fixed
+
+- Two authored-content bugs the snapshot tests caught: an "Oscillating" descent
+  snapshot at `lr = 2.6` that actually converges (the threshold for L = 0.35x² is
+  `1/0.35 = 2.857`), and a "Steep descent" tangent snapshot at `x = -3` where
+  `f'(x) = 0.9x² - 2` is *positive*.
+- The descent board's behaviour classifier reported divergence as "oscillating"
+  because it tested `|x| > 1e3`, a threshold ten steps of mild divergence never
+  reach. It now tests whether `|x|` is growing and whether the sign alternates.
 
 ## [1.6.3] — 2026-07-07
 

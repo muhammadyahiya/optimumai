@@ -89,6 +89,7 @@ nav:
       - "Classical AI, ML & RL": classical-ai.md
       - "Interactive & Explained": interactive.md
       - "Guided Steps": guided-steps.md
+      - "Scratchpad Boards": scratchpad-boards.md
       - "Explainer Roadmap": roadmap-visual-explainers.md
       - "Token Generation": generation.md
   - Tutorials:

@@ -39,3 +39,6 @@ node_modules/
 !notebooks/*
 # the scratchpad's Jinja template is source, not a generated artifact
 !src/optimumai/scratchpad/templates/*.html
+
+# vendored third-party assets, fetched on demand by `scratchpad --vendor`
+src/optimumai/scratchpad/static/vendor/

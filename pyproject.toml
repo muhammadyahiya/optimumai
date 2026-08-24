@@ -49,7 +49,7 @@ viz = ["plotext>=5.2", "matplotlib>=3.8", "pillow>=10.0"]
 dashboard = ["streamlit>=1.30"]
 repl = ["prompt_toolkit>=3.0"]
 symbolic = ["sympy>=1.12"]
-scratchpad = ["flask>=3.0"]
+scratchpad = ["flask>=3.0", "sympy>=1.12"]
 tokenize = ["tiktoken>=0.7"]
 gpu = ["numba>=0.59"]
 torch = ["torch>=2.0"]  # optional: run the real-PyTorch cells in `optimumai tutorial pytorch`

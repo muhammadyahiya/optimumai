@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <title>optimumai scratchpad — {{ active_concept.title }}</title>
 
-<!-- JSXGraph: interactive geometry / function plotting, MIT/LGPL, no dependencies -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css">
-<script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
-
-<!-- KaTeX: fast equation rendering, MIT, no dependencies -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+{# Only the libraries this board declares. A vectors board does not pay for
+   KaTeX it never renders, and no board pays for a library it does not use.
+   Paths resolve to static/vendor/ when `--vendor` has been run, else CDN. #}
+{% if assets.jsxgraph_css %}<link rel="stylesheet" href="{{ assets.jsxgraph_css }}">{% endif %}
+{% if assets.jsxgraph_js %}<script src="{{ assets.jsxgraph_js }}"></script>{% endif %}
+{% if assets.katex_css %}<link rel="stylesheet" href="{{ assets.katex_css }}">{% endif %}
+{% if assets.katex_js %}<script src="{{ assets.katex_js }}"></script>{% endif %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='scratchpad.css') }}">
 </head>
@@ -19,11 +19,18 @@
 <div class="layout">
   <nav class="sidebar">
     <h1>optimumai scratchpad</h1>
+    <p class="asset-mode">{{ "offline · vendored" if assets.offline else "assets via CDN" }}</p>
     <ul>
       {% for c in all_concepts %}
       <li>
-        <a href="/scratchpad/{{ c.concept_id }}" class="{{ 'active' if c.concept_id == active_concept.concept_id else '' }}">
-          {{ c.title }}
+        <a href="/scratchpad/{{ c.concept_id }}"
+           class="{{ 'active' if c.concept_id == active_concept.concept_id else '' }}{{ ' locked' if c.locked else '' }}"
+           {% if c.locked %}title="Needs first: {{ c.unmet | join(', ') }}"{% endif %}>
+          <span class="nav-title">{{ c.title }}</span>
+          <span class="badges">
+            {% if c.completed %}<span class="badge done">done</span>{% endif %}
+            {% if c.locked %}<span class="badge locked">locked</span>{% endif %}
+          </span>
         </a>
       </li>
       {% endfor %}
@@ -33,20 +40,28 @@
   <main class="workspace">
     <h2>{{ active_concept.title }}</h2>
     <p class="track-label">{{ active_concept.track }}</p>
+    {% if active_concept.unmet %}
+    <p class="lock-warning">
+      This board assumes you have done:
+      {% for p in active_concept.unmet %}<code>{{ p }}</code>{% endfor %}
+    </p>
+    {% endif %}
 
     <div class="board-row">
-      <div id="jxgbox" class="jxgbox"></div>
+      <div class="board-col">
+        <div id="jxgbox" class="jxgbox"></div>
+        <div id="expr-label" class="expr-label"></div>
+        <div id="params" class="params"></div>
+        <div id="snapshots" class="snapshots"></div>
+        <p id="snapshot-note" class="snapshot-note"></p>
+      </div>
 
       <aside class="trace-panel">
         <div class="card">
           <p class="card-label">live trace</p>
           <p id="trace-eq" class="trace-eq"></p>
         </div>
-        <div class="card-row">
-          <div class="card metric"><p class="card-label" id="metricA-label"></p><p id="metricA" class="metric-value"></p></div>
-          <div class="card metric"><p class="card-label" id="metricB-label"></p><p id="metricB" class="metric-value"></p></div>
-          <div class="card metric accent"><p class="card-label" id="metricC-label"></p><p id="metricC" class="metric-value"></p></div>
-        </div>
+        <div class="card-row" id="readouts"></div>
         <div class="card">
           <p class="card-label">why AI uses this</p>
           <p class="why-text">{{ active_concept.why_ai_uses_it }}</p>
@@ -61,13 +76,24 @@
           <p class="card-label">run it in the CLI</p>
           <code>{{ active_concept.cli_hook }}</code>
         </div>
+        <div class="card">
+          <p class="card-label">progress</p>
+          <p class="progress-note">
+            Records against course lesson <code>{{ active_concept.lesson_id }}</code>,
+            the same id <code>optimumai progress</code> reads.
+          </p>
+          <button id="complete-btn" {% if active_concept.completed %}disabled{% endif %}>
+            {{ "Marked complete ✓" if active_concept.completed else "Mark complete" }}
+          </button>
+        </div>
       </aside>
     </div>
   </main>
 </div>
 
 <script>
-  window.ACTIVE_CONCEPT = "{{ active_concept.concept_id }}";
+  window.ACTIVE_CONCEPT = {{ active_concept.concept_id | tojson }};
+  window.BOARD_SPEC = {{ active_concept.board | tojson }};
 </script>
 <script src="{{ url_for('static', filename='scratchpad.js') }}"></script>
 </body>

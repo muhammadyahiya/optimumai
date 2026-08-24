@@ -320,25 +320,81 @@ def dashboard_cmd(port: int) -> None:
 @click.argument("concept", required=False)
 @click.option("--port", type=int, default=5057, help="Local port to bind (127.0.0.1 only).")
 @click.option("--no-browser", is_flag=True, help="Don't auto-open a browser.")
-def scratchpad_cmd(concept: str | None, port: int, no_browser: bool) -> None:
+@click.option("--vendor", is_flag=True, help="Download assets for offline use, then exit.")
+@click.option("--order", "show_order", is_flag=True, help="Print the prerequisite graph and exit.")
+@click.option("--force", is_flag=True, help="Open a board even if its prerequisites are unmet.")
+def scratchpad_cmd(
+    concept: str | None, port: int, no_browser: bool,
+    vendor: bool, show_order: bool, force: bool,
+) -> None:
     """Drag the math and watch the trace update (needs the [scratchpad] extra)."""
+    from optimumai.progress import ProgressTracker
     from optimumai.scratchpad.concepts import get_concept, list_concepts
+    from optimumai.scratchpad.dag import unmet_prerequisites
+
+    if vendor:
+        from optimumai.scratchpad.assets import vendor_assets, vendor_dir
+
+        click.echo(f"downloading front-end assets → {vendor_dir()}")
+        failures = 0
+        for name, status in vendor_assets():
+            failures += status.startswith("failed")
+            click.echo(f"  {name:<22} {status}")
+        if failures:
+            raise click.ClickException(
+                f"{failures} asset(s) could not be downloaded; the board will fall back to CDN"
+            )
+        click.echo("done — boards now load without network access")
+        return
+
+    done_lessons = set(ProgressTracker().completed_ids())
+    concepts = list_concepts()
+    done = {c.concept_id for c in concepts if c.lesson_id in done_lessons}
+
+    if show_order:
+        click.echo("Prerequisite order (earliest first):\n")
+        for c in concepts:
+            unmet = unmet_prerequisites(c, done)
+            mark = "x" if c.concept_id in done else ("-" if unmet else " ")
+            needs = f"  needs: {', '.join(unmet)}" if unmet else ""
+            click.echo(f"  [{mark}] {c.concept_id:<18} lesson={c.lesson_id:<12}{needs}")
+        return
 
     if concept is None:
         click.echo("Interactive scratchpad boards — run one of:\n")
-        for c in list_concepts():
-            click.echo(f"  optimumai scratchpad {c.concept_id:<16} {c.title}")
+        for c in concepts:
+            unmet = unmet_prerequisites(c, done)
+            mark = "x" if c.concept_id in done else ("-" if unmet else " ")
+            click.echo(f"  [{mark}] optimumai scratchpad {c.concept_id:<18} {c.title}")
+        click.echo("\n  [x] done   [-] locked (prerequisites unmet)")
         return
+
     try:
-        get_concept(concept)  # fail fast on a typo, before binding a port
+        active = get_concept(concept)  # fail fast on a typo, before binding a port
     except KeyError as exc:
         raise click.ClickException(exc.args[0]) from exc
+
+    unmet = unmet_prerequisites(active, done)
+    if unmet and not force:
+        raise click.ClickException(
+            f"'{concept}' has unmet prerequisites: {', '.join(unmet)}.\n"
+            f"Do those first, or pass --force to open it anyway."
+        )
+
     try:
         import flask  # noqa: F401
     except ImportError as exc:
         raise click.ClickException(
             'Flask is not installed. Install it with:  pip install "optimumai[scratchpad]"'
         ) from exc
+    if active.board.expression:
+        try:
+            import sympy  # noqa: F401
+        except ImportError as exc:
+            raise click.ClickException(
+                f"'{concept}' plots a function, which needs SymPy: "
+                'pip install "optimumai[scratchpad]"'
+            ) from exc
     from optimumai.scratchpad.cli import launch
 
     launch(concept=concept, port=port, open_browser=not no_browser)
