@@ -59,7 +59,66 @@ Research-driven, 4 sprints. Sources: WolframAlpha, 3Blue1Brown/Manim, explorable
 4. Author the new fields for 3 concepts (attention, backpropagation, gradient_descent).
 5. Tests + docs + CHANGELOG.
 
-**Sprint 2 — "Pods & Terminal"** — Pod/tier model (W1,W2), interpretation echo + reproducing code (W6), terminal renderer so `explain` works without a browser, `--state` flags (W5).
+**Sprint 2 — "Pods & Terminal"** — Pod/tier model (W1,W2), interpretation echo + reproducing code (W6), terminal renderer so `explain` works without a browser, `--state` flags (W5), and the offline fix below.
+
+### Sprint 2 offline plan (revised against measured data)
+
+The original note here said only "inline the CDN assets". Measurement changed the
+recommendation, so the specifics are recorded rather than left to be rediscovered.
+
+**Hard `file://` constraints** — these rule options out, they are not preferences:
+
+| capability | works from `file://`? |
+|---|---|
+| inline `<script>` (classic or module) | yes |
+| `<script type="module" src="./x.js">` | **no** — module scripts are always CORS-fetched; opaque origin fails |
+| `fetch('./data.json')` / XHR | **no** — data must be an inline literal or `data:` URI |
+| Service Worker registration | **no** — secure context, `http(s)` only |
+| Web Worker from `./w.js` | **no** (Chrome) |
+| `WebAssembly.instantiateStreaming(fetch(...))` | **no** |
+| `WebAssembly.instantiate(bytes)` from inline base64 | yes — the only viable WASM path |
+| `@font-face` from `data:font/woff2;base64,...` | yes |
+
+Consequences: no sidecar JSON, no service worker, and **Pyodide is out** (12.28 MB
+core alone: `pyodide.asm.wasm` 8,647,684 + `python_stdlib.zip` 2,423,989 + glue
+1,074,322). Real Pyodide exports measure 28 MB / 740 files (marimo `html-wasm`),
+33 MB (shinylive), 74 MB (JupyterLite) — and marimo's own `--help` says the output
+"cannot be opened directly from the file system (e.g. file://)".
+
+**Measured cost of inlining a general-purpose runtime** (same trivial chart):
+mpld3 305 KB · vega 878 KB · pyvis 699 KB · bokeh 1.74 MB · holoviews 2.9 MB ·
+plotly 4.86 MB. The lesson is not "inlining is expensive" but "**general-purpose
+plotting runtimes are expensive**" — mpld3 proves a full interactive renderer fits
+in 64 KB. For reference, `d3blocks` ships a fully self-contained chord diagram in
+**61,752 bytes** via nothing more than a Jinja `{% include %}` plus
+`const jsonData = {{ json_data }}`, and matplotlib's *entire* interactive-animation
+export feature is **7,986 bytes** of Python-side template constants.
+
+**Math rendering, measured per formula:**
+
+| approach | per formula | runtime JS | fonts |
+|---|---|---|---|
+| `latex2mathml` → native MathML | **599 B** | **0** | **0** |
+| build-time KaTeX pre-render | 3.5 KB | **0** | ~188 KB once |
+| `matplotlib.mathtext` → SVG paths | 9.6 KB | 0 | 0 |
+| KaTeX runtime, inlined | — | 277 KB | inlined |
+| MathJax `tex-svg.js` | — | 2.1 MB | 0 |
+
+So: **pre-render or use MathML; never ship the KaTeX runtime or MathJax.** Also note
+KaTeX's fonts are 259,792 B as woff2-only (not the widely-repeated ~1 MB, which counts
+ttf+woff+woff2), and 123,776 B subset to the math families we actually use.
+
+**Precompute numbers, not pixels.** Panel's `embed` at 100 states measures 127,872 B
+raw / **5,865 B gzipped (4.6%)** because numeric state tables are highly self-similar.
+Base64 PNG frames do the opposite — `to_jshtml` with 30 frames is 502,911 B gzipping to
+368,703 (73%), ~16.6 KB/frame flat. Ship arrays and redraw an inline SVG.
+
+**Budget on RAW bytes, not gzipped.** Email attachments are not gzip-encoded, and a
+forwarded lesson is the target use case. Targets: **≤200 KB raw per explainer,
+≤500 KB per multi-widget page.** Today `explain attention` is ~26 KB with CDN, so
+there is real headroom — but only if we avoid inlining d3 (279,706 B) + dagre + the
+KaTeX runtime, which would land near 1 MB. Prefer: keep the DAG renderer bespoke,
+pre-render the formulas.
 
 **Sprint 3 — "Manipulate"** — scratchpad boards become declarative (`Param` types: Range/Choice/Bool/Point), snapshots as authored parameter tours, grid-deformation board (determinant = unit square, eigenvector = span line), token adoption across all surfaces.
 
