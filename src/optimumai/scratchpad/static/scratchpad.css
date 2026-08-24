@@ -61,3 +61,32 @@ button#reveal-btn:hover { background: #2c2f36; }
 .hidden { display: none; }
 
 code { font-size: 12px; color: #a99bff; }
+
+/* --- Tier 2: params, snapshots, badges, lock state ------------------ */
+.asset-mode { font-size: 10px; text-transform: uppercase; letter-spacing: .06em;
+  color: #6f6f7a; margin: 0 0 14px; }
+.sidebar a { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.sidebar a.locked { opacity: .5; }
+.nav-title { flex: 1; }
+.badges { display: flex; gap: 4px; flex-shrink: 0; }
+.badge { font-size: 9px; text-transform: uppercase; letter-spacing: .05em;
+  padding: 2px 5px; border-radius: 4px; }
+.badge.done { background: #1d3b32; color: #5CD0B3; }
+.badge.locked { background: #3a3320; color: #F4D345; }
+.lock-warning { font-size: 12px; color: #F4D345; margin: -4px 0 12px; }
+.lock-warning code { background: #24262c; padding: 1px 5px; border-radius: 4px; margin-right: 4px; }
+.board-col { display: flex; flex-direction: column; }
+.expr-label { margin-top: 10px; font-size: 13px; color: #c7c7c7; min-height: 18px; }
+.params { margin-top: 12px; }
+.param-row { display: grid; grid-template-columns: 110px 1fr 52px; align-items: center;
+  gap: 10px; margin-bottom: 7px; font-size: 12px; color: #c7c7c7; }
+.param-row input[type=range] { width: 100%; accent-color: #a99bff; }
+.param-value { font-variant-numeric: tabular-nums; text-align: right; color: #cabaff; }
+.snapshots { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.snapshots .card-label { width: 100%; margin: 0 0 2px; }
+.snapshot { background: #1e2128; border: 1px solid #2a2f3d; color: #c7c7c7;
+  font-size: 11.5px; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+.snapshot:hover { border-color: #a99bff; color: #cabaff; }
+.snapshot-note { font-size: 12px; color: #9a9aa6; min-height: 17px; margin: 8px 0 0; }
+.progress-note { font-size: 11.5px; color: #9a9aa6; margin: 0 0 8px; line-height: 1.45; }
+.progress-note code { background: #24262c; padding: 1px 5px; border-radius: 4px; }

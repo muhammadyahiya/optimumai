@@ -22,6 +22,7 @@ def launch(
     concept: str = "dot_product",
     port: int = DEFAULT_PORT,
     open_browser: bool = True,
+    progress_path: str | None = None,
 ) -> None:
     """
     Start the scratchpad server.
@@ -34,7 +35,7 @@ def launch(
             127.0.0.1-only server by design (local-first, no cloud dependency).
         open_browser: whether to auto-open the default browser.
     """
-    app = create_app()
+    app = create_app(progress_path=progress_path)
     url = f"http://127.0.0.1:{port}/scratchpad/{concept}"
 
     if open_browser:

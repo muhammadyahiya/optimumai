@@ -22,12 +22,25 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .concepts import CONCEPTS, get_concept, list_concepts
+from .concepts import CONCEPTS, BoardSpec, Param, Snapshot, get_concept, list_concepts
+from .dag import is_locked, learning_order, unmet_prerequisites, validate_dag
 
 if TYPE_CHECKING:  # pragma: no cover
     from .cli import launch
 
-__all__ = ["CONCEPTS", "get_concept", "launch", "list_concepts"]
+__all__ = [
+    "CONCEPTS",
+    "BoardSpec",
+    "Param",
+    "Snapshot",
+    "get_concept",
+    "is_locked",
+    "launch",
+    "learning_order",
+    "list_concepts",
+    "unmet_prerequisites",
+    "validate_dag",
+]
 
 
 def __getattr__(name: str):

@@ -15,7 +15,9 @@ def test_list_concepts_nonempty():
 
 def test_get_concept_valid():
     c = get_concept("dot_product")
-    assert c.board_type == "dotProduct"
+    # Tier 2: a concept declares a BoardSpec rather than naming a JS function.
+    assert c.board.kind == "vectors"
+    assert c.lesson_id == "dot"
 
 
 def test_get_concept_invalid_raises():
