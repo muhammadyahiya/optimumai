@@ -22,6 +22,8 @@ import json
 import webbrowser
 from pathlib import Path
 
+from optimumai.design import to_css_vars
+
 # --------------------------------------------------------------------------
 # shared page chrome (dark DAG theme, matching optimumai.circuit.interactive)
 # --------------------------------------------------------------------------
@@ -37,8 +39,10 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 <style>
   :root{
-    --bg:#0f1117; --panel:#171a23; --line:#2a2f3d; --text:#e7e9ee; --dim:#7d8497;
-    --accent:#6ea8fe; --accent2:#ffb86b;
+__CSS_VARS__
+    /* legacy aliases -> design tokens (optimumai.design) */
+    --bg:var(--canvas); --panel:var(--surface); --line:var(--border); --dim:var(--text-dim);
+    --accent:#6ea8fe; --accent2:var(--attention);
     --params:#6ea8fe; --grad:#ff8b8b; --optim:#5fd4a0; --branch:#c792ea;
     --ingestion:#6ea8fe; --query:#c792ea; --retrieval:#ffb86b; --generation:#5fd4a0;
   }
@@ -80,6 +84,28 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .io-title{ color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.03em; margin-bottom:6px; }
   #step-count{ color:var(--dim); font-size:12px; white-space:nowrap; }
   #zoomhint{ position:absolute; top:12px; right:16px; color:var(--dim); font-size:11px; }
+  .step-controls{ display:flex; flex-wrap:wrap; gap:7px; margin:14px 0 18px; }
+  .step-controls button{ font-size:12px; padding:6px 11px; }
+  .step-controls button.on{ border-color:var(--hint); color:var(--hint); }
+  .hint-card{ border-left:3px solid var(--hint); background:var(--surface); border-radius:6px;
+    padding:11px 14px; margin:12px 0; transition:opacity var(--ui-base-ms) var(--ease-css); }
+  .hint-card.past{ opacity:.55; }
+  .hint-label{ color:var(--hint); font-size:10px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
+  .hint-text{ font-size:13.5px; line-height:1.5; }
+  .why-card{ border-left:3px solid var(--justification); background:var(--surface); border-radius:6px;
+    padding:11px 14px; margin:11px 0; font-size:12.5px; line-height:1.55; }
+  .why-label{ color:var(--justification); font-size:10px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
+  .substeps{ margin:12px 0; }
+  .substep{ border:1px solid var(--line); border-radius:6px; margin-bottom:6px; }
+  .substep-head{ display:flex; gap:8px; align-items:baseline; padding:8px 11px; cursor:pointer; font-size:12.5px; }
+  .substep-head:hover{ color:var(--attention); }
+  .substep-tok{ color:var(--attention); font-family:monospace; }
+  .substep-body{ padding:0 12px 11px 30px; font-size:12.5px; line-height:1.55; color:var(--dim); }
+  .substep-body.collapsed{ display:none; }
+  .all-step{ border-bottom:1px solid var(--line); padding:14px 0; }
+  .all-step-title{ font-size:14px; margin-bottom:6px; }
+  .all-step-hint{ color:var(--hint); font-size:12px; margin-bottom:5px; }
+  .all-step-narr{ font-size:13px; line-height:1.55; color:var(--dim); }
 </style>
 </head>
 <body>
@@ -98,18 +124,35 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <h1 id="concept-label"></h1>
     <h2 id="trace-title"></h2>
     <div id="desc"></div>
+    <div class="step-controls">
+      <button id="showall">Show all steps</button>
+      <button id="hints-toggle" class="on">Hints: on</button>
+      <button id="restart">Start over</button>
+    </div>
+    <div id="single-step">
     <div id="stage-badge"></div>
     <h2 id="step-title" style="font-size:17px;"></h2>
+    <div id="hint-block" class="hint-card" style="display:none;">
+      <div class="hint-label">hint &middot; try it before you look</div>
+      <div id="hint-text" class="hint-text"></div>
+    </div>
     <div id="narration"></div>
     <div id="formula" style="display:none;"></div>
     <div id="code-block" style="display:none;">
       <div class="code-title">Python &middot; optimumai</div>
       <pre id="code-pre"></pre>
     </div>
+    <div id="why-block" class="why-card" style="display:none;">
+      <div class="why-label">why this step is allowed</div>
+      <div id="why-text"></div>
+    </div>
+    <div id="substeps" class="substeps" style="display:none;"></div>
     <div id="metrics-block" style="display:none;">
       <div class="io-title">Metrics</div>
       <table class="metrics"><tbody id="metrics-body"></tbody></table>
     </div>
+    </div>
+    <div id="all-steps" style="display:none;"></div>
   </div>
 </div>
 
@@ -156,50 +199,122 @@ nodeG.append("text").attr("class","node-label").attr("x", 10).attr("y", 18).text
 nodeG.append("text").attr("class","node-sub").attr("x", 10).attr("y", 32).text(d => d.kind);
 
 let current = 0;
-function stepsUpToCurrent(){ return new Set(stepIndexOrder.slice(0, current+1)); }
+let phase = "hint";          // (index, phase) cursor -- see docs/guided-steps.md
+let hintsOn = true;
+let openSub = null;          // only one drill-down open at a time
+let viewAll = false;
 
-function render(){
-  const step = TRACE.steps[current];
+function stepsUpToCurrent(){ return new Set(stepIndexOrder.slice(0, current+1)); }
+function hintFor(s){ return (hintsOn && s.hint) ? s.hint : null; }
+function inHintPhase(){ return !viewAll && phase === "hint" && !!hintFor(TRACE.steps[current]); }
+function atLastReveal(){ return current === TRACE.steps.length-1 && !inHintPhase(); }
+
+function renderGraph(step){
   const activeSteps = stepsUpToCurrent();
   const hlNodes = new Set(step.highlight_nodes || []);
   const hlEdges = new Set(step.highlight_edges || []);
-
   edgeSel.classed("active", d => hlEdges.has(d.id))
     .classed("past", d => !hlEdges.has(d.id) && activeSteps.has(d.active_from_step))
     .attr("opacity", d => activeSteps.has(d.active_from_step) ? null : 0.12);
-
   nodeG.select("rect").classed("active", d => hlNodes.has(d.id))
     .attr("opacity", d => {
       const everTouched = TRACE.edges.some(e => (e.source===d.id||e.target===d.id) && activeSteps.has(e.active_from_step));
       return (everTouched || hlNodes.has(d.id)) ? 1 : 0.25;
     });
+}
+
+function renderSubsteps(step, revealed){
+  const wrap = d3.select("#substeps");
+  wrap.selectAll("*").remove();
+  const subs = step.substeps || [];
+  if (!revealed || !subs.length){ wrap.style("display","none"); return; }
+  wrap.style("display","block");
+  subs.forEach((sub, i) => {
+    const isOpen = openSub === i;
+    const box = wrap.append("div").attr("class","substep");
+    box.append("div").attr("class","substep-head")
+      .html(`<span class="substep-tok">${isOpen ? "[-]" : "[+]"}</span><span>${sub.title}</span>`)
+      .on("click", () => { openSub = isOpen ? null : i; render(); });   // mutual exclusion
+    const body = box.append("div").attr("class","substep-body" + (isOpen ? "" : " collapsed"));
+    body.append("div").text(sub.detail || "");
+    if (sub.formula){
+      const f = body.append("div").attr("class","substep-formula").node();
+      katex.render(sub.formula, f, {throwOnError:false, displayMode:true});
+    }
+  });
+}
+
+function renderAllSteps(){
+  const wrap = d3.select("#all-steps");
+  wrap.selectAll("*").remove();
+  TRACE.steps.forEach(s => {
+    const box = wrap.append("div").attr("class","all-step");
+    box.append("div").attr("class","all-step-title").text(`${s.index}. ${s.title}`);
+    if (s.hint) box.append("div").attr("class","all-step-hint").text(`hint: ${s.hint}`);
+    box.append("div").attr("class","all-step-narr").text(s.narration);
+    if (s.formula){
+      const f = box.append("div").style("margin-top","8px").node();
+      katex.render(s.formula, f, {throwOnError:false, displayMode:true});
+    }
+    (s.substeps || []).forEach(sub => {
+      box.append("div").attr("class","all-step-narr").style("padding-left","16px")
+        .text(`- ${sub.title}: ${sub.detail || ""}`);
+    });
+  });
+}
+
+function render(){
+  const step = TRACE.steps[current];
+  const hintPhase = inHintPhase();
+  const revealed = !hintPhase;
+  renderGraph(step);
 
   d3.select("#concept-label").text(TRACE.concept);
   d3.select("#trace-title").text(TRACE.title);
   d3.select("#desc").text(TRACE.description);
+
+  d3.select("#single-step").style("display", viewAll ? "none" : "block");
+  d3.select("#all-steps").style("display", viewAll ? "block" : "none");
+  if (viewAll){ renderAllSteps(); }
+
   const firstHl = step.highlight_nodes && step.highlight_nodes[0];
   const grp = firstHl && nodeById[firstHl] ? nodeById[firstHl].group : null;
   d3.select("#stage-badge").html(
     `<span class="stage-tag" style="background:${GROUP_COLOR[grp]||'var(--panel)'}22;color:${GROUP_COLOR[grp]||'var(--dim)'}">${step.stage}</span><span class="op-tag">op: ${step.op}</span>`
   );
   d3.select("#step-title").text(`${step.index}. ${step.title}`);
-  d3.select("#narration").text(step.narration);
+
+  const hint = hintFor(step);
+  const hintBlock = d3.select("#hint-block");
+  if (hint){
+    hintBlock.style("display","block").classed("past", revealed);
+    d3.select("#hint-text").text(hint);
+  } else { hintBlock.style("display","none"); }
+
+  d3.select("#narration").style("display", revealed ? "block" : "none").text(step.narration);
 
   const formulaEl = d3.select("#formula");
-  if (step.formula){
+  if (step.formula && revealed){
     formulaEl.style("display","block");
     katex.render(step.formula, formulaEl.node(), {throwOnError:false, displayMode:true});
   } else { formulaEl.style("display","none"); }
 
   const codeBlock = d3.select("#code-block");
-  const codePre = d3.select("#code-pre");
-  if (step.code){ codeBlock.style("display","block"); codePre.text(step.code); }
+  if (step.code && revealed){ codeBlock.style("display","block"); d3.select("#code-pre").text(step.code); }
   else { codeBlock.style("display","none"); }
+
+  const whyBlock = d3.select("#why-block");
+  if (step.justification && revealed){
+    whyBlock.style("display","block");
+    d3.select("#why-text").text(step.justification);
+  } else { whyBlock.style("display","none"); }
+
+  renderSubsteps(step, revealed);
 
   const metricsBlock = d3.select("#metrics-block");
   const metricsBody = d3.select("#metrics-body");
   metricsBody.selectAll("tr").remove();
-  const metricEntries = Object.entries(step.metrics || {});
+  const metricEntries = revealed ? Object.entries(step.metrics || {}) : [];
   if (metricEntries.length){
     metricsBlock.style("display","block");
     metricEntries.forEach(([k,v]) => {
@@ -209,26 +324,61 @@ function render(){
     });
   } else { metricsBlock.style("display","none"); }
 
-  d3.select("#step-count").text(`Step ${current+1} / ${TRACE.steps.length}`);
-  d3.select("#prev").property("disabled", current === 0);
-  d3.select("#next").property("disabled", current === TRACE.steps.length-1);
+  d3.select("#step-count").text(
+    `Step ${current+1} / ${TRACE.steps.length}${hintPhase ? " (hint)" : ""}`
+  );
+  d3.select("#prev").property("disabled", current === 0 || viewAll);
+  d3.select("#next").property("disabled", viewAll)
+    .html(atLastReveal() ? "Start over &#8635;" : (hintPhase ? "Reveal step &rarr;" : "Next &rarr;"));
+  d3.select("#showall").text(viewAll ? "Step through" : "Show all steps").classed("on", viewAll);
+  d3.select("#hints-toggle").text(hintsOn ? "Hints: on" : "Hints: off").classed("on", hintsOn);
   renderProgress();
+  history.replaceState(null, "", `#step=${current+1}`);
 }
 
 function renderProgress(){
   const wrap = d3.select("#progress"); wrap.selectAll("*").remove();
   TRACE.steps.forEach((s,i) => {
     wrap.append("div").attr("class", "dot" + (i < current ? " done" : "") + (i === current ? " current" : ""))
-      .on("click", () => { current = i; render(); });
+      .on("click", () => { current = i; phase = "hint"; openSub = null; render(); });
   });
 }
 
-d3.select("#prev").on("click", () => { if (current>0){ current--; render(); }});
-d3.select("#next").on("click", () => { if (current<TRACE.steps.length-1){ current++; render(); }});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") d3.select("#next").dispatch("click");
-  if (e.key === "ArrowLeft") d3.select("#prev").dispatch("click");
+// A hint occupies the same cursor slot as its step: advancing from (i, hint)
+// reveals step i, it does not skip to i+1.
+function goNext(){
+  if (inHintPhase()){ phase = "revealed"; render(); return; }
+  if (current < TRACE.steps.length-1){ current++; phase = "hint"; openSub = null; render(); }
+  else { restart(); }
+}
+function goPrev(){
+  if (current > 0){ current--; phase = "revealed"; openSub = null; render(); }
+}
+function restart(){ current = 0; phase = "hint"; openSub = null; viewAll = false; render(); }
+
+d3.select("#prev").on("click", goPrev);
+d3.select("#next").on("click", goNext);
+d3.select("#showall").on("click", () => { viewAll = !viewAll; render(); });
+d3.select("#hints-toggle").on("click", () => {
+  hintsOn = !hintsOn;
+  if (!hintsOn) phase = "revealed";
+  render();
 });
+d3.select("#restart").on("click", restart);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); goNext(); }
+  if (e.key === "ArrowLeft") goPrev();
+  if (e.key === "a" || e.key === "A") { viewAll = !viewAll; render(); }
+  if (e.key === "h" || e.key === "H") d3.select("#hints-toggle").dispatch("click");
+  if (e.key === "r" || e.key === "R") restart();
+});
+
+const hashStep = parseInt((location.hash.match(/step=([0-9]+)/) || [])[1], 10);
+if (!isNaN(hashStep) && hashStep >= 1 && hashStep <= TRACE.steps.length){
+  current = hashStep - 1;
+  phase = "revealed";
+}
 render();
 </script>
 </body>
@@ -298,8 +448,39 @@ updateCount();
 # --------------------------------------------------------------------------
 
 
+def _substeps(entries: list[dict]) -> list[dict]:
+    """Normalise a step's level-2 detail entries.
+
+    Level 1 is *strategy* -- the decisions a human would narrate. Level 2 is
+    *mechanics* -- the algebra that produced the level-1 result. Keeping the
+    top level at roughly 3-8 steps and pushing length down here is what keeps a
+    long derivation readable.
+    """
+    return [
+        {
+            "title": s["title"],
+            "detail": s.get("detail", ""),
+            "formula": s.get("formula"),
+        }
+        for s in entries
+    ]
+
+
 def _steps(*entries: dict) -> list[dict]:
-    """Fill in id/index/highlight defaults for a concept's step list."""
+    """Fill in id/index/highlight defaults for a concept's step list.
+
+    Three optional keys drive the guided-step UI, and every one of them is
+    read with ``.get`` so concepts that predate them keep working unchanged:
+
+    ``hint``
+        Names the *technique* the step is about to use, without performing it,
+        so the reader can attempt the move first. Shown in place of the step.
+    ``justification``
+        The rule or theorem that licenses the step -- "why is this allowed",
+        as distinct from "what does it do".
+    ``substeps``
+        Level-2 mechanics, collapsed by default; see :func:`_substeps`.
+    """
     out = []
     for i, e in enumerate(entries, 1):
         step = {
@@ -316,6 +497,9 @@ def _steps(*entries: dict) -> list[dict]:
             "highlight_nodes": e.get("highlight_nodes", []),
             "highlight_edges": e.get("highlight_edges", []),
             "metrics": e.get("metrics", {}),
+            "hint": e.get("hint"),
+            "justification": e.get("justification"),
+            "substeps": _substeps(e.get("substeps", [])),
             "duration_hint_ms": 900,
             "chart": None,
         }
@@ -365,6 +549,16 @@ CONCEPTS["attention"] = {
     "steps": _steps(
         {
             "title": "Compute QK^T similarity scores", "op": "matmul",
+            "hint": (
+                "You need one number per key saying how well it matches the query. Which operation turns two vectors into a single number that grows when they point the same way?"
+            ),
+            "justification": (
+                "The dot product equals |q||k|cos(theta), so it peaks when two vectors align, is zero when they are perpendicular, and goes negative when they oppose. That is exactly the shape 'relevance' should have."
+            ),
+            "substeps": [
+                {"title": "One query against one key", "detail": "Multiply componentwise and sum. This is a single scalar: how much this one key matches this one query.", "formula": r"q \cdot k_i = \sum_j q_j k_{ij}"},
+                {"title": "All keys at once", "detail": "Stacking the keys as the rows of K turns that loop into one matrix product -- which is why the formula is written QK^T rather than as a sum over i.", "formula": r"\text{scores} = QK^T"},
+            ],
             "narration": "Each key is compared against the query via dot product — a higher score means that key/value pair is more relevant to this query.",
             "formula": r"\text{scores} = QK^T",
             "code": "from optimumai import Attention\nattn = Attention.demo(seed=0)\nscores = attn.scores  # shape (T, T)",
@@ -372,6 +566,16 @@ CONCEPTS["attention"] = {
         },
         {
             "title": "Scale by sqrt(d_k)", "op": "scale",
+            "hint": (
+                "These dot products get larger as the vectors get longer -- not more relevant, just higher-dimensional. Before softmax sees them, something has to undo that growth. What is the variance of a sum of d_k independent products?"
+            ),
+            "justification": (
+                "If q and k have independent, unit-variance entries, then q.k is a sum of d_k such products and so has variance d_k. Dividing by sqrt(d_k) restores unit variance, which keeps softmax away from its saturated region."
+            ),
+            "substeps": [
+                {"title": "Which dimension is d_k", "detail": "d_k is the per-head key width, not the model width. Eight heads over a 512-wide model give d_k = 64, so the divisor is 8 -- not 22.6."},
+                {"title": "Why saturation stops learning", "detail": "A wide spread of logits makes softmax nearly one-hot. Its Jacobian then approaches zero, so almost no gradient flows back into Q or K and those projections stop improving."},
+            ],
             "narration": "Dividing by sqrt(dimension) prevents dot products from growing too large as dimensionality increases, which would otherwise push softmax into a near-one-hot, gradient-killing regime.",
             "formula": r"\text{scaled} = \frac{QK^T}{\sqrt{d_k}}",
             "code": "import numpy as np\nd_k = 8\nscaled = scores / np.sqrt(d_k)",
@@ -379,6 +583,17 @@ CONCEPTS["attention"] = {
         },
         {
             "title": "Softmax turns scores into weights", "op": "softmax",
+            "hint": (
+                "You have arbitrary real numbers and you need weights that are all non-negative and sum to one, without changing which key ranked highest. What function does that?"
+            ),
+            "justification": (
+                "Exponentiating makes every score positive; dividing by the total forces them to sum to 1. Because exp is strictly increasing, the ranking of the scores is preserved -- so this normalises without reordering."
+            ),
+            "substeps": [
+                {"title": "Exponentiate", "detail": "Turns every score positive and converts additive gaps into multiplicative ratios.", "formula": r"e^{s_i}"},
+                {"title": "Normalise", "detail": "Dividing by the sum puts the result on the probability simplex.", "formula": r"\alpha_i = \frac{e^{s_i}}{\sum_j e^{s_j}}"},
+                {"title": "The stability trick", "detail": "Real implementations subtract max(s) before exponentiating. This cannot change the answer -- the constant factor cancels between numerator and denominator -- but it prevents exp from overflowing."},
+            ],
             "narration": "Softmax converts the scaled scores into a probability distribution over the keys — these become the attention weights.",
             "formula": r"\alpha_i = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right)_i",
             "code": "from optimumai import softmax\nweights = softmax(scaled.tolist())",
@@ -386,6 +601,16 @@ CONCEPTS["attention"] = {
         },
         {
             "title": "Weighted sum of values", "op": "weighted_sum",
+            "hint": (
+                "You now have a distribution over positions, and a value vector sitting at each position. What single vector represents 'mostly position 2, with a little of position 1'?"
+            ),
+            "justification": (
+                "The weights are non-negative and sum to 1, so the output is a convex combination of the value vectors: it always lands inside their convex hull. Attention can blend and rescale information it was given, but it cannot manufacture a direction that no value vector contained."
+            ),
+            "substeps": [
+                {"title": "The blend", "detail": "Each value vector contributes in proportion to its attention weight.", "formula": r"\text{out} = \sum_i \alpha_i V_i"},
+                {"title": "What is learned and what is not", "detail": "The mixing arithmetic here has no parameters at all. Everything learned lives in the projections that produced Q, K and V in the first place."},
+            ],
             "narration": "The final attention output is a blend of all value vectors, weighted by relevance — the query 'attends' most to whichever key it matched best.",
             "formula": r"\text{out} = \sum_i \alpha_i V_i",
             "code": "output = weights @ v  # blends V rows by attention weight",
@@ -424,6 +649,16 @@ CONCEPTS["backpropagation"] = {
     "steps": _steps(
         {
             "title": "Forward: compute hidden h = ReLU(w1 x)", "op": "forward",
+            "hint": (
+                "Nothing can be differentiated yet. A derivative has to be evaluated somewhere -- so what has to be computed and remembered first?"
+            ),
+            "justification": (
+                "Reverse-mode differentiation multiplies a local derivative at every node, and each local derivative depends on that node's own input. So the forward values must be computed and cached before any backward pass can start -- this is why training needs more memory than inference."
+            ),
+            "substeps": [
+                {"title": "Affine part", "detail": "Scale the input by the weight. This is the part that has a parameter to learn.", "formula": r"z_1 = w_1 x"},
+                {"title": "Nonlinearity", "detail": "ReLU passes positives through unchanged and clamps negatives to zero. Without it, stacking layers would collapse into a single linear map.", "formula": r"h = \max(0, z_1)"},
+            ],
             "narration": "The forward pass starts by combining the input with the first weight and applying a non-linearity.",
             "formula": r"h = \text{ReLU}(w_1 x)",
             "code": "from optimumai import Value\nx = Value(1.5); w1 = Value(0.4)\nh = (x * w1).relu()",
@@ -431,6 +666,15 @@ CONCEPTS["backpropagation"] = {
         },
         {
             "title": "Forward: output y_hat = w2 h", "op": "forward",
+            "hint": (
+                "One more affine step to get a prediction. Ask yourself what h now plays the role of."
+            ),
+            "justification": (
+                "From the second layer's point of view h is simply its input. That self-similarity is what lets one rule -- the chain rule -- be applied repeatedly at every depth instead of needing a new formula per layer."
+            ),
+            "substeps": [
+                {"title": "No activation here", "detail": "The output layer is left linear because the loss that follows expects an unbounded real number. Squashing it first would cap the gradient.", "formula": r"\hat{y} = w_2 h"},
+            ],
             "narration": "The hidden activation is scaled by the second weight to produce the model's prediction.",
             "formula": r"\hat{y} = w_2 h",
             "code": "w2 = Value(0.9)\ny_hat = w2 * h",
@@ -438,6 +682,16 @@ CONCEPTS["backpropagation"] = {
         },
         {
             "title": "Loss: MSE between prediction and target", "op": "loss",
+            "hint": (
+                "You need one number summarising how wrong the network is, and it must be differentiable everywhere. Why square the error rather than take its absolute value?"
+            ),
+            "justification": (
+                "Squaring is differentiable at zero, where |.| is not, and it penalises large errors superlinearly. The derivative is then simply proportional to the signed error, which is what makes the first backward step so cheap."
+            ),
+            "substeps": [
+                {"title": "The scalar objective", "detail": "Collapsing everything to one number is what makes 'the gradient of the loss' well defined.", "formula": r"L = (\hat{y} - y)^2"},
+                {"title": "Its derivative", "detail": "Differentiating the square gives back the error itself, doubled -- the seed value the whole backward pass starts from.", "formula": r"\frac{\partial L}{\partial \hat{y}} = 2(\hat{y} - y)"},
+            ],
             "narration": "The loss measures how far the prediction is from the true value — this is what we differentiate.",
             "formula": r"L = (\hat{y} - y)^2",
             "code": "y = Value(1.0)\nloss = (y_hat - y) ** 2",
@@ -445,6 +699,16 @@ CONCEPTS["backpropagation"] = {
         },
         {
             "title": "Backward: propagate dL/dy_hat", "op": "backward",
+            "hint": (
+                "You have dL/dy_hat. You want dL/dw2. Between them sits y_hat = w2 * h -- so what local derivative connects them?"
+            ),
+            "justification": (
+                "The chain rule: dL/dw2 = dL/dy_hat * dy_hat/dw2, and dy_hat/dw2 is just h. This is why a weight's gradient is proportional to the activation it multiplied -- weights fed by large activations get larger updates."
+            ),
+            "substeps": [
+                {"title": "Gradient at the weight", "detail": "The incoming gradient times the cached forward activation.", "formula": r"\frac{\partial L}{\partial w_2} = \frac{\partial L}{\partial \hat{y}} \cdot h"},
+                {"title": "Gradient at the activation", "detail": "The same incoming gradient, routed through the weight instead. This is the value handed to the layer below.", "formula": r"\frac{\partial L}{\partial h} = \frac{\partial L}{\partial \hat{y}} \cdot w_2"},
+            ],
             "narration": "The backward pass starts at the loss and walks the graph in reverse, applying the chain rule at every node.",
             "formula": r"\frac{\partial L}{\partial \hat{y}} = 2(\hat{y} - y)",
             "code": "loss.backward()  # computes all gradients in one call",
@@ -452,6 +716,16 @@ CONCEPTS["backpropagation"] = {
         },
         {
             "title": "Gradient at w1 via the chain rule", "op": "backward",
+            "hint": (
+                "One more link back. ReLU is in the way -- and it is not differentiable at zero. What does its derivative look like everywhere else?"
+            ),
+            "justification": (
+                "ReLU's derivative is 1 where its input was positive and 0 where it was negative, so it acts as a gate: it passes the gradient through untouched or blocks it entirely. A unit that was inactive in the forward pass therefore receives no gradient -- the origin of 'dying ReLU'."
+            ),
+            "substeps": [
+                {"title": "Through the gate", "detail": "Multiply by 1 or 0 depending on the sign of the cached pre-activation.", "formula": r"\frac{\partial L}{\partial z_1} = \frac{\partial L}{\partial h} \cdot \mathbf{1}[z_1 > 0]"},
+                {"title": "Down to the weight", "detail": "Finally multiply by the layer's own input, exactly as in the layer above.", "formula": r"\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial z_1} \cdot x"},
+            ],
             "narration": "The gradient at w1 requires chaining through every operation between it and the loss — this is exactly what autograd automates.",
             "formula": r"\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial \hat{y}}\cdot w_2 \cdot \mathbf{1}[h>0]\cdot x",
             "code": "print(w1.grad)  # dL/dw1, computed via the chain rule",
@@ -533,6 +807,15 @@ CONCEPTS["gradient_descent"] = {
     "steps": _steps(
         {
             "title": "Compute loss L(θ)", "op": "loss",
+            "hint": (
+                "Before you can go downhill you need to know how high you are. What does the algorithm have to measure first?"
+            ),
+            "justification": (
+                "Gradient descent is defined on a scalar function. Collapsing all the errors to a single number is what makes 'downhill' meaningful -- you cannot rank directions by a vector-valued objective without first choosing how to reduce it to one number."
+            ),
+            "substeps": [
+                {"title": "Why a single number", "detail": "Every choice of how to aggregate per-example errors -- mean, sum, weighted -- is a different objective and gives a different minimum."},
+            ],
             "narration": "Every gradient descent step starts by evaluating how wrong the current parameters are.",
             "formula": r"L(\theta) = \frac{1}{n}\sum_i (y_i - \hat{y}_i)^2",
             "code": "from optimumai import LinearRegression\nmodel = LinearRegression()\nloss = model.mse(X_train, y_train)",
@@ -540,6 +823,16 @@ CONCEPTS["gradient_descent"] = {
         },
         {
             "title": "Compute the gradient ∇L", "op": "diff",
+            "hint": (
+                "In one dimension you would ask for the slope. In many dimensions, 'the slope' is not one number. What object replaces it, and what does its length tell you?"
+            ),
+            "justification": (
+                "The gradient is the vector of partial derivatives, and it points in the direction of steepest *increase*. That is a theorem about directional derivatives, not a definition -- which is exactly why the update below uses its negative."
+            ),
+            "substeps": [
+                {"title": "Componentwise reading", "detail": "Each entry answers one narrow question: if I nudge only this parameter, how does the loss respond?", "formula": r"\nabla L = \left[\frac{\partial L}{\partial \theta_1}, \dots, \frac{\partial L}{\partial \theta_n}\right]"},
+                {"title": "The non-spatial reading", "detail": "Forget the surface. The gradient is a list of signed numbers: the sign says which way to move each knob, and the relative magnitudes say which knobs matter most. This reading is the one that survives at 13,002 dimensions, where the hillside picture does not."},
+            ],
             "narration": "The gradient tells us how the loss changes with each parameter — the direction to move away from.",
             "formula": r"\nabla_\theta L = \frac{2}{n} X^T(X\theta - y)",
             "code": "from optimumai import gradient\ngrad = gradient(model.loss_fn, model.params)",
@@ -547,6 +840,16 @@ CONCEPTS["gradient_descent"] = {
         },
         {
             "title": "Apply the update rule", "op": "update",
+            "hint": (
+                "You know which way is uphill. Two decisions remain: which direction to actually move, and how far. Why not step all the way to where the gradient predicts zero loss?"
+            ),
+            "justification": (
+                "The gradient is only accurate in an infinitesimal neighbourhood -- it is the first-order term of a Taylor expansion. The learning rate exists because that linear approximation stops being trustworthy at any finite distance."
+            ),
+            "substeps": [
+                {"title": "Minus the gradient", "detail": "The gradient points uphill, so descending means subtracting it.", "formula": r"\theta \leftarrow \theta - \eta \nabla L"},
+                {"title": "Why the step shrinks by itself", "detail": "Near a minimum the gradient gets small, so a fixed learning rate still produces smaller and smaller steps. The algorithm decelerates into the valley without being told to."},
+            ],
             "narration": "Step opposite to the gradient, scaled by the learning rate η.",
             "formula": r"\theta \leftarrow \theta - \eta \nabla_\theta L",
             "code": "from optimumai import SGD\noptimizer = SGD(lr=0.01)\nparams = optimizer.step(params, grad)",
@@ -554,6 +857,16 @@ CONCEPTS["gradient_descent"] = {
         },
         {
             "title": "Repeat until convergence", "op": "loop",
+            "hint": (
+                "One step is not enough, because the gradient you used was only valid where you were standing. What has to be recomputed, and what would tell you to stop?"
+            ),
+            "justification": (
+                "Each step moves to a new point where the old gradient no longer applies, so the derivative must be re-evaluated. Convergence is declared when the gradient norm gets small -- that is a first-order stationarity test, and it is satisfied by minima, maxima and saddle points alike."
+            ),
+            "substeps": [
+                {"title": "Stopping tests used in practice", "detail": "A small gradient norm, a loss that stops improving, or simply a step budget. The last one is by far the most common in deep learning."},
+                {"title": "Where saddles bite", "detail": "In high dimensions saddle points vastly outnumber local minima, and near one the gradient is small in every direction while the loss is not minimal. This is a large part of why momentum-based optimisers exist."},
+            ],
             "narration": "Looping this process drives the loss down step by step until it stops improving meaningfully.",
             "formula": r"L^{(t+1)} < L^{(t)}",
             "code": "for step in range(100):\n    loss = model.loss_fn(params)\n    grad = gradient(model.loss_fn, params)\n    params = optimizer.step(params, grad)",
@@ -561,6 +874,16 @@ CONCEPTS["gradient_descent"] = {
         },
         {
             "title": "Final parameters minimize the loss", "op": "converge",
+            "hint": (
+                "The gradient has gone quiet. Be careful about what you are entitled to conclude -- is this the best possible setting, or just a place where no small move helps?"
+            ),
+            "justification": (
+                "A zero gradient certifies only a *local* stationary point. Global optimality would additionally require convexity, which neural-network losses do not have. In practice the achievable claim is that no small perturbation improves the loss."
+            ),
+            "substeps": [
+                {"title": "What convexity would buy", "detail": "On a convex loss -- linear or logistic regression, for instance -- any stationary point is the global minimum, so 'converged' really does mean 'best'."},
+                {"title": "Why non-convexity is tolerable anyway", "detail": "Empirically many distinct minima of a large network reach similar loss, so landing in one of them rather than the single best one costs surprisingly little."},
+            ],
             "narration": "After enough steps, the parameters settle near a minimum of the loss surface.",
             "formula": r"\hat{\theta} = \arg\min_\theta L(\theta)",
             "code": 'print(f"Final loss: {loss:.4f}")\nprint(f"Params: {params}")',
@@ -2016,8 +2339,10 @@ def _build_html(concept: str) -> str:
         "steps": data["steps"],
         "meta": {},
     }
-    return HTML_TEMPLATE.replace("__TRACE_JSON__", json.dumps(trace)).replace(
-        "__TITLE__", data["title"]
+    return (
+        HTML_TEMPLATE.replace("__TRACE_JSON__", json.dumps(trace))
+        .replace("__TITLE__", data["title"])
+        .replace("__CSS_VARS__", to_css_vars())
     )
 
 

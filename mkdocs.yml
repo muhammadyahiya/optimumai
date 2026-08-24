@@ -88,6 +88,8 @@ nav:
       - "GPU Kernels": gpu-kernels.md
       - "Classical AI, ML & RL": classical-ai.md
       - "Interactive & Explained": interactive.md
+      - "Guided Steps": guided-steps.md
+      - "Explainer Roadmap": roadmap-visual-explainers.md
       - "Token Generation": generation.md
   - Tutorials:
       - "Learn NumPy": learn-numpy.md
