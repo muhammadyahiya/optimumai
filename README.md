@@ -223,6 +223,34 @@ from a CDN, so the first load of a board needs network access.
 Adding a board is one entry in `scratchpad/concepts.py` plus one `init*Board()`
 function in `scratchpad/static/scratchpad.js`.
 
+## Think before you look — guided steps
+
+The 30 concept explainers let you *advance* through a derivation. They now also
+let you **attempt** it. Each step can carry a **hint** that names the technique
+without performing it, a **justification** for why the move is allowed, and
+collapsed **substeps** holding the algebra.
+
+```bash
+optimumai explain attention          # hints on by default
+optimumai explain backpropagation
+optimumai explain gradient_descent
+```
+
+The cursor is a pair, `(step, phase)`. Pressing **Next** while a hint is showing
+reveals *that* step rather than jumping to the following one — that pause is the
+whole point, and it is backed by Kapur's productive-failure result (problem-first
+beat instruction-first by a wide margin on conceptual understanding at equal
+procedural scores).
+
+Controls: `→`/`Space` next · `←` back · `a` show all steps · `h` toggle hints ·
+`r` start over. The active step lives in the URL as `#step=4`, so you can send
+someone the exact step they are stuck on.
+
+Colour and motion now come from one place, [`optimumai.design`](src/optimumai/design/tokens.py) —
+palette derived from Manim's published conventions, with yellow reserved for
+"look here" and never used semantically. See
+[docs/guided-steps.md](docs/guided-steps.md) for the authoring contract.
+
 ## Explore every concept — formula + code, side by side (v1.6)
 
 Pick any of **30 foundational AI/ML concepts** and get a **DAG you step

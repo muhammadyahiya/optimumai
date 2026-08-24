@@ -16,6 +16,24 @@ All notable changes to OptimumAI are documented here. The format follows
   - `tangent_line` — a glider on a curve: `f(x)` and the instantaneous slope `f'(x)`.
 - New `[scratchpad]` extra (Flask). The server binds `127.0.0.1` only and makes
   no external API calls; all recompute is client-side via JSXGraph + KaTeX.
+- **Guided steps in `optimumai explain`** — each step can now carry a `hint`
+  (names the technique without performing it), a `justification` (the rule that
+  licenses the move), and `substeps` (level-2 mechanics, collapsed by default).
+  The step cursor is now `(index, phase)`: pressing Next on a hint reveals *that*
+  step rather than skipping ahead, which is what preserves the pause where the
+  thinking happens. Authored for `attention`, `backpropagation` and
+  `gradient_descent`; the other 27 concepts are unchanged and still render.
+- New explainer controls: Show all steps, hints on/off, Start over, keyboard
+  bindings (`→`/`Space`, `←`, `a`, `h`, `r`), and `#step=N` deep links so you can
+  link someone to the exact step they are stuck on. Only one drill-down opens at
+  a time, so the top level stays readable as an outline.
+- `optimumai.design` — design tokens as a single source of truth for colour and
+  motion, replacing per-surface hardcoded hex codes (64 distinct values had
+  accumulated across 6 interactive surfaces). Palette values are derived from
+  Manim's published conventions; yellow is reserved for attention and never
+  given a semantic role. Exposes `to_css_vars()` and `to_ansi()`.
+- Docs: "Guided Steps" page covering the authoring contract and the
+  `(index, phase)` cursor.
 
 ## [1.6.3] — 2026-07-07
 
